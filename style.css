@@ -1,0 +1,191 @@
+/* Riket Patel — single-page site
+   Palette nods to Vedic saffron + ink, kept minimal so content carries.
+*/
+
+:root {
+  --ink: #1a1a1a;
+  --ink-soft: #444;
+  --paper: #fafaf7;
+  --paper-alt: #f1ede4;
+  --saffron: #d97706;
+  --rule: #e6e1d6;
+  --max: 980px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: ui-serif, Georgia, "Iowan Old Style", "Apple Garamond", "Palatino Linotype", "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--saffron);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+a:hover { border-bottom-color: var(--saffron); }
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.container.narrow {
+  max-width: 720px;
+}
+
+/* ── Hero ─────────────────────────────────────────────── */
+
+.hero {
+  padding: 120px 0 80px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(217, 119, 6, 0.08), transparent 60%),
+    var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero .om {
+  font-size: 72px;
+  line-height: 1;
+  color: var(--saffron);
+  margin-bottom: 24px;
+  font-family: ui-serif, "Sanskrit Text", "Noto Serif Devanagari", serif;
+}
+
+.hero h1 {
+  font-size: 56px;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+.hero .lede {
+  font-size: 22px;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+.hero .sub {
+  font-size: 16px;
+  color: var(--ink-soft);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Sections ─────────────────────────────────────────── */
+
+.section {
+  padding: 80px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.section.alt {
+  background: var(--paper-alt);
+}
+
+.section h2 {
+  font-size: 32px;
+  margin: 0 0 12px;
+  letter-spacing: -0.01em;
+}
+
+.section-intro {
+  color: var(--ink-soft);
+  margin: 0 0 32px;
+  font-size: 17px;
+}
+
+.section p {
+  color: var(--ink-soft);
+}
+
+/* ── Ventures grid ─────────────────────────────────────── */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px 24px 28px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.card h3 {
+  font-size: 22px;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.card .meta {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--saffron);
+  margin: 0 0 16px;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.card p {
+  font-size: 16px;
+  margin: 0 0 16px;
+}
+
+.card .link {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ── Approach + Contact text ───────────────────────────── */
+
+#approach p,
+#contact p {
+  font-size: 18px;
+  margin: 0 0 18px;
+}
+
+.email a {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 17px;
+}
+
+/* ── Footer ────────────────────────────────────────────── */
+
+footer {
+  padding: 32px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: var(--paper);
+}
+
+/* ── Mobile ────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+  .hero { padding: 80px 0 56px; }
+  .hero h1 { font-size: 40px; }
+  .hero .lede { font-size: 19px; }
+  .hero .om { font-size: 56px; }
+  .section { padding: 56px 0; }
+  .section h2 { font-size: 26px; }
+  .grid { grid-template-columns: 1fr; gap: 16px; }
+}
