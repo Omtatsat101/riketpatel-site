@@ -1,27 +1,20 @@
 {
   "schema": 1,
-  "updated_at": "2026-05-12",
+  "updated_at": "2026-05-13",
   "leads": [
     {
       "id": "wiley-2025-mentor",
-      "quote": "You were exceptional in how you worked with me in every area that we explored. Your follow-up actions were always very helpful in providing multiple resources and learning tools for me to explore. Your execution exceeded what I would have expected from a mentoring relationship. I do not have any further development feedback.",
+      "quote": "You were thorough in helping to talk through the topics we discussed, and you were quick to understand areas where I could benefit from learning new ways of working. Your follow-up actions were always very helpful in providing multiple resources and learning tools for me to explore. I do not have any further development feedback.",
       "name": "Robert Wiley",
-      "title": "Director, Oncology National Account · Merck",
-      "context": "Reverse mentoring feedback, Aug 2025"
+      "title": "Director, Oncology National Account, Merck",
+      "context": "Reverse-mentoring feedback, August 2025"
     },
     {
       "id": "mao-2025-internship",
-      "quote": "You listen carefully and always make me feel heard, while also giving honest and constructive feedback that challenges me to improve. You are very good at digging into conversations to uncover strengths, doubts, and concerns I wasn't even fully aware of myself. I truly don't think I would have completed my internship so successfully without your mentorship.",
+      "quote": "You listen carefully and always make me feel heard, while also giving honest and constructive feedback that challenges me to improve. I truly don't think I would have completed my internship so successfully without your mentorship.",
       "name": "Jenny Mao",
-      "title": "Cornell Computer Science Master's intern, mentored at Merck",
-      "context": "Aug 2025"
-    },
-    {
-      "id": "ting-2025-coaching",
-      "quote": "Leading yourself — identifying initiatives that aligned with your values and vision and putting effort in to move these projects forward. Leading others — you described professional experiences to drive teams as scrum-master/team leader. Empathy — you are capable of picking up emotional signals. You reflected upon my questions and ideas thoughtfully.",
-      "name": "Laura Ting",
-      "title": "Executive Coach · Merck",
-      "context": "Coaching review, Aug 2025"
+      "title": "Cornell Tech master's intern, mentored at Merck",
+      "context": "August 2025"
     }
   ],
   "linkedin": [
@@ -32,7 +25,7 @@
       "title": "Director, Oncology National Account, Merck",
       "direction": "received",
       "date": "Aug 2025",
-      "summary": "Riket designed a program with cutting-edge cross-team communication. Highly emotional intelligence; very cooperative with colleagues. I would re-hire him.",
+      "summary": "Designed a cross-team communication program; thoughtful, collaborative, would re-hire.",
       "language": "ja",
       "ocr_raw": ""
     },
@@ -40,10 +33,10 @@
       "id": "jenny-mao",
       "image": "assets/recommendations/jenny-mao.png",
       "name": "Jenny Mao",
-      "title": "Cornell Tech MS · former Merck IMP mentee",
+      "title": "Cornell Tech master's, formerly mentored at Merck",
       "direction": "sent",
       "date": "Aug 2025",
-      "summary": "Among the most inspiring people I met during my internship — patient, generous with feedback, sees both sides of a problem.",
+      "summary": "One of the most generous people she met during her internship; patient, honest with feedback.",
       "language": "ja",
       "ocr_raw": ""
     },
@@ -51,10 +44,10 @@
       "id": "jill-mcginn",
       "image": "assets/recommendations/jill-mcginn.png",
       "name": "Jill McGinn, MBA",
-      "title": "Corporate Business Development, Strategic Alliances, Oncology",
+      "title": "Corporate Business Development, Strategic Alliances — Oncology",
       "direction": "received",
       "date": "Sep 2025",
-      "summary": "Strategic thinker, unbound by convention. Values diversity and inclusion. Driven, goal-oriented, ambitious career builder.",
+      "summary": "Strategic thinker; values diversity and inclusion; ambitious career builder.",
       "language": "ja",
       "ocr_raw": ""
     },
@@ -62,10 +55,10 @@
       "id": "laura-dean",
       "image": "assets/recommendations/laura-dean.png",
       "name": "Laura Dean",
-      "title": "Physician & Healthcare Leader Empowerment Coach",
+      "title": "Physician and Healthcare Leader Empowerment Coach",
       "direction": "received",
       "date": "Aug 2025",
-      "summary": "Eager to learn. Open-minded, resilient, and patient. Will thrive in an environment that supports collaborative growth.",
+      "summary": "Eager to learn; open-minded, resilient, patient; would thrive in a collaborative environment.",
       "language": "ja",
       "ocr_raw": ""
     },
@@ -73,10 +66,10 @@
       "id": "jezzey-centeno",
       "image": "assets/recommendations/jezzey-centeno.png",
       "name": "Jezzey Centeno, MBA",
-      "title": "Life Sciences Insurance / Risk Mgmt Leader",
+      "title": "Life Sciences Insurance and Risk Management",
       "direction": "received",
       "date": "Sep 2025",
-      "summary": "Combines deep professional knowledge with a clear sense of purpose. Trustworthy partner — would be an asset to any organization.",
+      "summary": "Combines professional depth with a clear sense of purpose; reliable partner.",
       "language": "ja",
       "ocr_raw": ""
     },
@@ -87,7 +80,7 @@
       "title": "Digital Transformation Leader",
       "direction": "received",
       "date": "Sep 2025",
-      "summary": "Coordinated complex projects from requirements through delivery with a strategic, cross-functional approach. Strong leader; would recommend him without reservation.",
+      "summary": "Coordinated complex projects end-to-end with a strategic, cross-functional approach.",
       "language": "ja",
       "ocr_raw": ""
     }
@@ -95,23 +88,18 @@
   "extras": [
     {
       "id": "bhavika-note",
-      "label": "Bhavika's note",
+      "label": "Note from Bhavika",
       "image": "assets/recommendations/bhavika-note.jpg",
-      "caption": "Hand-written note sent on materials",
-      "context": "Personal, undated"
+      "caption": "Hand-written note, undated",
+      "context": ""
     },
     {
       "id": "mural-board",
-      "label": "Mural board export",
+      "label": "Mural board",
       "image": "assets/recommendations/mural-board.png",
-      "caption": "Captured from a Merck Mural workspace",
-      "context": "Team brag board"
+      "caption": "From a Merck working session",
+      "context": ""
     }
   ],
-  "stats": [
-    { "num": "20+", "label": "peer recognitions documented on Merck INSPIRE" },
-    { "num": "10,000 hrs", "label": "saved annually · Scale IT for Clinical Portfolio" },
-    { "num": "6 → 1", "label": "months reduced to weeks · China NDA translation (ARST)" },
-    { "num": "6 countries", "label": "stakeholders led: US · Japan · China · Germany · Belgium · Switzerland" }
-  ]
+  "stats": []
 }
