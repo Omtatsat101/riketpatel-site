@@ -256,10 +256,21 @@
           w.append("phone", lead.phone || "");
           w.append("message", lead.message || "");
           return fetch("https://api.web3forms.com/submit", { method: "POST", body: w });
-        })()
+        })(),
+        // 3. Google Sheets via Apps Script webhook (fire-and-forget; Apps Script doesn't send CORS headers)
+        (cfg.GOOGLE_SHEETS_WEBHOOK_URL && cfg.GOOGLE_SHEETS_WEBHOOK_URL.indexOf("REPLACE_WITH") !== 0)
+          ? fetch(cfg.GOOGLE_SHEETS_WEBHOOK_URL, {
+              method: "POST",
+              mode: "no-cors",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(lead)
+            })
+          : Promise.reject("sheets-webhook-not-configured")
       ]);
 
-      var anyOk = results.some(function(r){ return r.status === "fulfilled" && r.value && r.value.ok; });
+      var anyOk = results.some(function(r){
+        return r.status === "fulfilled" && (r.value === undefined || (r.value && (r.value.ok || r.value.type === "opaque")));
+      });
       if (anyOk) {
         if (status) { status.textContent = "Sent. I'll reply within a day."; status.className = "cm-status is-ok"; }
         form.reset();

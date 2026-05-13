@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connect with Riket B. Patel</title>
+<meta name="description" content="Request a conversation — office hours and direct calendar booking." />
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-383FDKRG70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-383FDKRG70', { send_page_view: true });
+</script>
+<link rel="stylesheet" href="../style.css" />
+<style>
+  body { background: var(--paper); }
+  .connect-wrap {
+    max-width: 880px;
+    margin: 40px auto;
+    padding: 0 24px;
+  }
+  .connect-head h1 {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4.4vw, 42px);
+    margin: 0 0 10px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .connect-head p.lede {
+    color: var(--ink-soft);
+    font-size: 17px;
+    max-width: 60ch;
+    margin: 0 0 28px;
+  }
+  .connect-section {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+  }
+  .connect-section h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin: 0 0 6px;
+    color: var(--ink);
+  }
+  .connect-section p.s-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 18px;
+  }
+
+  /* Form */
+  .c-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .c-form input,
+  .c-form textarea {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper);
+  }
+  .c-form input:focus, .c-form textarea:focus {
+    outline: none;
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 3px rgba(201, 111, 50, 0.15);
+  }
+  .c-form textarea { resize: vertical; min-height: 96px; }
+  .c-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .c-honeypot {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px; height: 1px;
+    opacity: 0;
+  }
+  .c-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+  .c-quiet { font-size: 13px; color: var(--muted); }
+  .c-status {
+    margin: 14px 0 0;
+    min-height: 22px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .c-status.is-ok { color: var(--forest); font-weight: 600; }
+  .c-status.is-error { color: #c0392b; font-weight: 600; }
+  .c-success {
+    display: none;
+    margin-top: 18px;
+    padding: 16px 20px;
+    border: 1px solid var(--forest);
+    border-radius: var(--radius);
+    background: #ecf3ef;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .c-success.is-on { display: block; }
+  .c-success strong { color: var(--forest); }
+
+  /* Office hours */
+  .oh-grid {
+    display: grid;
+    gap: 14px;
+  }
+  .oh-week {
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+  .oh-week:first-child { border-top: none; padding-top: 0; }
+  .oh-week-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--saffron);
+    margin-bottom: 8px;
+  }
+  .oh-slots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .oh-slot {
+    display: inline-block;
+    padding: 10px 14px;
+    background: var(--paper-alt);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 14px;
+    color: var(--ink);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .oh-slot:hover {
+    background: var(--forest);
+    color: var(--paper);
+    border-color: var(--forest);
+    transform: translateY(-1px);
+  }
+  .oh-slot .oh-day { font-weight: 600; }
+  .oh-slot .oh-time { color: var(--muted); font-size: 13px; margin-left: 6px; }
+  .oh-slot:hover .oh-time { color: rgba(250,250,247,0.85); }
+  .oh-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 16px;
+    font-style: italic;
+  }
+
+  /* Calendar embed */
+  .cal-embed {
+    width: 100%;
+    height: 740px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--paper-alt);
+  }
+  .cal-placeholder {
+    padding: 36px 28px;
+    text-align: center;
+    color: var(--ink-soft);
+    background: var(--gold-light);
+    border: 1px dashed var(--gold);
+    border-radius: var(--radius);
+  }
+  .cal-placeholder strong { color: var(--ink); display: block; margin-bottom: 6px; font-size: 16px; }
+  .cal-placeholder code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--saffron);
+  }
+
+  /* Sidekick links */
+  .sidekick-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .sidekick-row .btn { font-size: 14px; padding: 10px 18px; }
+
+  .back-link {
+    display: inline-block;
+    margin: 24px auto 12px;
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .back-link a { color: var(--muted); }
+
+  @media (max-width: 600px) {
+    .c-row-2 { grid-template-columns: 1fr; }
+    .connect-section { padding: 22px 20px; }
+    .cal-embed { height: 620px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="connect-wrap">
+
+  <header class="connect-head">
+    <h1>Request to connect</h1>
+    <p class="lede">A few words about who you are. I read every note that comes in, and I'll reply from <code>hey@riketpatel.com</code> — usually within a day. If you'd rather just grab a slot, the office hours and calendar below work the same way.</p>
+  </header>
+
+  <!-- ─── FORM ─── -->
+  <section class="connect-section">
+    <h2>Send a note</h2>
+    <p class="s-sub">Stored in my CRM, emailed to me, and added to a private Google Sheet.</p>
+
+    <form id="connect-form" class="c-form">
+      <input type="checkbox" name="botcheck" class="c-honeypot" tabindex="-1" autocomplete="off" />
+      <div class="c-row-2">
+        <label>Your name *<input type="text" name="name" required autocomplete="name" /></label>
+        <label>Email *<input type="email" name="email" required autocomplete="email" /></label>
+      </div>
+      <div class="c-row-2">
+        <label>Phone (optional)<input type="tel" name="phone" autocomplete="tel" /></label>
+        <label>Company (optional)<input type="text" name="company" autocomplete="organization" /></label>
+      </div>
+      <label>Referred by (optional)<input type="text" name="referred_by" placeholder="Name of the person or place that pointed you here" /></label>
+      <label>How can I help? *<textarea name="message" rows="4" required placeholder="A few sentences is plenty"></textarea></label>
+      <div class="c-actions">
+        <button type="submit" class="btn btn-primary">Send</button>
+        <span class="c-quiet">No newsletter. No marketing list.</span>
+      </div>
+      <p class="c-status" id="c-status" aria-live="polite"></p>
+    </form>
+
+    <div class="c-success" id="c-success">
+      <strong>Got it.</strong> I'll reply within a day. If you also want a calendar slot, the office hours and live calendar below let you book directly.
+    </div>
+  </section>
+
+  <!-- ─── OFFICE HOURS ─── -->
+  <section class="connect-section">
+    <h2>Office hours, next 7 weeks</h2>
+    <p class="s-sub">Walk-in conversation slots (no agenda needed). All times Eastern. Click a slot to start a booking — the calendar adjusts to your time zone.</p>
+
+    <div class="oh-grid" id="oh-grid">
+      <!-- Office hour blocks rendered by JS so dates are always correct on load -->
+    </div>
+
+    <p class="oh-note">If none of these times work, the full calendar below has more availability.</p>
+  </section>
+
+  <!-- ─── CALENDAR EMBED ─── -->
+  <section class="connect-section">
+    <h2>Open calendar</h2>
+    <p class="s-sub">Live availability from my Google Workspace calendar. Pick any green slot and you're booked.</p>
+
+    <div id="cal-mount">
+      <!-- Iframe injected by JS when GOOGLE_CALENDAR_APPT_URL is set in config.js -->
+    </div>
+  </section>
+
+  <!-- ─── SIDEKICK LINKS ─── -->
+  <section class="connect-section">
+    <h2>Other ways to reach me</h2>
+    <div class="sidekick-row">
+      <a class="btn btn-ghost" href="mailto:hey@riketpatel.com">hey@riketpatel.com</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/riketpatel" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href="resume.html">Download résumé</a>
+    </div>
+  </section>
+
+  <p class="back-link"><a href="../">← Back to riketpatel.com</a></p>
+</div>
+
+<script src="../config.js"></script>
+<script>
+(function(){
+  // ─── Render 7 weeks of office hours ─────────────────────
+  // Two slots per week: Tuesday 5-6pm ET + Thursday 12-1pm ET.
+  // Times rendered relative to user's clock with timeZone: 'America/New_York'.
+  function renderOfficeHours(){
+    var mount = document.getElementById('oh-grid');
+    if (!mount) return;
+
+    // Find the Monday of next week
+    var today = new Date();
+    var dow = today.getDay(); // 0 = Sun
+    var daysUntilNextMon = ((1 - dow + 7) % 7) || 7;
+    var nextMonday = new Date(today.getFullYear(), today.getMonth(), today.getDate() + daysUntilNextMon);
+
+    var weekdayFmt = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'America/New_York' });
+    var rangeFmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'America/New_York' });
+
+    var html = '';
+    for (var w = 0; w < 7; w++) {
+      var weekStart = new Date(nextMonday); weekStart.setDate(nextMonday.getDate() + w * 7);
+      var weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 6);
+      var label = 'Week of ' + rangeFmt.format(weekStart);
+
+      // Slot 1: Tuesday 17:00 ET
+      var tue = new Date(weekStart); tue.setDate(weekStart.getDate() + 1);
+      // Slot 2: Thursday 12:00 ET
+      var thu = new Date(weekStart); thu.setDate(weekStart.getDate() + 3);
+
+      var tueLabel = weekdayFmt.format(tue);
+      var thuLabel = weekdayFmt.format(thu);
+
+      var bookBase = (window.RP_CONFIG && window.RP_CONFIG.GOOGLE_CALENDAR_APPT_URL) || '#open-calendar';
+
+      html += '<div class="oh-week">' +
+              '<span class="oh-week-label">' + label + '</span>' +
+              '<div class="oh-slots">' +
+                '<a class="oh-slot" href="' + bookBase + '" target="_blank" rel="noopener" data-slot="' + tueLabel + ' 5:00 PM ET">' +
+                  '<span class="oh-day">' + tueLabel + '</span><span class="oh-time">5:00–6:00 PM ET</span>' +
+                '</a>' +
+                '<a class="oh-slot" href="' + bookBase + '" target="_blank" rel="noopener" data-slot="' + thuLabel + ' 12:00 PM ET">' +
+                  '<span class="oh-day">' + thuLabel + '</span><span class="oh-time">12:00–1:00 PM ET</span>' +
+                '</a>' +
+              '</div>' +
+            '</div>';
+    }
+    mount.innerHTML = html;
+
+    // Track slot clicks
+    mount.addEventListener('click', function(e){
+      var slot = e.target.closest('.oh-slot');
+      if (slot && window.gtag) {
+        gtag('event', 'office_hour_click', { domain: 'riketpatel.com', slot: slot.getAttribute('data-slot') });
+      }
+    });
+  }
+
+  // ─── Render calendar embed ───────────────────────────────
+  function renderCalendar(){
+    var mount = document.getElementById('cal-mount');
+    if (!mount) return;
+    var url = window.RP_CONFIG && window.RP_CONFIG.GOOGLE_CALENDAR_APPT_URL;
+    if (url && url.indexOf('REPLACE_WITH') !== 0) {
+      mount.innerHTML = '<iframe class="cal-embed" src="' + url + '" frameborder="0" loading="lazy" title="Book a time with Riket"></iframe>';
+    } else {
+      mount.innerHTML =
+        '<div class="cal-placeholder">' +
+          '<strong>Calendar not connected yet.</strong>' +
+          'Paste the Google Calendar Appointment Schedule URL into <code>config.js</code> as <code>GOOGLE_CALENDAR_APPT_URL</code> and reload.<br/>' +
+          '<a class="link" href="mailto:hey@riketpatel.com" style="margin-top:14px;display:inline-block;">In the meantime, email me directly →</a>' +
+        '</div>';
+    }
+  }
+
+  // ─── Form submit ─────────────────────────────────────────
+  function wireForm(){
+    var form = document.getElementById('connect-form');
+    if (!form) return;
+    var status = document.getElementById('c-status');
+    var success = document.getElementById('c-success');
+
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      if (form.botcheck && form.botcheck.checked) return;
+      status.textContent = 'Sending…';
+      status.className = 'c-status';
+
+      var fd = new FormData(form);
+      var cfg = window.RP_CONFIG || {};
+      var lead = {
+        name: fd.get('name'),
+        email: fd.get('email'),
+        phone: fd.get('phone') || null,
+        company: fd.get('company') || null,
+        referred_by: fd.get('referred_by') || null,
+        message: fd.get('message') || null,
+        source: 'connect_request',
+        domain: 'riketpatel.com',
+        user_agent: navigator.userAgent,
+        referrer: document.referrer || null,
+        metadata: { page: 'connect' }
+      };
+
+      // Fire three sinks in parallel — Supabase, Web3Forms (email), Google Sheets (Apps Script web app)
+      var results = await Promise.allSettled([
+        cfg.SUPABASE_URL ? fetch(cfg.SUPABASE_URL + '/rest/v1/leads', {
+          method: 'POST',
+          headers: {
+            'apikey': cfg.SUPABASE_ANON_KEY,
+            'Authorization': 'Bearer ' + cfg.SUPABASE_ANON_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(lead)
+        }) : Promise.reject('supabase-not-configured'),
+
+        (function(){
+          var w = new FormData();
+          w.append('access_key', cfg.WEB3FORMS_KEY_RIKETPATEL || 'REPLACE_WITH_WEB3FORMS_KEY_RIKETPATEL');
+          w.append('subject', 'riketpatel.com — connect request from ' + lead.name);
+          w.append('from_name', 'riketpatel.com / connect');
+          for (var k in lead) { if (lead[k] != null && typeof lead[k] !== 'object') w.append(k, lead[k]); }
+          return fetch('https://api.web3forms.com/submit', { method: 'POST', body: w });
+        })(),
+
+        (cfg.GOOGLE_SHEETS_WEBHOOK_URL && cfg.GOOGLE_SHEETS_WEBHOOK_URL.indexOf('REPLACE_WITH') !== 0)
+          ? fetch(cfg.GOOGLE_SHEETS_WEBHOOK_URL, {
+              method: 'POST',
+              mode: 'no-cors',     // Apps Script web apps don't return CORS headers; we fire-and-forget
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(lead)
+            })
+          : Promise.reject('sheets-webhook-not-configured')
+      ]);
+
+      var anyOk = results.some(function(r){
+        return r.status === 'fulfilled' && (r.value === undefined || (r.value && (r.value.ok || r.value.type === 'opaque')));
+      });
+
+      if (anyOk) {
+        status.textContent = '';
+        success.classList.add('is-on');
+        form.reset();
+        if (window.gtag) gtag('event', 'connect_submit', { domain: 'riketpatel.com' });
+      } else {
+        status.textContent = 'Something broke. Email hey@riketpatel.com directly.';
+        status.className = 'c-status is-error';
+      }
+    });
+  }
+
+  // ─── Init ────────────────────────────────────────────────
+  renderOfficeHours();
+  renderCalendar();
+  wireForm();
+})();
+</script>
+
+</body>
+</html>
