@@ -1,0 +1,70 @@
+name: Refresh recommendations wall
+
+# Runs:
+#   - Nightly at 06:15 UTC (~ 02:15 ET) — picks up anything dropped during the day
+#   - On every push to main that touches assets/recommendations/ or this workflow
+#   - On manual trigger (Actions tab → Run workflow)
+#
+# What it does:
+#   1. Installs Tesseract with Japanese + Chinese (Simplified + Traditional) + English packs.
+#   2. Runs scripts/refresh_recommendations.py, which scans assets/recommendations/
+#      for new images and appends OCR'd entries to data/recommendations.json.
+#   3. If data/recommendations.json changed, commits and pushes it back to main.
+#      GitHub Pages then redeploys automatically.
+#
+# To add a new recommendation: drop the screenshot into assets/recommendations/
+# (web upload, mobile, OM Quantum OS hub, anything) and commit. The wall updates
+# itself on the next push or the next nightly run.
+
+on:
+  schedule:
+    - cron: "15 6 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "assets/recommendations/**"
+      - "scripts/refresh_recommendations.py"
+      - ".github/workflows/refresh-recommendations.yml"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Tesseract + language packs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            tesseract-ocr \
+            tesseract-ocr-jpn \
+            tesseract-ocr-chi-sim \
+            tesseract-ocr-chi-tra \
+            tesseract-ocr-eng
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install pytesseract pillow
+
+      - name: Run refresh script
+        run: python scripts/refresh_recommendations.py
+
+      - name: Commit + push if changed
+        run: |
+          if git diff --quiet data/recommendations.json; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/recommendations.json
+          git commit -m "chore: refresh recommendations wall ($(date -u +%F))"
+          git push

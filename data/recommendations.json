@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "updated_at": "2026-05-12",
+  "leads": [
+    {
+      "id": "wiley-2025-mentor",
+      "quote": "You were exceptional in how you worked with me in every area that we explored. Your follow-up actions were always very helpful in providing multiple resources and learning tools for me to explore. Your execution exceeded what I would have expected from a mentoring relationship. I do not have any further development feedback.",
+      "name": "Robert Wiley",
+      "title": "Director, Oncology National Account · Merck",
+      "context": "Reverse mentoring feedback, Aug 2025"
+    },
+    {
+      "id": "mao-2025-internship",
+      "quote": "You listen carefully and always make me feel heard, while also giving honest and constructive feedback that challenges me to improve. You are very good at digging into conversations to uncover strengths, doubts, and concerns I wasn't even fully aware of myself. I truly don't think I would have completed my internship so successfully without your mentorship.",
+      "name": "Jenny Mao",
+      "title": "Cornell Computer Science Master's intern, mentored at Merck",
+      "context": "Aug 2025"
+    },
+    {
+      "id": "ting-2025-coaching",
+      "quote": "Leading yourself — identifying initiatives that aligned with your values and vision and putting effort in to move these projects forward. Leading others — you described professional experiences to drive teams as scrum-master/team leader. Empathy — you are capable of picking up emotional signals. You reflected upon my questions and ideas thoughtfully.",
+      "name": "Laura Ting",
+      "title": "Executive Coach · Merck",
+      "context": "Coaching review, Aug 2025"
+    }
+  ],
+  "linkedin": [
+    {
+      "id": "robert-wiley",
+      "image": "assets/recommendations/robert-wiley.png",
+      "name": "Robert Wiley",
+      "title": "Director, Oncology National Account, Merck",
+      "direction": "received",
+      "date": "Aug 2025",
+      "summary": "Riket designed a program with cutting-edge cross-team communication. Highly emotional intelligence; very cooperative with colleagues. I would re-hire him.",
+      "language": "ja",
+      "ocr_raw": ""
+    },
+    {
+      "id": "jenny-mao",
+      "image": "assets/recommendations/jenny-mao.png",
+      "name": "Jenny Mao",
+      "title": "Cornell Tech MS · former Merck IMP mentee",
+      "direction": "sent",
+      "date": "Aug 2025",
+      "summary": "Among the most inspiring people I met during my internship — patient, generous with feedback, sees both sides of a problem.",
+      "language": "ja",
+      "ocr_raw": ""
+    },
+    {
+      "id": "jill-mcginn",
+      "image": "assets/recommendations/jill-mcginn.png",
+      "name": "Jill McGinn, MBA",
+      "title": "Corporate Business Development, Strategic Alliances, Oncology",
+      "direction": "received",
+      "date": "Sep 2025",
+      "summary": "Strategic thinker, unbound by convention. Values diversity and inclusion. Driven, goal-oriented, ambitious career builder.",
+      "language": "ja",
+      "ocr_raw": ""
+    },
+    {
+      "id": "laura-dean",
+      "image": "assets/recommendations/laura-dean.png",
+      "name": "Laura Dean",
+      "title": "Physician & Healthcare Leader Empowerment Coach",
+      "direction": "received",
+      "date": "Aug 2025",
+      "summary": "Eager to learn. Open-minded, resilient, and patient. Will thrive in an environment that supports collaborative growth.",
+      "language": "ja",
+      "ocr_raw": ""
+    },
+    {
+      "id": "jezzey-centeno",
+      "image": "assets/recommendations/jezzey-centeno.png",
+      "name": "Jezzey Centeno, MBA",
+      "title": "Life Sciences Insurance / Risk Mgmt Leader",
+      "direction": "received",
+      "date": "Sep 2025",
+      "summary": "Combines deep professional knowledge with a clear sense of purpose. Trustworthy partner — would be an asset to any organization.",
+      "language": "ja",
+      "ocr_raw": ""
+    },
+    {
+      "id": "gibran-morales",
+      "image": "assets/recommendations/gibran-morales.png",
+      "name": "Gibran Morales",
+      "title": "Digital Transformation Leader",
+      "direction": "received",
+      "date": "Sep 2025",
+      "summary": "Coordinated complex projects from requirements through delivery with a strategic, cross-functional approach. Strong leader; would recommend him without reservation.",
+      "language": "ja",
+      "ocr_raw": ""
+    }
+  ],
+  "extras": [
+    {
+      "id": "bhavika-note",
+      "label": "Bhavika's note",
+      "image": "assets/recommendations/bhavika-note.jpg",
+      "caption": "Hand-written note sent on materials",
+      "context": "Personal, undated"
+    },
+    {
+      "id": "mural-board",
+      "label": "Mural board export",
+      "image": "assets/recommendations/mural-board.png",
+      "caption": "Captured from a Merck Mural workspace",
+      "context": "Team brag board"
+    }
+  ],
+  "stats": [
+    { "num": "20+", "label": "peer recognitions documented on Merck INSPIRE" },
+    { "num": "10,000 hrs", "label": "saved annually · Scale IT for Clinical Portfolio" },
+    { "num": "6 → 1", "label": "months reduced to weeks · China NDA translation (ARST)" },
+    { "num": "6 countries", "label": "stakeholders led: US · Japan · China · Germany · Belgium · Switzerland" }
+  ]
+}

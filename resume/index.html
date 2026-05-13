@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Riket B. Patel — Résumé</title>
+<meta name="description" content="Riket B. Patel — Product Manager, operator, broker. Edgewater Park, NJ." />
+<style>
+  :root {
+    --ink: #181413;
+    --ink-soft: #4a4239;
+    --muted: #6d635c;
+    --paper: #fafaf7;
+    --line: rgba(55, 34, 18, 0.18);
+    --saffron: #c96f32;
+    --forest: #1a3a2a;
+    --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .toolbar {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(250, 250, 247, 0.95);
+    backdrop-filter: saturate(160%) blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 10px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px;
+  }
+  .toolbar a { color: var(--saffron); text-decoration: none; font-weight: 600; }
+  .toolbar a:hover { text-decoration: underline; }
+  .toolbar button {
+    background: var(--forest); color: var(--paper);
+    border: none; padding: 8px 18px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: background 0.15s;
+  }
+  .toolbar button:hover { background: #0d1f16; }
+  .resume {
+    max-width: 8.5in;
+    margin: 24px auto;
+    padding: 0.6in;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 24px rgba(34, 22, 10, 0.08);
+  }
+  .header {
+    border-bottom: 2px solid var(--forest);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 16px;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: 32px;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .header .tag {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .contact {
+    text-align: right;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .contact a { color: var(--saffron); text-decoration: none; }
+  .contact a:hover { text-decoration: underline; }
+  h2 {
+    font-family: var(--font-display);
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--forest);
+    margin: 22px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-size: 16px;
+    margin: 0 0 2px;
+    color: var(--ink);
+  }
+  .role-meta {
+    display: flex; justify-content: space-between;
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .role-meta span { font-family: var(--font-mono); letter-spacing: 0.02em; }
+  ul {
+    margin: 0 0 14px 0;
+    padding: 0 0 0 18px;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  ul li { margin-bottom: 4px; }
+  ul li strong { color: var(--ink); font-weight: 600; }
+  .role { margin-bottom: 16px; }
+  .summary { color: var(--ink-soft); font-size: 14px; margin: 0 0 4px; }
+  .twocol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .edu-item { margin-bottom: 10px; }
+  .edu-item h3 { font-size: 14px; }
+  .edu-item .role-meta { margin-bottom: 2px; }
+  .chip-list {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    font-size: 12.5px;
+  }
+  .chip-list span {
+    background: #f5f1e8;
+    color: var(--ink-soft);
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+  .cert-list { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+  .cert-list strong { color: var(--ink); font-weight: 600; }
+
+  @media print {
+    body { background: #fff; font-size: 11pt; }
+    .toolbar { display: none; }
+    .resume {
+      max-width: none;
+      margin: 0;
+      padding: 0.5in;
+      border: none;
+      box-shadow: none;
+    }
+    h2 { margin-top: 16px; }
+    a { color: var(--ink); text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <a href="../">← riketpatel.com</a>
+  <button type="button" onclick="window.print()">Save as PDF / Print</button>
+</div>
+
+<article class="resume">
+
+  <header class="header">
+    <div>
+      <h1>Riket B. Patel</h1>
+      <p class="tag">Product Manager · Operator · Broker — Edgewater Park, NJ</p>
+    </div>
+    <div class="contact">
+      <a href="mailto:hey@riketpatel.com">hey@riketpatel.com</a><br/>
+      <a href="https://riketpatel.com">riketpatel.com</a> · <a href="https://linkedin.com/in/riketpatel">linkedin.com/in/riketpatel</a><br/>
+      Trilingual: English · Hindi · Gujarati
+    </div>
+  </header>
+
+  <section>
+    <h2>Professional summary</h2>
+    <p class="summary">Results-driven Product Manager with 7+ years delivering healthcare-technology products in regulated pharmaceutical environments. Led cross-functional teams across six countries to build clinical-trial analysis tools that saved 10,000+ hours of manual effort annually. Now applying the same discipline to brokerage, e-commerce, and applied AI as Managing Partner of Legacy Bridge Alliance Group — overseeing Metta Legacy Partners (business brokerage) and Metta Realty Partners (NJ real estate, HomeSmart affiliate).</p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+
+    <div class="role">
+      <h3>Managing Partner · Legacy Bridge Alliance Group</h3>
+      <div class="role-meta"><span>Holding company · NJ</span><span>2025 — present</span></div>
+      <ul>
+        <li>Operate <strong>Metta Legacy Partners</strong> (business brokerage) and <strong>Metta Realty Partners</strong> (real estate, HomeSmart affiliate)</li>
+        <li>Multi-store Shopify operator: <strong>KiddieSketch</strong> (kids-art keepsake POD), <strong>KiddieGo</strong> (active outdoor kids' gear)</li>
+        <li>Built <strong>CustomSketch</strong> — private Shopify app with 6-provider AI router, spec validation, and multi-fulfillment routing (Printful · Printify · Gelato)</li>
+        <li>Built <strong>OM Quantum OS</strong> — local AI hub on Ollama + vLLM with a Claude Code bridge over Tailscale</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <h3>Product Manager, CRWEG · Merck &amp; Co., Inc.</h3>
+      <div class="role-meta"><span>Clinical Trial Analysis &amp; Reporting · Upper Gwynedd, PA</span><span>Aug 2018 — Nov 2025</span></div>
+      <ul>
+        <li><strong>Scale IT for Clinical Portfolio</strong> — eliminated <strong>10,000 hours</strong> of manual effort annually across Delta Fusion, CDI Platform, CDDR, and SLS. Delivered ahead of plan; projected to double to 20,000 hours.</li>
+        <li><strong>A&amp;R Submission Translation (ARST)</strong> — cut China NDA translation cycle from <strong>6 months to 1 week</strong>. User research across Japan, China, Germany, Belgium, and the US.</li>
+        <li>Managed 15+ stakeholder groups across the US, Europe, and Asia-Pacific (Biostatistics, Medical Writing, HTA, Research Decision Science)</li>
+        <li>Promoted to <strong>Squad Lead</strong> (2022); Subject Matter Expert for BARDS regulatory compliance across three inspection-readiness systems</li>
+        <li>Two consecutive <strong>OUTPERFORMED</strong> ratings (2020, 2021); 20+ peer recognitions on Merck INSPIRE</li>
+        <li>Represented product line in international strategy sessions: Prague, Brussels, Zurich (cloud modernization, AI/ML integration)</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <h3>Solution Specialist II · NextGen Healthcare</h3>
+      <div class="role-meta"><span>Commercial Operations · Horsham, PA</span><span>Dec 2016 — Apr 2017</span></div>
+      <ul>
+        <li>Delivered Mirth Connect and EHR product consultations to healthcare clients, aligning technical capabilities with implementation requirements and sales targets</li>
+        <li>Authored SOPs compliant with Public Health policy; prepared sales engineering reports and RFPs from JIRA and R&amp;D data</li>
+      </ul>
+    </div>
+
+    <div class="role">
+      <h3>EHR Application Specialist · NextGen Healthcare</h3>
+      <div class="role-meta"><span>Horsham, PA</span><span>May 2014 — Nov 2016</span></div>
+      <ul>
+        <li>Troubleshot EHR/EMR client cases using SQL Server Management Studio, SQL Profiler, and SQL Tracing across HL7- and FHIR-integrated systems</li>
+        <li>Identified root cause across application, database, and integration layers; escalated reproducible defects with full trace artifacts</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="twocol">
+      <div class="edu-item">
+        <h3>Pennsylvania State University</h3>
+        <div class="role-meta"><span>State College, PA</span><span>2017 — 2018</span></div>
+        <p>Master of Professional Studies in Data Analytics (May 2018)<br/>
+        Graduate Certificate in Business Analytics (Aug 2017)</p>
+      </div>
+      <div class="edu-item">
+        <h3>B.S. Business Administration</h3>
+        <div class="role-meta"><span>Management &amp; Marketing</span><span>May 2014</span></div>
+        <p>Concentration in management and marketing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Certifications</h2>
+    <p class="cert-list">
+      <strong>Certified Artificial Intelligence Product Management</strong> (Dec 2024) ·
+      <strong>Certified Agile Leader 1</strong> · Scrum Alliance (Jun 2024) ·
+      <strong>Certified Mental Health First Aider</strong> (May 2024) ·
+      <strong>NJ Real Estate Salesperson</strong>
+    </p>
+  </section>
+
+  <section>
+    <h2>Toolkit</h2>
+    <div class="chip-list">
+      <span>Product strategy &amp; roadmaps</span>
+      <span>Agile · Scrum · SAFe</span>
+      <span>Design Thinking</span>
+      <span>User research</span>
+      <span>Figma · Mural · Miro</span>
+      <span>JIRA · Confluence</span>
+      <span>SQL · Python · SAS · R</span>
+      <span>AWS</span>
+      <span>NLP · ML · Gen AI</span>
+      <span>Prompt engineering</span>
+      <span>Local LLMs (Ollama · vLLM)</span>
+      <span>Supabase</span>
+      <span>Linked Data</span>
+      <span>CDISC (SDTM · ADaM)</span>
+      <span>HL7 · FHIR</span>
+      <span>MedDRA · WHO Drug</span>
+      <span>GxP · ITIL</span>
+      <span>HTA modeling</span>
+      <span>Shopify multi-store</span>
+      <span>Print-on-demand (Printful · Printify · Gelato)</span>
+      <span>Business brokerage</span>
+      <span>CRE underwriting (DSCR · IRR · CAP)</span>
+      <span>Make.com automation</span>
+      <span>TCO &amp; financial modeling</span>
+    </div>
+  </section>
+
+</article>
+
+</body>
+</html>
