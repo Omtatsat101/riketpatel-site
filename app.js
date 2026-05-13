@@ -213,33 +213,61 @@
 
   var form = document.getElementById("contact-form");
   if (form) {
-    form.addEventListener("submit", function (e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
       var status = document.getElementById("cm-status");
-      var key = form.querySelector('[name="access_key"]').value;
-      if (!key || key.indexOf("REPLACE_WITH") === 0) {
-        if (status) {
-          status.textContent = "Form not configured yet — emailing directly works too.";
-          status.className = "cm-status is-error";
-        }
-        return;
-      }
+      var cfg = window.RP_CONFIG || {};
+      if (form.botcheck && form.botcheck.checked) return;
+
       if (status) { status.textContent = "Sending…"; status.className = "cm-status"; }
       var fd = new FormData(form);
-      fetch(form.action, { method: "POST", body: fd })
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          if (data && data.success) {
-            if (status) { status.textContent = "Sent. I'll reply within a day."; status.className = "cm-status is-ok"; }
-            form.reset();
-            setTimeout(closeModal, 1800);
-          } else {
-            if (status) { status.textContent = (data && data.message) || "Something broke — try emailing instead."; status.className = "cm-status is-error"; }
-          }
-        })
-        .catch(function () {
-          if (status) { status.textContent = "Network error — try emailing instead."; status.className = "cm-status is-error"; }
-        });
+      var lead = {
+        name: fd.get("name"),
+        email: fd.get("email"),
+        phone: fd.get("phone") || null,
+        message: fd.get("message") || null,
+        source: "contact_riketpatel",
+        domain: "riketpatel.com",
+        user_agent: navigator.userAgent,
+        referrer: document.referrer || null,
+        metadata: { page: location.pathname }
+      };
+
+      var results = await Promise.allSettled([
+        // 1. Supabase insert
+        cfg.SUPABASE_URL ? fetch(cfg.SUPABASE_URL + "/rest/v1/leads", {
+          method: "POST",
+          headers: {
+            "apikey": cfg.SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + cfg.SUPABASE_ANON_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify(lead)
+        }) : Promise.reject("supabase-not-configured"),
+        // 2. Web3Forms email
+        (function(){
+          var w = new FormData();
+          w.append("access_key", cfg.WEB3FORMS_KEY_RIKETPATEL || "REPLACE_WITH_WEB3FORMS_KEY_RIKETPATEL");
+          w.append("subject", "riketpatel.com — new message from " + lead.name);
+          w.append("from_name", "riketpatel.com");
+          w.append("name", lead.name);
+          w.append("email", lead.email);
+          w.append("phone", lead.phone || "");
+          w.append("message", lead.message || "");
+          return fetch("https://api.web3forms.com/submit", { method: "POST", body: w });
+        })()
+      ]);
+
+      var anyOk = results.some(function(r){ return r.status === "fulfilled" && r.value && r.value.ok; });
+      if (anyOk) {
+        if (status) { status.textContent = "Sent. I'll reply within a day."; status.className = "cm-status is-ok"; }
+        form.reset();
+        if (window.gtag) gtag("event", "contact_submit", { domain: "riketpatel.com" });
+        setTimeout(closeModal, 1800);
+      } else {
+        if (status) { status.textContent = "Something broke. Email hey@riketpatel.com directly."; status.className = "cm-status is-error"; }
+      }
     });
   }
 })();

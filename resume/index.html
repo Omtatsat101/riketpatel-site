@@ -3,283 +3,248 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Riket B. Patel — Résumé</title>
-<meta name="description" content="Riket B. Patel — Product Manager, operator, broker. Edgewater Park, NJ." />
+<title>Request my résumé — Riket B. Patel</title>
+<meta name="description" content="A quick note about who you are, and I'll send you the résumé." />
+<meta name="robots" content="noindex,nofollow" />
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-383FDKRG70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-383FDKRG70', { send_page_view: true });
+</script>
+<link rel="stylesheet" href="../style.css" />
 <style>
-  :root {
-    --ink: #181413;
-    --ink-soft: #4a4239;
-    --muted: #6d635c;
-    --paper: #fafaf7;
-    --line: rgba(55, 34, 18, 0.18);
-    --saffron: #c96f32;
-    --forest: #1a3a2a;
-    --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
-    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--font-body);
-    font-size: 15px;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
-  .toolbar {
-    position: sticky; top: 0; z-index: 10;
-    background: rgba(250, 250, 247, 0.95);
-    backdrop-filter: saturate(160%) blur(8px);
-    border-bottom: 1px solid var(--line);
-    padding: 10px 24px;
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 13px;
-  }
-  .toolbar a { color: var(--saffron); text-decoration: none; font-weight: 600; }
-  .toolbar a:hover { text-decoration: underline; }
-  .toolbar button {
-    background: var(--forest); color: var(--paper);
-    border: none; padding: 8px 18px; border-radius: 999px;
-    font-size: 13px; font-weight: 600; cursor: pointer;
-    transition: background 0.15s;
-  }
-  .toolbar button:hover { background: #0d1f16; }
-  .resume {
-    max-width: 8.5in;
-    margin: 24px auto;
-    padding: 0.6in;
+  body { background: var(--paper); }
+  .gate-wrap {
+    max-width: 640px;
+    margin: 48px auto;
+    padding: 40px 32px;
     background: #fff;
     border: 1px solid var(--line);
-    box-shadow: 0 8px 24px rgba(34, 22, 10, 0.08);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
   }
-  .header {
-    border-bottom: 2px solid var(--forest);
-    padding-bottom: 14px;
-    margin-bottom: 18px;
-    display: flex; justify-content: space-between; align-items: flex-end;
-    gap: 16px;
-  }
-  .header h1 {
+  .gate-wrap h1 {
     font-family: var(--font-display);
-    font-size: 32px;
-    margin: 0 0 4px;
+    font-size: 28px;
+    margin: 0 0 8px;
+    color: var(--ink);
     letter-spacing: -0.01em;
   }
-  .header .tag {
-    font-size: 13px;
-    color: var(--muted);
-    margin: 0;
-  }
-  .contact {
-    text-align: right;
-    font-size: 12.5px;
+  .gate-wrap p.lede {
     color: var(--ink-soft);
-    line-height: 1.6;
-  }
-  .contact a { color: var(--saffron); text-decoration: none; }
-  .contact a:hover { text-decoration: underline; }
-  h2 {
-    font-family: var(--font-display);
-    font-size: 15px;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--forest);
-    margin: 22px 0 10px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--line);
-  }
-  h3 {
-    font-family: var(--font-display);
     font-size: 16px;
-    margin: 0 0 2px;
+    margin: 0 0 24px;
+  }
+  .gate-form label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
     color: var(--ink);
+    margin-bottom: 14px;
   }
-  .role-meta {
-    display: flex; justify-content: space-between;
-    font-size: 12.5px;
-    color: var(--muted);
-    margin-bottom: 6px;
+  .gate-form input,
+  .gate-form textarea,
+  .gate-form select {
+    display: block;
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper);
   }
-  .role-meta span { font-family: var(--font-mono); letter-spacing: 0.02em; }
-  ul {
-    margin: 0 0 14px 0;
-    padding: 0 0 0 18px;
-    color: var(--ink-soft);
-    font-size: 14px;
+  .gate-form input:focus, .gate-form textarea:focus, .gate-form select:focus {
+    outline: none;
+    border-color: var(--saffron);
+    box-shadow: 0 0 0 3px rgba(201, 111, 50, 0.15);
   }
-  ul li { margin-bottom: 4px; }
-  ul li strong { color: var(--ink); font-weight: 600; }
-  .role { margin-bottom: 16px; }
-  .summary { color: var(--ink-soft); font-size: 14px; margin: 0 0 4px; }
-  .twocol {
+  .gate-form textarea { resize: vertical; min-height: 90px; }
+  .gate-row-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 14px;
   }
-  .edu-item { margin-bottom: 10px; }
-  .edu-item h3 { font-size: 14px; }
-  .edu-item .role-meta { margin-bottom: 2px; }
-  .chip-list {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    font-size: 12.5px;
+  .gate-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 8px;
+    flex-wrap: wrap;
   }
-  .chip-list span {
-    background: #f5f1e8;
+  .gate-quiet { font-size: 13px; color: var(--muted); }
+  .gate-status {
+    margin: 14px 0 0;
+    min-height: 22px;
+    font-size: 14px;
     color: var(--ink-soft);
-    padding: 3px 9px;
-    border-radius: 999px;
-    border: 1px solid var(--line);
   }
-  .cert-list { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
-  .cert-list strong { color: var(--ink); font-weight: 600; }
-
-  @media print {
-    body { background: #fff; font-size: 11pt; }
-    .toolbar { display: none; }
-    .resume {
-      max-width: none;
-      margin: 0;
-      padding: 0.5in;
-      border: none;
-      box-shadow: none;
-    }
-    h2 { margin-top: 16px; }
-    a { color: var(--ink); text-decoration: none; }
+  .gate-status.is-ok { color: var(--forest); font-weight: 600; }
+  .gate-status.is-error { color: #c0392b; font-weight: 600; }
+  .gate-honeypot {
+    position: absolute !important;
+    left: -9999px !important;
+    width: 1px; height: 1px;
+    opacity: 0;
+  }
+  .gate-success {
+    display: none;
+    margin-top: 18px;
+    padding: 20px 24px;
+    border: 1px solid var(--forest);
+    border-radius: var(--radius);
+    background: #ecf3ef;
+  }
+  .gate-success.is-on { display: block; }
+  .gate-success h2 {
+    font-family: var(--font-display);
+    font-size: 18px;
+    margin: 0 0 6px;
+    color: var(--forest);
+  }
+  .gate-success p { margin: 0 0 12px; font-size: 14px; color: var(--ink-soft); }
+  .gate-success .btn { display: inline-block; }
+  .back-link {
+    display: inline-block;
+    margin: 24px auto 0;
+    text-align: center;
+    width: 100%;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .back-link a { color: var(--muted); }
+  @media (max-width: 540px) {
+    .gate-row-2 { grid-template-columns: 1fr; }
+    .gate-wrap { padding: 28px 22px; margin: 16px; }
   }
 </style>
 </head>
 <body>
 
-<div class="toolbar">
-  <a href="../">← riketpatel.com</a>
-  <button type="button" onclick="window.print()">Save as PDF / Print</button>
+<div class="gate-wrap">
+  <h1>Request my résumé</h1>
+  <p class="lede">A quick note about who you are, and the résumé opens. I'll see your details — replies, when warranted, come from <code>hey@riketpatel.com</code>.</p>
+
+  <form id="gate-form" class="gate-form">
+    <input type="checkbox" name="botcheck" class="gate-honeypot" tabindex="-1" autocomplete="off" />
+    <div class="gate-row-2">
+      <label>Your name *<input type="text" name="name" required autocomplete="name" /></label>
+      <label>Email *<input type="email" name="email" required autocomplete="email" /></label>
+    </div>
+    <div class="gate-row-2">
+      <label>Phone (optional)<input type="tel" name="phone" autocomplete="tel" placeholder="Helps me reach you faster" /></label>
+      <label>Company (optional)<input type="text" name="company" autocomplete="organization" /></label>
+    </div>
+    <label>Your role / what brings you here *
+      <select name="role" required>
+        <option value="">Choose one</option>
+        <option>Recruiter</option>
+        <option>Hiring manager</option>
+        <option>Real-estate client / prospect</option>
+        <option>Business-brokerage client / prospect</option>
+        <option>Investor / partner</option>
+        <option>Curious / networking</option>
+        <option>Other</option>
+      </select>
+    </label>
+    <label>A few words about why? (optional)<textarea name="message" rows="3" placeholder="Specific role, project, or context — helps me tailor the reply"></textarea></label>
+    <div class="gate-actions">
+      <button type="submit" class="btn btn-primary">Get the résumé</button>
+      <span class="gate-quiet">Your info goes to <code>hey@riketpatel.com</code> and my CRM. No marketing.</span>
+    </div>
+    <p class="gate-status" id="gate-status" aria-live="polite"></p>
+  </form>
+
+  <div class="gate-success" id="gate-success">
+    <h2>Thanks. Here's the résumé.</h2>
+    <p>I got your note. Click below to view the résumé — there's a "Save as PDF" button in the top right of that page.</p>
+    <a class="btn btn-primary" href="view.html" id="gate-go">Open the résumé →</a>
+  </div>
+
+  <p class="back-link"><a href="../">← Back to riketpatel.com</a></p>
 </div>
 
-<article class="resume">
+<script src="../config.js"></script>
+<script>
+(function(){
+  var form = document.getElementById('gate-form');
+  var status = document.getElementById('gate-status');
+  var success = document.getElementById('gate-success');
 
-  <header class="header">
-    <div>
-      <h1>Riket B. Patel</h1>
-      <p class="tag">Product Manager · Operator · Broker — Edgewater Park, NJ</p>
-    </div>
-    <div class="contact">
-      <a href="mailto:hey@riketpatel.com">hey@riketpatel.com</a><br/>
-      <a href="https://riketpatel.com">riketpatel.com</a> · <a href="https://linkedin.com/in/riketpatel">linkedin.com/in/riketpatel</a><br/>
-      Trilingual: English · Hindi · Gujarati
-    </div>
-  </header>
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if (form.botcheck && form.botcheck.checked) return; // honeypot
+    status.textContent = 'Sending…';
+    status.className = 'gate-status';
 
-  <section>
-    <h2>Professional summary</h2>
-    <p class="summary">Results-driven Product Manager with 7+ years delivering healthcare-technology products in regulated pharmaceutical environments. Led cross-functional teams across six countries to build clinical-trial analysis tools that saved 10,000+ hours of manual effort annually. Now applying the same discipline to brokerage, e-commerce, and applied AI as Managing Partner of Legacy Bridge Alliance Group — overseeing Metta Legacy Partners (business brokerage) and Metta Realty Partners (NJ real estate, HomeSmart affiliate).</p>
-  </section>
+    var fd = new FormData(form);
+    var payload = {
+      name: fd.get('name'),
+      email: fd.get('email'),
+      phone: fd.get('phone') || null,
+      company: fd.get('company') || null,
+      role: fd.get('role'),
+      message: fd.get('message') || null,
+      source: 'resume_download',
+      domain: 'riketpatel.com',
+      user_agent: navigator.userAgent,
+      referrer: document.referrer || null,
+      metadata: { page: 'resume/index' }
+    };
 
-  <section>
-    <h2>Experience</h2>
+    var results = await Promise.allSettled([
+      // 1. Supabase insert (lead record)
+      fetch(window.RP_CONFIG.SUPABASE_URL + '/rest/v1/leads', {
+        method: 'POST',
+        headers: {
+          'apikey': window.RP_CONFIG.SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + window.RP_CONFIG.SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      }),
+      // 2. Web3Forms email notification
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: (function(){
+          var w = new FormData();
+          w.append('access_key', window.RP_CONFIG.WEB3FORMS_KEY_RIKETPATEL || 'REPLACE_WITH_WEB3FORMS_KEY_RIKETPATEL');
+          w.append('subject', 'riketpatel.com — résumé requested by ' + payload.name);
+          w.append('from_name', 'riketpatel.com / résumé gate');
+          w.append('name', payload.name);
+          w.append('email', payload.email);
+          w.append('phone', payload.phone || '');
+          w.append('company', payload.company || '');
+          w.append('role', payload.role);
+          w.append('message', payload.message || '');
+          return w;
+        })()
+      })
+    ]);
 
-    <div class="role">
-      <h3>Managing Partner · Legacy Bridge Alliance Group</h3>
-      <div class="role-meta"><span>Holding company · NJ</span><span>2025 — present</span></div>
-      <ul>
-        <li>Operate <strong>Metta Legacy Partners</strong> (business brokerage) and <strong>Metta Realty Partners</strong> (real estate, HomeSmart affiliate)</li>
-        <li>Multi-store Shopify operator: <strong>KiddieSketch</strong> (kids-art keepsake POD), <strong>KiddieGo</strong> (active outdoor kids' gear)</li>
-        <li>Built <strong>CustomSketch</strong> — private Shopify app with 6-provider AI router, spec validation, and multi-fulfillment routing (Printful · Printify · Gelato)</li>
-        <li>Built <strong>OM Quantum OS</strong> — local AI hub on Ollama + vLLM with a Claude Code bridge over Tailscale</li>
-      </ul>
-    </div>
+    // We only require Supabase OR Web3Forms to succeed for the user to get the resume
+    var anyOk = results.some(function(r){ return r.status === 'fulfilled' && r.value && r.value.ok; });
 
-    <div class="role">
-      <h3>Product Manager, CRWEG · Merck &amp; Co., Inc.</h3>
-      <div class="role-meta"><span>Clinical Trial Analysis &amp; Reporting · Upper Gwynedd, PA</span><span>Aug 2018 — Nov 2025</span></div>
-      <ul>
-        <li><strong>Scale IT for Clinical Portfolio</strong> — eliminated <strong>10,000 hours</strong> of manual effort annually across Delta Fusion, CDI Platform, CDDR, and SLS. Delivered ahead of plan; projected to double to 20,000 hours.</li>
-        <li><strong>A&amp;R Submission Translation (ARST)</strong> — cut China NDA translation cycle from <strong>6 months to 1 week</strong>. User research across Japan, China, Germany, Belgium, and the US.</li>
-        <li>Managed 15+ stakeholder groups across the US, Europe, and Asia-Pacific (Biostatistics, Medical Writing, HTA, Research Decision Science)</li>
-        <li>Promoted to <strong>Squad Lead</strong> (2022); Subject Matter Expert for BARDS regulatory compliance across three inspection-readiness systems</li>
-        <li>Two consecutive <strong>OUTPERFORMED</strong> ratings (2020, 2021); 20+ peer recognitions on Merck INSPIRE</li>
-        <li>Represented product line in international strategy sessions: Prague, Brussels, Zurich (cloud modernization, AI/ML integration)</li>
-      </ul>
-    </div>
-
-    <div class="role">
-      <h3>Solution Specialist II · NextGen Healthcare</h3>
-      <div class="role-meta"><span>Commercial Operations · Horsham, PA</span><span>Dec 2016 — Apr 2017</span></div>
-      <ul>
-        <li>Delivered Mirth Connect and EHR product consultations to healthcare clients, aligning technical capabilities with implementation requirements and sales targets</li>
-        <li>Authored SOPs compliant with Public Health policy; prepared sales engineering reports and RFPs from JIRA and R&amp;D data</li>
-      </ul>
-    </div>
-
-    <div class="role">
-      <h3>EHR Application Specialist · NextGen Healthcare</h3>
-      <div class="role-meta"><span>Horsham, PA</span><span>May 2014 — Nov 2016</span></div>
-      <ul>
-        <li>Troubleshot EHR/EMR client cases using SQL Server Management Studio, SQL Profiler, and SQL Tracing across HL7- and FHIR-integrated systems</li>
-        <li>Identified root cause across application, database, and integration layers; escalated reproducible defects with full trace artifacts</li>
-      </ul>
-    </div>
-  </section>
-
-  <section>
-    <h2>Education</h2>
-    <div class="twocol">
-      <div class="edu-item">
-        <h3>Pennsylvania State University</h3>
-        <div class="role-meta"><span>State College, PA</span><span>2017 — 2018</span></div>
-        <p>Master of Professional Studies in Data Analytics (May 2018)<br/>
-        Graduate Certificate in Business Analytics (Aug 2017)</p>
-      </div>
-      <div class="edu-item">
-        <h3>B.S. Business Administration</h3>
-        <div class="role-meta"><span>Management &amp; Marketing</span><span>May 2014</span></div>
-        <p>Concentration in management and marketing.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Certifications</h2>
-    <p class="cert-list">
-      <strong>Certified Artificial Intelligence Product Management</strong> (Dec 2024) ·
-      <strong>Certified Agile Leader 1</strong> · Scrum Alliance (Jun 2024) ·
-      <strong>Certified Mental Health First Aider</strong> (May 2024) ·
-      <strong>NJ Real Estate Salesperson</strong>
-    </p>
-  </section>
-
-  <section>
-    <h2>Toolkit</h2>
-    <div class="chip-list">
-      <span>Product strategy &amp; roadmaps</span>
-      <span>Agile · Scrum · SAFe</span>
-      <span>Design Thinking</span>
-      <span>User research</span>
-      <span>Figma · Mural · Miro</span>
-      <span>JIRA · Confluence</span>
-      <span>SQL · Python · SAS · R</span>
-      <span>AWS</span>
-      <span>NLP · ML · Gen AI</span>
-      <span>Prompt engineering</span>
-      <span>Local LLMs (Ollama · vLLM)</span>
-      <span>Supabase</span>
-      <span>Linked Data</span>
-      <span>CDISC (SDTM · ADaM)</span>
-      <span>HL7 · FHIR</span>
-      <span>MedDRA · WHO Drug</span>
-      <span>GxP · ITIL</span>
-      <span>HTA modeling</span>
-      <span>Shopify multi-store</span>
-      <span>Print-on-demand (Printful · Printify · Gelato)</span>
-      <span>Business brokerage</span>
-      <span>CRE underwriting (DSCR · IRR · CAP)</span>
-      <span>Make.com automation</span>
-      <span>TCO &amp; financial modeling</span>
-    </div>
-  </section>
-
-</article>
+    if (anyOk) {
+      status.textContent = '';
+      success.classList.add('is-on');
+      form.style.display = 'none';
+      if (window.gtag) gtag('event', 'resume_gate_submit', { domain: 'riketpatel.com', role: payload.role });
+      // Auto-redirect after a beat
+      setTimeout(function(){ window.location.href = 'view.html'; }, 1800);
+    } else {
+      status.textContent = 'Something broke. Email hey@riketpatel.com and I will send it directly.';
+      status.className = 'gate-status is-error';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
