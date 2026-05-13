@@ -185,6 +185,48 @@
   }
   loadBrags();
 
+  // ─── Instagram feed render ──────────────────────────────
+  function renderInstagram() {
+    var mount = document.getElementById("ig-mount");
+    if (!mount) return;
+    var cfg = window.RP_CONFIG || {};
+    var handle = cfg.INSTAGRAM_HANDLE || "";
+    var link = document.getElementById("ig-link");
+    if (link && handle) link.href = "https://instagram.com/" + handle;
+    if (link && handle) link.textContent = "@" + handle;
+
+    // Mode 1: LightWidget / iframe embed
+    if (cfg.INSTAGRAM_EMBED_URL && cfg.INSTAGRAM_EMBED_URL.indexOf("REPLACE_WITH") !== 0 && cfg.INSTAGRAM_EMBED_URL.length > 10) {
+      mount.innerHTML = '<iframe class="ig-embed" src="' + cfg.INSTAGRAM_EMBED_URL + '" frameborder="0" scrolling="no" allowtransparency="true" loading="lazy" title="Riket on Instagram"></iframe>';
+      return;
+    }
+
+    // Mode 2: JSON-driven grid
+    fetch("data/instagram.json", { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !Array.isArray(data.posts) || data.posts.length === 0) {
+          mount.innerHTML = '<div class="ig-placeholder">' +
+            '<strong>Instagram feed not connected yet.</strong>' +
+            'Either paste a LightWidget iframe src into <code>config.js</code> as <code>INSTAGRAM_EMBED_URL</code>, or drop posts into <code>data/instagram.json</code>.' +
+            '</div>';
+          return;
+        }
+        var posts = data.posts.slice(0, 9);
+        mount.innerHTML = '<div class="ig-grid">' + posts.map(function (p) {
+          var href = p.url || ("https://instagram.com/" + (data.handle || handle));
+          return '<a class="ig-tile" href="' + href + '" target="_blank" rel="noopener">' +
+            '<img src="' + p.image + '" alt="' + (p.alt || "Instagram post") + '" loading="lazy" />' +
+            (p.caption ? '<span class="ig-caption">' + p.caption + '</span>' : '') +
+            '</a>';
+        }).join("") + '</div>';
+      })
+      .catch(function () {
+        mount.innerHTML = '<div class="ig-placeholder">Couldn\'t load the feed right now.</div>';
+      });
+  }
+  renderInstagram();
+
   // ─── Contact modal ───────────────────────────────────────
   var modal = document.getElementById("contact-modal");
   function openModal() {

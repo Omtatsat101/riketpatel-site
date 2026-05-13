@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "updated_at": "2026-05-13",
+  "handle": "riketpatel",
+  "posts": [
+    {
+      "id": "post-cozy-coupe",
+      "image": "assets/instagram/2026-05-12-cozy-coupe.jpg",
+      "alt": "My son driving his Cozy Coupe",
+      "caption": "The only car he asks to drive twice a day.",
+      "url": "https://instagram.com/"
+    }
+  ]
+}

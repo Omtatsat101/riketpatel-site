@@ -27,5 +27,15 @@ window.RP_CONFIG = {
   GOOGLE_SHEETS_WEBHOOK_URL: "REPLACE_WITH_APPS_SCRIPT_WEBAPP_URL",
 
   /* Google Calendar Appointment Schedule public URL — see GOOGLE-WORKSPACE-SETUP.md */
-  GOOGLE_CALENDAR_APPT_URL: "REPLACE_WITH_GOOGLE_CALENDAR_APPT_URL"
+  GOOGLE_CALENDAR_APPT_URL: "REPLACE_WITH_GOOGLE_CALENDAR_APPT_URL",
+
+  /* Instagram — see INSTAGRAM-SETUP.md.
+   * Pick ONE of three render modes:
+   *   1) "lightwidget"  — paste the LightWidget iframe src into INSTAGRAM_EMBED_URL
+   *   2) "json"         — leave embed empty; data/instagram.json drives the grid
+   *   3) "" (default)   — empty; the grid shows a placeholder until you wire it
+   */
+  INSTAGRAM_HANDLE: "riketpatel",
+  INSTAGRAM_EMBED_URL: "",
+  INSTAGRAM_MODE: "json"
 };
