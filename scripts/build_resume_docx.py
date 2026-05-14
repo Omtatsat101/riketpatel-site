@@ -304,8 +304,8 @@ def build_main_resume():
          ("; user research with stakeholders in Japan, China, Germany, Belgium, US.", False)]
     )
     bullet_with_quote(doc,
-        [("Squad Lead (2022) + 2× OUTPERFORMED", True),
-         (" ratings (2020, 2021) + 20+ peer recognitions on Merck's INSPIRE platform.", False)]
+        [("Squad Lead (2022)", True),
+         (" — owned sprint planning, delivery cadence, and mentorship for the cross-functional product squad. Year objectives shipped on schedule with zero audit findings across 3 inspection-sensitive systems. 20+ peer recognitions on Merck's INSPIRE platform — and an even higher count given to others.", False)]
     )
     bullet_with_quote(doc,
         [("Reverse-mentor feedback", True),
@@ -403,8 +403,8 @@ def build_adp_resume():
          (" across 3 inspection-sensitive systems (audit trail, user access, data integrity) — comparable rigor to ADP's SOC 2 / IRS / state-payroll audit posture.", False)]
     )
     bullet_with_quote(doc,
-        [("Squad Lead (2022) + 2× OUTPERFORMED", True),
-         (" ratings (2020, 2021) + 20+ peer recognitions. Reverse-mentee (Robert Wiley, Director, Merck):", False)],
+        [("Squad Lead (2022)", True),
+         (" — managed sprint cadence and delivery accountability for a cross-functional team. Year objectives shipped on schedule; zero audit findings across 3 inspection-sensitive systems; 20+ peer recognitions. Reverse-mentee (Robert Wiley, Director, Merck):", False)],
         '"exceptional in every area we explored."'
     )
 
@@ -480,8 +480,8 @@ def build_ia_resume():
          (" across 3 systems (audit trail, user access, data integrity) — same documentation rigor a grant report or accession workflow requires.", False)]
     )
     bullet_with_quote(doc,
-        [("Squad Lead (2022) + 2× OUTPERFORMED", True),
-         (" ratings. Mentored Cornell Tech master's intern Jenny Mao through her 2025 Merck summer:", False)],
+        [("Squad Lead (2022)", True),
+         (" — coordinated delivery and mentorship for a cross-functional team. Year objectives shipped on schedule with zero audit findings. Mentored Cornell Tech master's intern Jenny Mao through her 2025 Merck summer:", False)],
         '"I truly don\'t think I would have completed my internship so successfully without your mentorship."'
     )
     bullet_with_quote(doc,
@@ -581,7 +581,7 @@ def build_ia_cover_letter():
 
     subhead("My professional journey")
     body_para([
-        ("At Merck & Co., I led the Scale IT for Clinical Portfolio program — coordinating delivery across four interconnected clinical-data systems (Delta Fusion, CDI, CDDR, SLS) and 15+ stakeholder groups across six countries. The program eliminated about 10,000 hours of annual manual effort, was delivered ahead of plan, and is on track to double to 20,000 hours. I also designed and shipped the A&R Submission Translation platform, which cut the China NDA translation cycle from about six months to about one week — through user research with stakeholders in Japan, China, Germany, Belgium, and the US. I was promoted to Squad Lead in 2022, served as the regulatory subject-matter expert for audit-readiness across three inspection-sensitive systems, and earned OUTPERFORMED ratings in both 2020 and 2021. My summer intern Jenny Mao — a Cornell Tech master's student spending the summer of 2025 on our team — later wrote: ", False, False),
+        ("At Merck & Co., I led the Scale IT for Clinical Portfolio program — coordinating delivery across four interconnected clinical-data systems (Delta Fusion, CDI, CDDR, SLS) and 15+ stakeholder groups across six countries. The program eliminated about 10,000 hours of annual manual effort, was delivered ahead of plan, and is on track to double to 20,000 hours. I also designed and shipped the A&R Submission Translation platform, which cut the China NDA translation cycle from about six months to about one week — through user research with stakeholders in Japan, China, Germany, Belgium, and the US. I was promoted to Squad Lead in 2022, served as the regulatory subject-matter expert for audit-readiness across three inspection-sensitive systems, and consistently shipped year objectives ahead of schedule with zero audit findings. My summer intern Jenny Mao — a Cornell Tech master's student spending the summer of 2025 on our team — later wrote: ", False, False),
         ('"I truly don\'t think I would have completed my internship so successfully without your mentorship."', False, True),
         (" That sentence is the one I'm proudest of from the whole tenure.", False, False),
     ])
@@ -601,6 +601,10 @@ def build_ia_cover_letter():
         (" and ", False, False),
         ("FreeRateFinder", True, False),
         (", free mortgage- and loan-rate references with simple calculators. None of those will make anyone rich. That's the point. I keep building them anyway.", False, False),
+    ])
+
+    body_para([
+        ("Longer term, I want to start a program that connects pharma — the industry where I grew professionally — with the Vedic community I grew up in. Two worlds that don't talk to each other often enough; both have things to learn from the other about discipline, ethics, and what we owe to the people we serve. I am not sure yet whether that lives as a nonprofit, an industry group, or just a recurring conversation, but the instinct behind it is the same one that drew me to the Archive: useful knowledge belongs to more people than currently have access to it.", False, False),
     ])
 
     subhead("Personal motivation and authenticity")
