@@ -195,45 +195,15 @@
   }
   loadBrags();
 
-  // ─── Admin gate (secret-click on the name in the topbar) ─
-  var ADMIN_KEY = "rp_admin_unlocked";
-  function isAdminUnlocked() {
-    try { return sessionStorage.getItem(ADMIN_KEY) === "1"; } catch (e) { return false; }
-  }
-  function setAdminUnlocked(v) {
-    try {
-      if (v) sessionStorage.setItem(ADMIN_KEY, "1");
-      else sessionStorage.removeItem(ADMIN_KEY);
-    } catch (e) {}
-  }
+  // ─── Admin trigger — admin moved to ohm.homes/admin/ ─────
+  // The secret trigger paths below now just redirect to the centralized
+  // admin module hosted at ohm.homes. The actual editor + auth lives there.
   function openAdminOverlay() {
-    var ov = document.getElementById("admin-overlay");
-    if (!ov) return;
-    ov.removeAttribute("hidden");
-    var pwView = document.getElementById("admin-pw-view");
-    var panelView = document.getElementById("admin-panel-view");
-    if (isAdminUnlocked()) {
-      if (pwView) pwView.hidden = true;
-      if (panelView) panelView.hidden = false;
-      hydrateAdminEditLinks();
-    } else {
-      if (pwView) pwView.hidden = false;
-      if (panelView) panelView.hidden = true;
-      setTimeout(function () { var i = document.getElementById("admin-pw-input"); if (i) i.focus(); }, 50);
-    }
+    window.location.href = "https://ohm.homes/admin/";
   }
-  function closeAdminOverlay() {
-    var ov = document.getElementById("admin-overlay");
-    if (ov) ov.setAttribute("hidden", "");
-  }
-  function hydrateAdminEditLinks() {
-    var cfg = window.RP_CONFIG || {};
-    var repo = cfg.GITHUB_REPO || "Omtatsat101/riketpatel-site";
-    document.querySelectorAll("[data-admin-edit]").forEach(function (a) {
-      var path = a.getAttribute("data-admin-edit");
-      a.href = "https://github.com/" + repo + "/edit/main/" + path;
-    });
-  }
+  // Stubs kept so any old references don't throw — they no-op now.
+  function closeAdminOverlay() {}
+  function hydrateAdminEditLinks() {}
 
   // Admin trigger — three reliable paths so this never silently fails:
   //   1) ?admin=1 URL parameter (always works, paste-in-URL fallback)
@@ -288,51 +258,7 @@
   wireAdminTrigger(document.getElementById("hero-photo-img"));
   wireAdminTrigger(document.querySelector(".brand"));
 
-  document.addEventListener("click", function (e) {
-    if (e.target.closest("[data-admin-close]")) {
-      e.preventDefault();
-      closeAdminOverlay();
-    }
-  });
-
-  var adminForm = document.getElementById("admin-pw-form");
-  if (adminForm) {
-    adminForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var cfg = window.RP_CONFIG || {};
-      var expected = cfg.ADMIN_PASSWORD || "Admin137";
-      var input = document.getElementById("admin-pw-input");
-      var status = document.getElementById("admin-status");
-      if ((input.value || "").trim() === expected) {
-        setAdminUnlocked(true);
-        if (status) { status.textContent = "Welcome."; status.className = "admin-status is-ok"; }
-        if (window.gtag) gtag("event", "admin_unlocked");
-        var pwView = document.getElementById("admin-pw-view");
-        var panelView = document.getElementById("admin-panel-view");
-        if (pwView) pwView.hidden = true;
-        if (panelView) panelView.hidden = false;
-        hydrateAdminEditLinks();
-      } else {
-        if (status) { status.textContent = "That's not it."; status.className = "admin-status is-error"; }
-      }
-    });
-  }
-
-  var adminLogout = document.getElementById("admin-logout");
-  if (adminLogout) {
-    adminLogout.addEventListener("click", function () {
-      setAdminUnlocked(false);
-      closeAdminOverlay();
-    });
-  }
-
-  // ESC closes the admin overlay
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      var ov = document.getElementById("admin-overlay");
-      if (ov && !ov.hasAttribute("hidden")) closeAdminOverlay();
-    }
-  });
+  // (Admin overlay removed — admin now lives at ohm.homes/admin/)
 
   // ─── Family tab password gate ───────────────────────────
   // Not real security — anyone can read source. It's a courtesy lock to

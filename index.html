@@ -427,75 +427,7 @@
   </div>
 </footer>
 
-<!-- Admin overlay (hidden by default; opens via secret click on the name) -->
-<div id="admin-overlay" class="admin-overlay" hidden>
-  <div class="admin-card" role="dialog" aria-modal="true" aria-labelledby="admin-title">
-    <button class="admin-close" aria-label="Close" data-admin-close>&times;</button>
-    <div id="admin-pw-view">
-      <h2 id="admin-title">Admin</h2>
-      <p class="admin-sub">Enter the admin password to open the editor.</p>
-      <form id="admin-pw-form" autocomplete="off">
-        <label class="admin-label">Password
-          <input type="password" id="admin-pw-input" name="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required />
-        </label>
-        <div class="admin-actions">
-          <button type="submit" class="btn btn-primary">Unlock</button>
-          <button type="button" class="btn btn-ghost" data-admin-close>Cancel</button>
-        </div>
-        <p class="admin-status" id="admin-status" aria-live="polite"></p>
-      </form>
-    </div>
-
-    <div id="admin-panel-view" hidden>
-      <h2>Edit your site</h2>
-      <p class="admin-sub">Each link opens the file in GitHub's web editor. Edit, scroll down, hit <strong>Commit changes</strong> — Pages redeploys in ~60 seconds.</p>
-
-      <div class="admin-section">
-        <h3>Content (JSON)</h3>
-        <ul class="admin-list">
-          <li><a data-admin-edit="data/recommendations.json" target="_blank" rel="noopener">Recommendations &amp; Wall of brags</a></li>
-          <li><a data-admin-edit="data/instagram.json" target="_blank" rel="noopener">Instagram feed</a></li>
-        </ul>
-      </div>
-
-      <div class="admin-section">
-        <h3>Pages</h3>
-        <ul class="admin-list">
-          <li><a data-admin-edit="index.html" target="_blank" rel="noopener">Home (Professional · Products · Family)</a></li>
-          <li><a data-admin-edit="connect/index.html" target="_blank" rel="noopener">/connect/ — Connect page</a></li>
-          <li><a data-admin-edit="resume/view.html" target="_blank" rel="noopener">/resume/view.html — Main résumé</a></li>
-          <li><a data-admin-edit="resume/adp/index.html" target="_blank" rel="noopener">/resume/adp/ — ADP-targeted résumé</a></li>
-          <li><a data-admin-edit="resume/internet-archive/index.html" target="_blank" rel="noopener">/resume/internet-archive/ — Internet Archive PC résumé</a></li>
-        </ul>
-      </div>
-
-      <div class="admin-section">
-        <h3>Site configuration</h3>
-        <ul class="admin-list">
-          <li><a data-admin-edit="config.js" target="_blank" rel="noopener">config.js — keys, passwords, IG handle</a></li>
-          <li><a data-admin-edit="style.css" target="_blank" rel="noopener">style.css — colors, type, layout</a></li>
-          <li><a data-admin-edit="app.js" target="_blank" rel="noopener">app.js — interactivity</a></li>
-        </ul>
-        <p class="admin-tip">To change the admin password, edit <code>config.js</code> → <code>ADMIN_PASSWORD</code>. To change the Family-tab password, edit <code>ADMIN_FAMILY_PASSWORD</code>.</p>
-      </div>
-
-      <div class="admin-section">
-        <h3>Other repos</h3>
-        <ul class="admin-list">
-          <li><a href="https://github.com/Omtatsat101/mettarealtypartners" target="_blank" rel="noopener">mettarealtypartners.com</a></li>
-          <li><a href="https://github.com/Omtatsat101/mettalegacypartners-site" target="_blank" rel="noopener">mettalegacypartners.com</a></li>
-          <li><a href="https://supabase.com/dashboard/project/doxmbwizpsyqruyrmffs/editor" target="_blank" rel="noopener">Supabase — leads table</a></li>
-          <li><a href="https://analytics.google.com/" target="_blank" rel="noopener">Google Analytics</a></li>
-        </ul>
-      </div>
-
-      <div class="admin-actions">
-        <button type="button" class="btn btn-ghost" id="admin-logout">Log out</button>
-        <button type="button" class="btn btn-ghost" data-admin-close>Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- Admin moved to ohm.homes/admin/. The secret triggers in app.js now redirect there. -->
 
 <script src="config.js"></script>
 <script src="app.js" defer></script>
