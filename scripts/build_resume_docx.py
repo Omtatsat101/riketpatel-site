@@ -292,8 +292,8 @@ def build_main_resume():
 
     bullet_with_quote(doc,
         [("Scale IT for Clinical Portfolio", True),
-         (" — eliminated ~10,000 hours of annual manual effort across Delta Fusion, CDI, CDDR, and SLS; delivered ahead of plan; projected to double to 20,000 hours. Leadership recognition (David Dzamba):", False)],
-        '"helping the company work smarter, not harder, and scale our clinical portfolio in a cost-efficient way."'
+         (" — eliminated ~10,000 hours of annual manual effort across Delta Fusion, CDI, CDDR, and SLS; delivered ahead of plan; projected to double to 20,000 hours. Senior leadership endorsement (Jill McGinn, Director of Corporate Strategy, Merck):", False)],
+        '"Strategic thinker, unbound by convention; values diversity and inclusion; goal-oriented and ambitious."'
     )
     bullet_with_quote(doc,
         [("A&R Submission Translation (ARST)", True),
@@ -381,8 +381,8 @@ def build_adp_resume():
 
     bullet_with_quote(doc,
         [("Scale IT for Clinical Portfolio", True),
-         (" — eliminated ~10,000 hours of annual manual effort across 4 interconnected systems; same operating pattern as automating recurring payroll-prep, time-attestation, and reporting workflows at scale. Leadership recognition (David Dzamba):", False)],
-        '"helping the company work smarter, scale cost-efficiently."'
+         (" — eliminated ~10,000 hours of annual manual effort across 4 interconnected systems; same operating pattern as automating recurring payroll-prep, time-attestation, and reporting workflows at scale. Senior leadership endorsement (Jill McGinn, Director of Corporate Strategy, Merck):", False)],
+        '"Strategic thinker, unbound by convention; values diversity and inclusion; goal-oriented and ambitious."'
     )
     bullet_with_quote(doc,
         [("A&R Submission Translation", True),
@@ -460,8 +460,8 @@ def build_ia_resume():
 
     bullet_with_quote(doc,
         [("Scale IT for Clinical Portfolio", True),
-         (" — coordinated a 4-system program that eliminated ~10,000 hours of annual manual effort; same operating pattern as freeing a small staff to do mission work instead of repetitive prep. Leadership recognition (David Dzamba):", False)],
-        '"helping the company work smarter, scale cost-efficiently."'
+         (" — coordinated a 4-system program that eliminated ~10,000 hours of annual manual effort; same operating pattern as freeing a small staff to do mission work instead of repetitive prep. Senior leadership endorsement (Jill McGinn, Director of Corporate Strategy, Merck):", False)],
+        '"Strategic thinker, unbound by convention; values diversity and inclusion; goal-oriented and ambitious."'
     )
     bullet_with_quote(doc,
         [("A&R Submission Translation", True),
