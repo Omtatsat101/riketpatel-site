@@ -1,5 +1,5 @@
 {
-  "schema": 1,
+  "schema": 2,
   "updated_at": "2026-05-13",
   "leads": [
     {
@@ -7,14 +7,16 @@
       "quote": "You were thorough in helping to talk through the topics we discussed, and you were quick to understand areas where I could benefit from learning new ways of working. Your follow-up actions were always very helpful in providing multiple resources and learning tools for me to explore. I do not have any further development feedback.",
       "name": "Robert Wiley",
       "title": "Director, Oncology National Account, Merck",
-      "context": "Reverse-mentoring feedback, August 2025"
+      "context": "Reverse-mentoring feedback, August 2025",
+      "linkedin_url": ""
     },
     {
       "id": "mao-2025-internship",
       "quote": "You listen carefully and always make me feel heard, while also giving honest and constructive feedback that challenges me to improve. I truly don't think I would have completed my internship so successfully without your mentorship.",
       "name": "Jenny Mao",
       "title": "Cornell Tech master's intern, mentored at Merck",
-      "context": "August 2025"
+      "context": "August 2025",
+      "linkedin_url": ""
     }
   ],
   "linkedin": [
@@ -27,6 +29,7 @@
       "date": "Aug 2025",
       "summary": "Designed a cross-team communication program; thoughtful, collaborative, would re-hire.",
       "language": "ja",
+      "linkedin_url": "",
       "ocr_raw": ""
     },
     {
@@ -38,6 +41,7 @@
       "date": "Aug 2025",
       "summary": "One of the most generous people she met during her internship; patient, honest with feedback.",
       "language": "ja",
+      "linkedin_url": "",
       "ocr_raw": ""
     },
     {
@@ -49,6 +53,7 @@
       "date": "Sep 2025",
       "summary": "Strategic thinker; values diversity and inclusion; ambitious career builder.",
       "language": "ja",
+      "linkedin_url": "",
       "ocr_raw": ""
     },
     {
@@ -60,6 +65,7 @@
       "date": "Aug 2025",
       "summary": "Eager to learn; open-minded, resilient, patient; would thrive in a collaborative environment.",
       "language": "ja",
+      "linkedin_url": "",
       "ocr_raw": ""
     },
     {
@@ -71,6 +77,7 @@
       "date": "Sep 2025",
       "summary": "Combines professional depth with a clear sense of purpose; reliable partner.",
       "language": "ja",
+      "linkedin_url": "",
       "ocr_raw": ""
     },
     {
@@ -82,6 +89,7 @@
       "date": "Sep 2025",
       "summary": "Coordinated complex projects end-to-end with a strategic, cross-functional approach.",
       "language": "ja",
+      "linkedin_url": "",
       "ocr_raw": ""
     }
   ],

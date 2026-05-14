@@ -92,6 +92,14 @@
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
+  function liLink(person) {
+    if (person.linkedin_url && person.linkedin_url.length > 8) {
+      return '<a class="brag-li-link" href="' + escapeHtml(person.linkedin_url) + '" target="_blank" rel="noopener">View on LinkedIn →</a>';
+    }
+    var q = encodeURIComponent(person.name || "");
+    return '<a class="brag-li-link brag-li-search" href="https://www.linkedin.com/search/results/people/?keywords=' + q + '" target="_blank" rel="noopener">Find on LinkedIn →</a>';
+  }
+
   function renderLeads(target, leads) {
     target.innerHTML = leads.map(function (l) {
       return (
@@ -99,6 +107,7 @@
           '<blockquote>&ldquo;' + escapeHtml(l.quote) + '&rdquo;</blockquote>' +
           '<figcaption><strong>' + escapeHtml(l.name) + '</strong> · ' + escapeHtml(l.title) +
             '<br/><span class="brag-source">' + escapeHtml(l.context || "") + '</span>' +
+            '<br/>' + liLink(l) +
           '</figcaption>' +
         '</figure>'
       );
@@ -117,6 +126,7 @@
             '<strong>' + escapeHtml(r.name) + '</strong>' + (r.title ? ' — ' + escapeHtml(r.title) : '') + '<br/>' +
             '<em>' + dir + (r.date ? ' · ' + escapeHtml(r.date) : '') + '</em><br/>' +
             (r.summary ? '<span>&ldquo;' + escapeHtml(r.summary) + '&rdquo;</span>' : '') +
+            '<br/>' + liLink(r) +
           '</figcaption>' +
         '</figure>'
       );
@@ -185,10 +195,130 @@
   }
   loadBrags();
 
+  // ─── Admin gate (secret-click on the name in the topbar) ─
+  var ADMIN_KEY = "rp_admin_unlocked";
+  function isAdminUnlocked() {
+    try { return sessionStorage.getItem(ADMIN_KEY) === "1"; } catch (e) { return false; }
+  }
+  function setAdminUnlocked(v) {
+    try {
+      if (v) sessionStorage.setItem(ADMIN_KEY, "1");
+      else sessionStorage.removeItem(ADMIN_KEY);
+    } catch (e) {}
+  }
+  function openAdminOverlay() {
+    var ov = document.getElementById("admin-overlay");
+    if (!ov) return;
+    ov.removeAttribute("hidden");
+    var pwView = document.getElementById("admin-pw-view");
+    var panelView = document.getElementById("admin-panel-view");
+    if (isAdminUnlocked()) {
+      if (pwView) pwView.hidden = true;
+      if (panelView) panelView.hidden = false;
+      hydrateAdminEditLinks();
+    } else {
+      if (pwView) pwView.hidden = false;
+      if (panelView) panelView.hidden = true;
+      setTimeout(function () { var i = document.getElementById("admin-pw-input"); if (i) i.focus(); }, 50);
+    }
+  }
+  function closeAdminOverlay() {
+    var ov = document.getElementById("admin-overlay");
+    if (ov) ov.setAttribute("hidden", "");
+  }
+  function hydrateAdminEditLinks() {
+    var cfg = window.RP_CONFIG || {};
+    var repo = cfg.GITHUB_REPO || "Omtatsat101/riketpatel-site";
+    document.querySelectorAll("[data-admin-edit]").forEach(function (a) {
+      var path = a.getAttribute("data-admin-edit");
+      a.href = "https://github.com/" + repo + "/edit/main/" + path;
+    });
+  }
+
+  // Secret-click trigger on .brand-name (the name in the topbar)
+  var brandName = document.querySelector(".brand-name");
+  if (brandName) {
+    brandName.style.cursor = "pointer";
+    brandName.setAttribute("title", "");
+    var clicks = 0;
+    var clickTimer = null;
+    brandName.addEventListener("click", function (e) {
+      // Don't override navigation if user is on a different page
+      e.stopPropagation();
+      clicks++;
+      if (clickTimer) clearTimeout(clickTimer);
+      clickTimer = setTimeout(function () { clicks = 0; }, 1400);
+      if (clicks >= 5) {
+        clicks = 0;
+        clearTimeout(clickTimer);
+        e.preventDefault();
+        openAdminOverlay();
+      }
+    });
+    // Long-press on touch / mouse — alt trigger
+    var pressTimer = null;
+    var triggerLongPress = function () {
+      pressTimer = setTimeout(function () { openAdminOverlay(); }, 2000);
+    };
+    var cancelLongPress = function () { if (pressTimer) clearTimeout(pressTimer); };
+    brandName.addEventListener("mousedown", triggerLongPress);
+    brandName.addEventListener("mouseup", cancelLongPress);
+    brandName.addEventListener("mouseleave", cancelLongPress);
+    brandName.addEventListener("touchstart", triggerLongPress);
+    brandName.addEventListener("touchend", cancelLongPress);
+    brandName.addEventListener("touchcancel", cancelLongPress);
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-admin-close]")) {
+      e.preventDefault();
+      closeAdminOverlay();
+    }
+  });
+
+  var adminForm = document.getElementById("admin-pw-form");
+  if (adminForm) {
+    adminForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var cfg = window.RP_CONFIG || {};
+      var expected = cfg.ADMIN_PASSWORD || "Admin137";
+      var input = document.getElementById("admin-pw-input");
+      var status = document.getElementById("admin-status");
+      if ((input.value || "").trim() === expected) {
+        setAdminUnlocked(true);
+        if (status) { status.textContent = "Welcome."; status.className = "admin-status is-ok"; }
+        if (window.gtag) gtag("event", "admin_unlocked");
+        var pwView = document.getElementById("admin-pw-view");
+        var panelView = document.getElementById("admin-panel-view");
+        if (pwView) pwView.hidden = true;
+        if (panelView) panelView.hidden = false;
+        hydrateAdminEditLinks();
+      } else {
+        if (status) { status.textContent = "That's not it."; status.className = "admin-status is-error"; }
+      }
+    });
+  }
+
+  var adminLogout = document.getElementById("admin-logout");
+  if (adminLogout) {
+    adminLogout.addEventListener("click", function () {
+      setAdminUnlocked(false);
+      closeAdminOverlay();
+    });
+  }
+
+  // ESC closes the admin overlay
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      var ov = document.getElementById("admin-overlay");
+      if (ov && !ov.hasAttribute("hidden")) closeAdminOverlay();
+    }
+  });
+
   // ─── Family tab password gate ───────────────────────────
   // Not real security — anyone can read source. It's a courtesy lock to
   // keep the Family tab off the front-line view for casual / search visitors.
-  var FAMILY_PW = "Family137";
+  var FAMILY_PW = (window.RP_CONFIG && window.RP_CONFIG.ADMIN_FAMILY_PASSWORD) || "Family137";
   var FAMILY_KEY = "rp_family_unlocked";
 
   function isFamilyUnlocked() {

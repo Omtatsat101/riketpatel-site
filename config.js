@@ -37,5 +37,15 @@ window.RP_CONFIG = {
    */
   INSTAGRAM_HANDLE: "riket.patel",
   INSTAGRAM_EMBED_URL: "",
-  INSTAGRAM_MODE: "json"
+  INSTAGRAM_MODE: "json",
+
+  /* Admin gate: click your own name in the top nav 5 times in quick succession
+   * (or hold for 2+ seconds) to open the password prompt.
+   * Change this password whenever you like. Family tab password is separate.
+   */
+  ADMIN_PASSWORD: "Admin137",
+  ADMIN_FAMILY_PASSWORD: "Family137",
+
+  /* GitHub repo identifier used for deep-linking to the web editor. */
+  GITHUB_REPO: "Omtatsat101/riketpatel-site"
 };
