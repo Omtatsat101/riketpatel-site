@@ -235,39 +235,58 @@
     });
   }
 
-  // Secret-click trigger on .brand-name (the name in the topbar)
-  var brandName = document.querySelector(".brand-name");
-  if (brandName) {
-    brandName.style.cursor = "pointer";
-    brandName.setAttribute("title", "");
+  // Admin trigger — three reliable paths so this never silently fails:
+  //   1) ?admin=1 URL parameter (always works, paste-in-URL fallback)
+  //   2) Click the profile photo 3 times in 1.5s
+  //   3) Long-press the profile photo or brand link for 1.5s
+  //   4) Keyboard shortcut: hold Shift and press '?' to open
+  if (location.search.indexOf("admin=1") !== -1) {
+    setTimeout(openAdminOverlay, 100);
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.shiftKey && e.key === "?") {
+      e.preventDefault();
+      openAdminOverlay();
+    }
+  });
+
+  function wireAdminTrigger(el) {
+    if (!el) return;
+    el.style.cursor = el.style.cursor || "pointer";
     var clicks = 0;
     var clickTimer = null;
-    brandName.addEventListener("click", function (e) {
-      // Don't override navigation if user is on a different page
-      e.stopPropagation();
+    var pressTimer = null;
+    var pressFired = false;
+    el.addEventListener("click", function (e) {
       clicks++;
       if (clickTimer) clearTimeout(clickTimer);
-      clickTimer = setTimeout(function () { clicks = 0; }, 1400);
-      if (clicks >= 5) {
+      clickTimer = setTimeout(function () { clicks = 0; }, 1500);
+      if (clicks >= 3) {
         clicks = 0;
-        clearTimeout(clickTimer);
         e.preventDefault();
+        e.stopImmediatePropagation();
         openAdminOverlay();
       }
-    });
-    // Long-press on touch / mouse — alt trigger
-    var pressTimer = null;
-    var triggerLongPress = function () {
-      pressTimer = setTimeout(function () { openAdminOverlay(); }, 2000);
+    }, true);
+    var startPress = function () {
+      pressFired = false;
+      if (pressTimer) clearTimeout(pressTimer);
+      pressTimer = setTimeout(function () { pressFired = true; openAdminOverlay(); }, 1500);
     };
-    var cancelLongPress = function () { if (pressTimer) clearTimeout(pressTimer); };
-    brandName.addEventListener("mousedown", triggerLongPress);
-    brandName.addEventListener("mouseup", cancelLongPress);
-    brandName.addEventListener("mouseleave", cancelLongPress);
-    brandName.addEventListener("touchstart", triggerLongPress);
-    brandName.addEventListener("touchend", cancelLongPress);
-    brandName.addEventListener("touchcancel", cancelLongPress);
+    var endPress = function (e) {
+      if (pressTimer) clearTimeout(pressTimer);
+      if (pressFired && e && e.cancelable) e.preventDefault();
+      pressFired = false;
+    };
+    el.addEventListener("mousedown", startPress);
+    el.addEventListener("mouseup", endPress);
+    el.addEventListener("mouseleave", endPress);
+    el.addEventListener("touchstart", startPress, { passive: true });
+    el.addEventListener("touchend", endPress);
+    el.addEventListener("touchcancel", endPress);
   }
+  wireAdminTrigger(document.getElementById("hero-photo-img"));
+  wireAdminTrigger(document.querySelector(".brand"));
 
   document.addEventListener("click", function (e) {
     if (e.target.closest("[data-admin-close]")) {
@@ -371,6 +390,57 @@
     });
   }
   applyFamilyLockState();
+
+  // ─── Résumé download — gated with the same password as the Family tab ─
+  function openResumeGate() {
+    if (isFamilyUnlocked()) {
+      // Already unlocked — go straight to the résumé
+      window.location.href = "resume/view.html";
+      return;
+    }
+    var ov = document.getElementById("resume-gate-modal");
+    if (ov) {
+      ov.removeAttribute("hidden");
+      setTimeout(function () {
+        var i = document.getElementById("resume-gate-input");
+        if (i) i.focus();
+      }, 50);
+    }
+  }
+  function closeResumeGate() {
+    var ov = document.getElementById("resume-gate-modal");
+    if (ov) ov.setAttribute("hidden", "");
+  }
+
+  var resumeBtn = document.getElementById("resume-download-btn");
+  if (resumeBtn) {
+    resumeBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      openResumeGate();
+    });
+  }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-rg-close]")) {
+      e.preventDefault();
+      closeResumeGate();
+    }
+  });
+  var resumeGateForm = document.getElementById("resume-gate-form");
+  if (resumeGateForm) {
+    resumeGateForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("resume-gate-input");
+      var status = document.getElementById("resume-gate-status");
+      if ((input.value || "").trim() === FAMILY_PW) {
+        setFamilyUnlocked(true); // unlock once unlocks both
+        if (window.gtag) gtag("event", "resume_unlocked", { domain: "riketpatel.com" });
+        if (status) { status.textContent = "Unlocked. Opening résumé…"; status.className = "cm-status is-ok"; }
+        setTimeout(function () { window.location.href = "resume/view.html"; }, 700);
+      } else {
+        if (status) { status.textContent = "That's not it. (Hint: check the small key under my photo.)"; status.className = "cm-status is-error"; }
+      }
+    });
+  }
 
   // ─── Instagram feed render ──────────────────────────────
   function renderInstagram() {

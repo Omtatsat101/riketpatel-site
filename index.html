@@ -11,6 +11,47 @@
 <meta property="og:url" content="https://riketpatel.com" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231a3a2a'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Georgia' fill='%23b8860b' text-anchor='middle' font-weight='700'%3ER%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="style.css" />
+<!-- Schema.org Person markup for SEO + social previews -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Riket B. Patel",
+  "url": "https://riketpatel.com",
+  "image": "https://riketpatel.com/assets/professional-suite.jpg",
+  "jobTitle": "Product Manager · Founder, Legacy Bridge Alliance Group",
+  "description": "Product manager and operator. Seven years at Merck building clinical-data systems. Founder of Metta Realty Partners and Metta Legacy Partners. Based in Edgewater Park, NJ.",
+  "alumniOf": [
+    { "@type": "EducationalOrganization", "name": "Pennsylvania State University" }
+  ],
+  "knowsLanguage": ["English", "Hindi", "Gujarati"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Edgewater Park",
+    "addressRegion": "NJ",
+    "addressCountry": "US"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/riketpatel",
+    "https://www.instagram.com/riket.patel",
+    "https://github.com/Omtatsat101"
+  ],
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Legacy Bridge Alliance Group"
+  }
+}
+</script>
+<!-- Open Graph + Twitter card -->
+<meta property="og:type" content="profile" />
+<meta property="og:title" content="Riket B. Patel" />
+<meta property="og:description" content="Product manager, operator, broker. Real estate, business brokerage, e-commerce, and applied AI in South Jersey / Greater Philadelphia." />
+<meta property="og:image" content="https://riketpatel.com/assets/professional-suite.jpg" />
+<meta property="og:url" content="https://riketpatel.com" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Riket B. Patel" />
+<meta name="twitter:description" content="Product manager, operator, broker." />
+<meta name="twitter:image" content="https://riketpatel.com/assets/professional-suite.jpg" />
 <!-- GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-383FDKRG70"></script>
 <script>
@@ -45,15 +86,20 @@
         <div class="hero-copy reveal">
           <h1>Riket B. Patel</h1>
           <p class="lede">I'm a product manager who spent seven years at Merck before taking on a real-estate license and a few small businesses. I live in Edgewater Park, NJ with my wife and son.</p>
-          <p class="sub">If you're here from a meeting, a postcard, or a referral, the form below works fine.</p>
+          <p class="sub">If you're here from a meeting, a postcard, or a referral, the buttons below cover it.</p>
           <div class="hero-cta">
-            <a class="btn btn-primary" href="connect/">Request to connect</a>
-            <button type="button" class="btn btn-ghost" data-cm-open>Quick message</button>
+            <a class="btn btn-primary" href="connect/">Get in touch</a>
+            <button type="button" class="btn btn-ghost" id="resume-download-btn">Download résumé</button>
             <a class="btn btn-ghost" href="https://www.linkedin.com/in/riketpatel" rel="noopener" target="_blank">LinkedIn</a>
           </div>
         </div>
         <figure class="hero-photo reveal">
-          <img src="assets/professional-suite.jpg" alt="Riket Patel" />
+          <img id="hero-photo-img" src="assets/professional-suite.jpg" alt="Riket Patel" />
+          <figcaption class="hero-photo-key">
+            <span class="hero-photo-key-label">Key</span>
+            <code class="hero-photo-key-pw" id="hero-photo-pw">Family137</code>
+            <span class="hero-photo-key-hint">— unlocks the Family tab &amp; the résumé download</span>
+          </figcaption>
         </figure>
       </div>
     </header>
@@ -115,20 +161,50 @@
       </div>
     </section>
 
-    <section class="subsection" id="brags" data-json="data/recommendations.json">
+    <section class="subsection" id="stories">
       <div class="container">
-        <h2>Recommendations</h2>
-        <p class="section-intro">A small selection of recommendations from people I worked with at Merck. The LinkedIn screenshots are in Japanese because my profile was set to Japanese at the time. A short English summary sits under each.</p>
+        <h2>Some things I'm proud of</h2>
+        <p class="section-intro">Short stories from the work that meant the most. Each one is mine to tell.</p>
 
-        <div class="brag-leads" data-render="leads"></div>
+        <div class="story-grid">
 
-        <h3 class="brag-subhead">LinkedIn</h3>
-        <div class="brag-grid" data-render="linkedin"></div>
+          <article class="story-card reveal">
+            <span class="story-tag">Merck · 2023–25</span>
+            <h3>10,000 hours back to the people doing the work</h3>
+            <p>I led the Scale IT for Clinical Portfolio program across four systems at Merck. The win, in plain numbers: about 10,000 hours of manual effort, every year, gone — work people used to grind through, now automated. We delivered ahead of schedule, and the impact is projected to double as adoption spreads. The leadership recognition was nice; the real reward was knowing biostatisticians I'd never meet got their evenings back.</p>
+          </article>
 
-        <h3 class="brag-subhead">Notes</h3>
-        <div class="brag-extras" data-render="extras"></div>
+          <article class="story-card reveal">
+            <span class="story-tag">Merck · 2022</span>
+            <h3>Six months down to a week — China NDA translation</h3>
+            <p>Regulatory submissions to China's NMPA used to take roughly six months of translation work before they could even be filed. I designed and shipped the A&amp;R Submission Translation platform that cut the cycle to about a week. The research wasn't done from a desk — I interviewed users in Japan, Shanghai, Germany, Belgium, and the US, and the platform was built around what they actually needed. Faster regulatory submissions mean faster access to medicines. That math is hard to argue with.</p>
+          </article>
 
-        <noscript class="brag-fallback">JavaScript is required to render this section. View the source JSON at <code>data/recommendations.json</code>.</noscript>
+          <article class="story-card reveal">
+            <span class="story-tag">Merck · 2022</span>
+            <h3>Promoted to Squad Lead, kept showing up for the team</h3>
+            <p>The 2022 promotion to Squad Lead wasn't the part I'm proudest of. The part I'm proudest of is the reverse-mentoring relationship I built with a senior director outside my reporting chain — he was generous enough to write back: <em>"exceptional in every area we explored. I do not have any further development feedback."</em> Leadership is two-way; if I'm coaching anyone, I'm being coached too.</p>
+          </article>
+
+          <article class="story-card reveal">
+            <span class="story-tag">Merck · summers 2023–25</span>
+            <h3>Mentoring a Cornell Tech intern through her summer</h3>
+            <p>One of the most rewarding parts of the Merck role was mentoring a master's intern through her Cornell Tech summer cohort. Her parting note: <em>"I truly don't think I would have completed my internship so successfully without your mentorship."</em> I'll take a paragraph like that over a performance rating any day. Two OUTPERFORMED ratings in 2020 and 2021 aside, this is the line I think about.</p>
+          </article>
+
+          <article class="story-card reveal">
+            <span class="story-tag">Independent · 2024–now</span>
+            <h3>Built a free children's word game in 17 languages</h3>
+            <p>KiddieWordle is a Wordle variant for younger players. No accounts, no ads in the play area, no monetization. The reason I'm proud of it: it's in seventeen languages, which means a five-year-old in Kerala can play in Malayalam and a five-year-old in Vermont can play in English, and the experience is the same. Universal access to small, useful things — that's a principle I try to live by.</p>
+          </article>
+
+          <article class="story-card reveal">
+            <span class="story-tag">Independent · 2024–now</span>
+            <h3>Turned my son's drawings into a real business</h3>
+            <p>KiddieSketch came out of a simple question: what if the drawings my son brings home from preschool didn't just live on the fridge? It's a Shopify store that turns kids' art into a real keepsake gift — a framed print, a mug, a hoodie, a lightboard, a photo album. Built end-to-end: the upload flow, the AI sketch enhancer, the spec validator, the multi-fulfillment routing. Every order is someone's kid's drawing landing on someone's grandmother's wall.</p>
+          </article>
+
+        </div>
       </div>
     </section>
 
@@ -136,6 +212,34 @@
       <div class="container">
         <h2>Skills</h2>
         <p class="skills-prose">Product management — Agile, design thinking, OKR/KPI tracking, JIRA, Confluence, Figma, Mural. Data and engineering — SQL, Python, SAS, R, AWS. AI — applied LLM work, prompt engineering, local-model deployment on Ollama and vLLM. Healthcare standards — CDISC (SDTM, ADaM), HL7, FHIR, MedDRA, GxP. Operating side — Shopify, print-on-demand fulfillment, basic business brokerage, commercial real-estate underwriting (cap rate, DSCR, IRR), and Make.com automations.</p>
+      </div>
+    </section>
+
+    <section class="subsection" id="hobbies">
+      <div class="container">
+        <h2>Outside of work</h2>
+        <div class="hobby-grid">
+          <article class="hobby-card reveal">
+            <span class="hobby-emoji" aria-hidden="true">✈️</span>
+            <h3>Travel</h3>
+            <p>Some of my best work years happened because of travel — Prague, Brussels, Zurich, and on the personal side India to see family. New places change how I think about old problems.</p>
+          </article>
+          <article class="hobby-card reveal">
+            <span class="hobby-emoji" aria-hidden="true">🦅</span>
+            <h3>Philadelphia sports</h3>
+            <p>Eagles, Phillies, Sixers, Flyers — in that order most days. Philly fans are loud, loyal, and never satisfied. I find that pretty inspiring.</p>
+          </article>
+          <article class="hobby-card reveal">
+            <span class="hobby-emoji" aria-hidden="true">🛠️</span>
+            <h3>Building small things</h3>
+            <p>The free sites I run on the side — KiddieWordle, BestPythonCourse, the rate-finder sites — exist because building useful things and giving them away is the hobby. Some people fish. I ship.</p>
+          </article>
+          <article class="hobby-card reveal">
+            <span class="hobby-emoji" aria-hidden="true">🕉️</span>
+            <h3>Vedic practice</h3>
+            <p>Quiet daily practice — chants, mantras, time at the mandir. It's the part of me that doesn't show on a résumé, but it's the part that keeps me grounded when the to-do list gets long.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -242,25 +346,21 @@
 
   </section>
 
-  <!-- ─────────────── CONTACT MODAL (shared across pages) ─────────────── -->
-  <div id="contact-modal" class="cm-backdrop" hidden>
-    <div class="cm-card" role="dialog" aria-modal="true" aria-labelledby="cm-title">
-      <button class="cm-close" aria-label="Close" data-cm-close>&times;</button>
-      <h2 id="cm-title">Get in touch</h2>
-      <p class="cm-sub">Sends to <code>hey@riketpatel.com</code> — replies usually within a day.</p>
-      <form id="contact-form" class="cm-form" method="POST">
-        <input type="hidden" name="subject" value="riketpatel.com — new message" />
-        <input type="hidden" name="from_name" value="riketpatel.com" />
-        <input type="checkbox" name="botcheck" class="cm-honeypot" tabindex="-1" autocomplete="off" />
-        <label>Your name<input type="text" name="name" required autocomplete="name" /></label>
-        <label>Email<input type="email" name="email" required autocomplete="email" /></label>
-        <label>Phone (optional)<input type="tel" name="phone" autocomplete="tel" /></label>
-        <label>What's on your mind?<textarea name="message" rows="5" required></textarea></label>
+  <!-- ─────────────── RESUME PASSWORD GATE ─────────────── -->
+  <div id="resume-gate-modal" class="cm-backdrop" hidden>
+    <div class="cm-card" role="dialog" aria-modal="true" aria-labelledby="rg-title">
+      <button class="cm-close" aria-label="Close" data-rg-close>&times;</button>
+      <h2 id="rg-title">Quick check</h2>
+      <p class="cm-sub">Enter the access key (it's under my photo).</p>
+      <form id="resume-gate-form" autocomplete="off">
+        <label class="family-gate-label">Access key
+          <input type="password" id="resume-gate-input" name="password" autocomplete="off" required />
+        </label>
         <div class="cm-row">
-          <button type="submit" class="btn btn-primary">Send</button>
-          <button type="button" class="btn btn-ghost" data-cm-close>Cancel</button>
+          <button type="submit" class="btn btn-primary">Unlock résumé</button>
+          <button type="button" class="btn btn-ghost" data-rg-close>Cancel</button>
         </div>
-        <p class="cm-status" id="cm-status" aria-live="polite"></p>
+        <p class="cm-status" id="resume-gate-status" aria-live="polite"></p>
       </form>
     </div>
   </div>
