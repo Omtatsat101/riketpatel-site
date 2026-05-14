@@ -196,12 +196,15 @@
   loadBrags();
 
   // ─── Admin trigger — admin moved to ohm.homes/admin/ ─────
-  // The secret trigger paths below now just redirect to the centralized
-  // admin module hosted at ohm.homes. The actual editor + auth lives there.
+  // ohm.homes/admin is in security-lockdown migration. The static
+  // courtesy-gate version was removed. The real Workers + Cloudflare-Access
+  // version needs `npm run deploy` from projects/ohm-homes/ — see
+  // OHM-HOMES-SECURITY-LOCKDOWN.md.
+  // Until then, this trigger just redirects to ohm.homes/admin/ which
+  // shows a "behind real auth — pending deploy" placeholder.
   function openAdminOverlay() {
     window.location.href = "https://ohm.homes/admin/";
   }
-  // Stubs kept so any old references don't throw — they no-op now.
   function closeAdminOverlay() {}
   function hydrateAdminEditLinks() {}
 
