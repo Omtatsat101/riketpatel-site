@@ -20,7 +20,12 @@ window.RP_CONFIG = {
   /* GA4 — single property for now (the Kiddie Brand property); split later when warranted. */
   GA4_MEASUREMENT_ID: "G-383FDKRG70",
 
-  /* Web3Forms — register at https://web3forms.com with hey@riketpatel.com */
+  /* Web3Forms — register at https://web3forms.com USING
+   *   riketpatel@hariomtatsatinvestments.com  (your master inbox)
+   * as the destination email. That's where every form submission lands.
+   * Visible public email on the site is Riketpatel@gmail.com; form
+   * notifications stay on the master so everything funnels into one inbox.
+   */
   WEB3FORMS_KEY_RIKETPATEL: "REPLACE_WITH_WEB3FORMS_KEY_RIKETPATEL",
 
   /* Google Apps Script web app endpoint — see GOOGLE-WORKSPACE-SETUP.md */

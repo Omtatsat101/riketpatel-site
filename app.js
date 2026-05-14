@@ -479,6 +479,7 @@
           w.append("access_key", cfg.WEB3FORMS_KEY_RIKETPATEL || "REPLACE_WITH_WEB3FORMS_KEY_RIKETPATEL");
           w.append("subject", "riketpatel.com — new message from " + lead.name);
           w.append("from_name", "riketpatel.com");
+          if (lead.email) w.append("replyto", lead.email);
           w.append("name", lead.name);
           w.append("email", lead.email);
           w.append("phone", lead.phone || "");
