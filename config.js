@@ -35,7 +35,7 @@ window.RP_CONFIG = {
    *   2) "json"         — leave embed empty; data/instagram.json drives the grid
    *   3) "" (default)   — empty; the grid shows a placeholder until you wire it
    */
-  INSTAGRAM_HANDLE: "riketpatel",
+  INSTAGRAM_HANDLE: "riket.patel",
   INSTAGRAM_EMBED_URL: "",
   INSTAGRAM_MODE: "json"
 };

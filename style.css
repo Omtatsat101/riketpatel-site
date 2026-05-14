@@ -865,6 +865,97 @@ a:hover { color: var(--saffron-deep); }
 }
 .family-note em { color: var(--saffron); font-style: italic; }
 
+/* ── Family tab gate ────────────────────────────────────── */
+
+.tab-lock {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 10px;
+  vertical-align: 1px;
+  opacity: 0.65;
+}
+
+.family-gate-card {
+  max-width: 480px;
+  margin: 56px auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px 28px;
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+.family-gate-icon {
+  display: inline-block;
+  font-size: 28px;
+  margin-bottom: 6px;
+  filter: grayscale(40%);
+}
+.family-gate-card h2 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  margin: 0 0 8px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.family-gate-sub {
+  font-size: 14.5px;
+  color: var(--muted);
+  margin: 0 0 22px;
+}
+.family-gate-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  margin-bottom: 16px;
+}
+.family-gate-label input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: var(--paper);
+}
+.family-gate-label input:focus {
+  outline: none;
+  border-color: var(--saffron);
+  box-shadow: 0 0 0 3px rgba(201, 111, 50, 0.15);
+}
+.family-gate-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.family-gate-quiet {
+  font-size: 13px;
+  color: var(--muted);
+}
+.family-gate-quiet:hover { color: var(--saffron); }
+.family-gate-status {
+  min-height: 20px;
+  margin: 14px 0 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.family-gate-status.is-ok { color: var(--forest); font-weight: 600; }
+.family-gate-status.is-error { color: #c0392b; font-weight: 600; }
+
+.family-lock-again {
+  font-size: 13px;
+  color: var(--muted);
+}
+.family-lock-again:hover { color: var(--saffron); }
+
 /* ── Instagram feed ─────────────────────────────────────── */
 
 .ig-mount {

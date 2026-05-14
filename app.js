@@ -185,6 +185,63 @@
   }
   loadBrags();
 
+  // ─── Family tab password gate ───────────────────────────
+  // Not real security — anyone can read source. It's a courtesy lock to
+  // keep the Family tab off the front-line view for casual / search visitors.
+  var FAMILY_PW = "Family137";
+  var FAMILY_KEY = "rp_family_unlocked";
+
+  function isFamilyUnlocked() {
+    try { return localStorage.getItem(FAMILY_KEY) === "1"; }
+    catch (e) { return false; }
+  }
+  function setFamilyUnlocked(v) {
+    try {
+      if (v) localStorage.setItem(FAMILY_KEY, "1");
+      else localStorage.removeItem(FAMILY_KEY);
+    } catch (e) {}
+    applyFamilyLockState();
+  }
+  function applyFamilyLockState() {
+    var gate = document.getElementById("family-gate");
+    var content = document.getElementById("family-content");
+    var lockBadge = document.getElementById("family-tab-lock");
+    var unlocked = isFamilyUnlocked();
+    if (gate)    gate.style.display    = unlocked ? "none" : "";
+    if (content) content.hidden        = !unlocked;
+    if (lockBadge) lockBadge.textContent = unlocked ? "" : "🔒";
+  }
+
+  var gateForm = document.getElementById("family-gate-form");
+  if (gateForm) {
+    gateForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("family-gate-input");
+      var status = document.getElementById("family-gate-status");
+      if ((input.value || "").trim() === FAMILY_PW) {
+        if (status) { status.textContent = "Unlocked."; status.className = "family-gate-status is-ok"; }
+        setFamilyUnlocked(true);
+        if (window.gtag) gtag("event", "family_unlocked", { domain: "riketpatel.com" });
+        // Re-fire any deferred renders that target Family content
+        setTimeout(function () {
+          if (typeof renderInstagram === "function") renderInstagram();
+          requestAnimationFrame(observeReveals);
+        }, 50);
+      } else {
+        if (status) { status.textContent = "That's not it."; status.className = "family-gate-status is-error"; }
+      }
+    });
+  }
+  var lockAgain = document.getElementById("family-lock-again");
+  if (lockAgain) {
+    lockAgain.addEventListener("click", function (e) {
+      e.preventDefault();
+      setFamilyUnlocked(false);
+      // Stay on family page so they see the gate immediately
+    });
+  }
+  applyFamilyLockState();
+
   // ─── Instagram feed render ──────────────────────────────
   function renderInstagram() {
     var mount = document.getElementById("ig-mount");

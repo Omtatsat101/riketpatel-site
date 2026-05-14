@@ -30,7 +30,7 @@
     <div class="tabs" role="tablist">
       <button class="tab is-active" role="tab" data-route="professional" aria-selected="true">Professional</button>
       <button class="tab" role="tab" data-route="projects" aria-selected="false">Products &amp; Services</button>
-      <button class="tab" role="tab" data-route="family" aria-selected="false">Family</button>
+      <button class="tab" role="tab" data-route="family" aria-selected="false">Family <span class="tab-lock" aria-hidden="true" id="family-tab-lock">🔒</span></button>
     </div>
   </div>
 </nav>
@@ -178,7 +178,7 @@
     <section class="subsection alt" id="products-section">
       <div class="container">
         <h2 class="ps-heading">Products</h2>
-        <p class="ps-sub">Consumer brands and content sites I own and operate.</p>
+        <p class="ps-sub">Consumer brands I own and operate.</p>
         <div class="grid">
 
           <article class="card reveal">
@@ -197,6 +197,16 @@
             <p>Outdoor and active goods for kids — balance bikes, helmets, scooters, sidewalk gear. Curated, not a megastore. Drop-shipped from vetted suppliers. (Icon: my son, KiddieGo's first customer.)</p>
             <a class="link" href="https://kiddiego.com" target="_blank" rel="noopener">kiddiego.com</a>
           </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="subsection" id="free-section">
+      <div class="container">
+        <h2 class="ps-heading">Free Products &amp; Services</h2>
+        <p class="ps-sub">Free-to-use games and content sites.</p>
+        <div class="grid">
 
           <article class="card reveal">
             <h3>KiddieWordle</h3>
@@ -255,8 +265,33 @@
     </div>
   </div>
 
-  <!-- ─────────────── PAGE 3 · FAMILY ─────────────── -->
+  <!-- ─────────────── PAGE 3 · FAMILY (password gated) ─────────────── -->
   <section class="page" id="family" role="tabpanel" hidden>
+
+    <!-- Gate -->
+    <section class="subsection" id="family-gate">
+      <div class="container narrow">
+        <div class="family-gate-card reveal">
+          <span class="family-gate-icon" aria-hidden="true">🔒</span>
+          <h2>Family — private</h2>
+          <p class="family-gate-sub">This section is gated. If you've been given the password, enter it below.</p>
+          <form id="family-gate-form" autocomplete="off">
+            <label class="family-gate-label">
+              Password
+              <input type="password" id="family-gate-input" name="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required />
+            </label>
+            <div class="family-gate-actions">
+              <button type="submit" class="btn btn-primary">Unlock</button>
+              <a class="family-gate-quiet" href="#professional" data-route="professional">Back to Professional</a>
+            </div>
+            <p class="family-gate-status" id="family-gate-status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Locked content (hidden until unlocked by JS) -->
+    <div id="family-content" hidden>
 
     <header class="hero hero-family">
       <div class="container narrow reveal">
@@ -274,10 +309,13 @@
         <div id="ig-mount" class="ig-mount"><!-- IG feed renders here --></div>
 
         <p class="ig-follow reveal">
-          More on <a id="ig-link" href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>.
+          More on <a id="ig-link" href="https://www.instagram.com/riket.patel" target="_blank" rel="noopener">@riket.patel</a>.
+          &nbsp;·&nbsp; <a href="#" id="family-lock-again" class="family-lock-again">Lock this tab again</a>
         </p>
       </div>
     </section>
+
+    </div><!-- /#family-content -->
 
   </section>
 
