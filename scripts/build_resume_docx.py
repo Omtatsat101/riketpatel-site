@@ -278,14 +278,16 @@ def build_main_resume():
     doc = Document()
     set_margins(doc)
 
-    build_header(doc, "Product Manager  ·  Healthcare Technology  ·  Agile Leader")
+    build_header(doc, "Product Manager  ·  Healthcare Tech  ·  Multi-Venture Operator")
 
     summary_para(doc, [
-        ("Seven years at Merck owning product roadmaps for clinical-data systems across six countries. Removed roughly ", False),
+        ("Spent seven years at Merck building clinical-data systems for teams in six countries — work that eliminated about ", False),
         ("10,000 hours", True),
-        (" of annual manual effort and cut a regulated submission cycle from ", False),
-        ("six months to about one week", True),
-        (". M.S. Data Analytics, Penn State. Certified AI Product Manager and Agile Leader (CAL-1). Currently founder of Legacy Bridge Alliance Group while exploring my next product role.", False),
+        (" of annual manual effort and cut a China NDA cycle from ", False),
+        ("six months to one week", True),
+        (". Left Merck in November 2025 to run ", False),
+        ("Legacy Bridge Alliance Group", True),
+        (" full time: a New Jersey real-estate practice (HomeSmart affiliate), a business-brokerage practice, two consumer Shopify stores, and four free public-good sites. First-generation Indian-American, ADHD-aware operator. M.S. Data Analytics, Penn State; Certified AI Product Manager + Agile Leader (CAL-1). Open to product or program roles where being trusted with the mission matters more than chasing a title.", False),
     ])
 
     section_header(doc, "Selected Wins")
@@ -345,11 +347,11 @@ def build_main_resume():
     job_block(doc,
         "Founder · Legacy Bridge Alliance Group",
         "2025 – present",
-        [("Holding company for ", False),
+        [("Left Merck in November 2025 to take on full-time what was already taking up nights and weekends. Now run ", False),
          ("Metta Realty Partners", True),
          (" (NJ real estate, HomeSmart affiliate) and ", False),
          ("Metta Legacy Partners", True),
-         (" (business brokerage), plus consumer e-commerce (KiddieSketch, KiddieGo). Also operate four free public-good sites: KiddieWordle (17 languages), BestPythonCourse, LoanRatesFinder, FreeRateFinder.", False)]
+         (" (business brokerage that handles the operating company while Metta Realty handles the property when both sell together), two consumer Shopify stores (KiddieSketch, KiddieGo), and four free public-good sites: KiddieWordle (17 languages), BestPythonCourse, LoanRatesFinder, FreeRateFinder. Also setting up a Python and generative-AI teacher position in my family's village in Anand, Gujarat — continuing my father's promise to give back there.", False)]
     )
 
     edu_certs_block(doc)
@@ -374,7 +376,7 @@ def build_adp_resume():
         ("10,000 hours", True),
         (" of annual manual effort and cut a regulated submission cycle from ", False),
         ("six months to about one week", True),
-        (". Familiar with SOX-adjacent compliance, multi-jurisdiction localization, audit-readiness, and AI / ML integration. M.S. Data Analytics, Penn State. Certified AI Product Manager + Agile Leader (CAL-1).", False),
+        (". Familiar with SOX-adjacent compliance, multi-jurisdiction localization, audit-readiness, and AI / ML integration. Left Merck in November 2025 to run a small holding company of real-estate, brokerage, and e-commerce ventures — comfortable being the central operations person who keeps everything on schedule. First-generation Indian-American, ADHD-aware operator. M.S. Data Analytics, Penn State. Certified AI Product Manager + Agile Leader (CAL-1).", False),
     ])
 
     section_header(doc, "Selected Wins (HCM SaaS-Adjacent)")
@@ -429,7 +431,11 @@ def build_adp_resume():
     job_block(doc,
         "Founder · Legacy Bridge Alliance Group",
         "2025 – present",
-        [("Multi-tenant ops experience as small-business owner-operator: Metta Realty Partners (NJ real estate, HomeSmart affiliate), Metta Legacy Partners (business brokerage), consumer e-commerce (KiddieSketch, KiddieGo). Builds empathy with ADP's small-business and mid-market customer base.", False)]
+        [("Left Merck in November 2025. Operate three small-business ventures simultaneously: ", False),
+         ("Metta Realty Partners", True),
+         (" (NJ real estate, HomeSmart affiliate), ", False),
+         ("Metta Legacy Partners", True),
+         (" (business brokerage), and two consumer Shopify stores (KiddieSketch, KiddieGo). Real-world experience with payroll, benefits, multi-state filings, and small-business compliance — the daily reality of ADP's customer base. Also run four free public-good content sites in evenings.", False)]
     )
 
     edu_certs_block(doc)
@@ -453,7 +459,7 @@ def build_ia_resume():
         ("10,000 hours", True),
         (" of annual manual effort and cut a regulated submission cycle from ", False),
         ("six months to about one week", True),
-        (". Outside work I run four free, ad-light public-good sites (KiddieWordle in 17 languages, BestPythonCourse, LoanRatesFinder, FreeRateFinder). Universal access to knowledge isn't a pivot — it's already the lane.", False),
+        (". Left Merck in November 2025 to run small ventures full-time and build free things on the side. Currently setting up a Python and generative-AI teacher position in my family's village in Anand, Gujarat — continuing my father's promise to give back there. First-generation Indian-American, ADHD-aware operator, trilingual. Universal access to knowledge isn't a pivot — it's already the lane.", False),
     ])
 
     section_header(doc, "Selected Wins (Program-Ops Translatable)")
@@ -570,7 +576,7 @@ def build_ia_cover_letter():
         set_run(r, size=12, bold=True, color=ACCENT)
 
     body_para([
-        ("I am writing to express my interest in the Program Coordinator role at the Internet Archive. With 7+ years of cross-functional program ownership at Merck — including running multi-system programs that eliminated roughly 10,000 hours of manual effort a year across teams in the US, Europe, and Asia-Pacific — I am drawn to the Archive's mission of universal access to knowledge. The work I already do on my own time points in that same direction, which is why this role feels less like a career pivot and more like a continuation.", False, False),
+        ("I am writing about the Program Coordinator role at the Internet Archive. I spent seven years at Merck running multi-system product programs that eliminated about 10,000 hours of manual effort a year across teams in the US, Europe, and Asia-Pacific. I left Merck in November 2025 to run a small holding company of ventures full-time while figuring out the next chapter, and the work I already do on my own time — quietly, on nights and weekends — points in exactly the same direction the Archive does. That's why this role feels less like a career pivot and more like a continuation.", False, False),
     ])
 
     subhead("My professional journey")
@@ -582,7 +588,7 @@ def build_ia_cover_letter():
 
     subhead("Why the Internet Archive")
     body_para([
-        ("My family came to America from a small village in Anand, Gujarat, India. My father made a public promise at his farewell event there to always give back to that village. I am continuing that promise now — right now, I am setting up a Python and generative-AI teacher position in our village so the kids growing up where my parents grew up have access to the same tools the rest of the world is learning. That is the same instinct the Internet Archive operates on: useful tools and knowledge should be free, reachable, and built for the people who need them most.", False, False),
+        ("I'm a first-generation Indian-American. My family came to the US from a small village in Anand, Gujarat. At his farewell event there, my father made a public promise to always give back to that village. I am continuing that promise: I am setting up a Python and generative-AI teacher position in our village so the kids growing up where my parents grew up have access to the same tools the rest of the world is learning. That is the same instinct the Internet Archive operates on, just at a different scale — useful tools and knowledge should be free, reachable, and built for the people who need them most.", False, False),
     ])
 
     body_para([
@@ -623,6 +629,11 @@ def build_ia_cover_letter():
     p = add_para(doc, space_after=2, line_spacing=1.3)
     r = p.add_run("Riket B. Patel")
     set_run(r, size=11.5, bold=True, color=INK)
+
+    # Personal sign-off
+    p = add_para(doc, space_before=4, space_after=4, line_spacing=1.3)
+    r = p.add_run("Hari Om Tat Sat.")
+    set_run(r, size=10.5, italic=True, color=MUTED)
 
     for line in [
         "Product Manager · Master's in Data Analytics, Pennsylvania State University",
