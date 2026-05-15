@@ -655,11 +655,229 @@ def build_ia_cover_letter():
 
 # ─── Main ──────────────────────────────────────────────────────────────────
 
+# ─── BUILDER 5: NJ Judiciary BA / IT Analyst 2 résumé ─────────────────────
+
+def build_nj_judiciary_resume():
+    doc = Document()
+    set_margins(doc)
+
+    # Custom header so we can include US Citizen status in the contact line
+    name_header(doc, "Riket B. Patel")
+    contact_line(doc, [
+        "56 Benford Ln, Edgewater Park, NJ 08010",
+        "(267) 408-6295",
+        "Riketpatel@gmail.com",
+        "linkedin.com/in/riketpatel",
+        "U.S. Citizen",
+        "Trilingual: English, Hindi, Gujarati",
+    ])
+    headline_bar(doc, "Business Analyst  ·  Regulated Systems  ·  Public Service-Minded")
+
+    summary_para(doc, [
+        ("Started my career as a Business / Technical Analyst at Merck, was promoted through three levels (Specialist → Squad Lead → Product Manager), and spent seven years translating complex business requirements into delivered software in a heavily regulated environment. Removed ~", False),
+        ("10,000 hours", True),
+        (" of annual manual work for stakeholder teams across six countries and led a regulated submission program that cut processing time from ", False),
+        ("six months to about one week", True),
+        (". M.S. Data Analytics, Penn State. New Jersey resident, U.S. citizen, NJ Real Estate Salesperson — already engaged with state systems. Drawn to this role for what the Judiciary actually does: keep records honest, court processes accessible, and the public served by systems they trust.", False),
+    ])
+
+    section_header(doc, "Selected Wins (BA Translatable)")
+
+    bullet_with_quote(doc,
+        [("Multi-system requirements coordination", True),
+         (" — led the Scale IT for Clinical Portfolio program across 4 interconnected data systems (Delta Fusion, CDI, CDDR, SLS). Worked with 15+ stakeholder groups (legal-equivalent: Biostatistics, Medical Writing, Compliance, Data Stewardship) to translate business needs into delivered software. Eliminated ~10,000 hours of annual manual effort across the user base.", False)]
+    )
+    bullet_with_quote(doc,
+        [("Multi-jurisdiction submission platform", True),
+         (" — designed the A&R Submission Translation platform that cut regulated filing cycle time from ", False),
+         ("6 months to ~1 week", True),
+         (". User research with stakeholders in 5 countries; iterative MVP (R1.0 → R1.1). Pattern directly translates to court-record translation, eFiling localization, and accessibility-mandated multi-language workflows.", False)]
+    )
+    bullet_with_quote(doc,
+        [("Audit-readiness SME", True),
+         (" across 3 inspection-sensitive systems — documented audit trails, user-access controls, and data-integrity workflows. Same documentation discipline a court-system records integrity program requires.", False)]
+    )
+    bullet_with_quote(doc,
+        [("BA progression", True),
+         (" — promoted from entry-level Business / Technical Analyst (2018) to Specialist (2019), to Lead BA (2020-2021), to Squad Lead (2022), to Product Manager (2023). Year objectives consistently shipped on schedule with zero audit findings. 20+ peer recognitions; reverse-mentor feedback (Robert Wiley, Director, Merck):", False)],
+        '"You were exceptional in how you worked with me in every area we explored. I do not have any further development feedback."'
+    )
+    bullet_with_quote(doc,
+        [("Trilingual + community-rooted", True),
+         (" — English, Hindi, Gujarati. Active member of Interfaith Organization, Next Gen Network, and capABILITY Network (disability inclusion) ERGs at Merck. Mentored Cornell Tech master's intern Jenny Mao through her 2025 summer cohort.", False)]
+    )
+
+    section_header(doc, "Experience")
+
+    job_block(doc,
+        "Business / Technical Analyst → Product Manager · Merck & Co., Inc., Upper Gwynedd, PA",
+        "Aug 2018 – Nov 2025",
+        [("Joined as an entry-level Business / Technical Analyst supporting BARDS clinical-data systems. Promoted through Specialist (2019), Lead BA (2020-2021), Squad Lead (2022), and Product Manager (2023). Owned requirements gathering, user research, documentation, sprint-cycle delivery, and audit-readiness across 5 interconnected systems. Subject-matter expert for ", False),
+         ("regulatory audit-readiness", True),
+         (" (audit trails, user access, data integrity) — the most directly transferable skill to court-records integrity work. ", False),
+         ("TCO Data Steward", True),
+         (" using Apptio + Ariba; Change Champion for O365 / Microsoft Teams enterprise adoption.", False)]
+    )
+
+    job_block(doc,
+        "Solution Specialist II → EHR Application Specialist · NextGen Healthcare, Horsham, PA",
+        "May 2014 – Apr 2017",
+        [("Mirth Connect & EHR client implementations. Triaged technical issues across HL7 / FHIR integrations using ", False),
+         ("SQL Server Management Studio, SQL Profiler, and SQL Tracing", True),
+         (". Authored SOPs aligned to Public Health policy. Built domain expertise in ", False),
+         ("HIPAA, ICD-10, Health Information Exchange, and clinical documentation", True),
+         (" — same data-privacy and records-integrity disciplines a court system relies on.", False)]
+    )
+
+    job_block(doc,
+        "Founder · Legacy Bridge Alliance Group (concurrent, evenings/weekends)",
+        "2025 – present",
+        [("Operate a small holding company alongside this job search: a New Jersey real-estate practice (HomeSmart affiliate — engaged with NJ state-licensed transactions weekly), a small-business brokerage practice, two consumer e-commerce stores, and four free public-good content sites. Available for full-time work and committed to staying local in South Jersey / Greater Philadelphia for the foreseeable future.", False)]
+    )
+
+    edu_certs_block(doc)
+
+    footnote(doc, "References available on request. U.S. Citizen. Available to start within 2 weeks. Longer narrative at riketpatel.com.")
+
+    out = OUTPUT_DIR / "Riket B Patel — Résumé (NJ Judiciary, BA + IT Analyst 2).docx"
+    doc.save(out)
+    print(f"✓ {out.name}")
+
+
+# ─── BUILDER 6: NJ Judiciary cover letter ──────────────────────────────────
+
+def build_nj_judiciary_cover_letter():
+    doc = Document()
+    set_margins(doc, top=0.75, bottom=0.75, left=0.85, right=0.85)
+
+    p = add_para(doc, space_after=2, line_spacing=1.0)
+    r = p.add_run("Riket B. Patel")
+    set_run(r, size=19, bold=True, color=INK)
+    rPr = r._r.get_or_add_rPr()
+    spc = OxmlElement("w:spacing")
+    spc.set(qn("w:val"), "24")
+    rPr.append(spc)
+
+    contact_line(doc, [
+        "56 Benford Ln, Edgewater Park, NJ 08010",
+        "(267) 408-6295",
+        "Riketpatel@gmail.com",
+        "U.S. Citizen",
+    ])
+
+    p = add_para(doc, space_before=16, space_after=12, line_spacing=1.3)
+    r = p.add_run("May 14, 2026")
+    set_run(r, size=11, color=INK)
+
+    for line in [
+        "Human Resources",
+        "New Jersey Judiciary",
+        "Re: Business Analyst / Information Technology Analyst 2 (Job ID 5318997)",
+    ]:
+        p = add_para(doc, space_after=0, line_spacing=1.3)
+        r = p.add_run(line)
+        set_run(r, size=11, color=INK)
+
+    p = add_para(doc, space_before=16, space_after=8, line_spacing=1.4)
+    r = p.add_run("Dear Hiring Team,")
+    set_run(r, size=11.5, color=INK)
+
+    def body_para(text_runs):
+        p = add_para(doc, space_after=8, line_spacing=1.5)
+        for text, bold, italic in text_runs:
+            r = p.add_run(text)
+            set_run(r, size=11.5, bold=bold, italic=italic, color=INK)
+
+    def subhead(text):
+        p = add_para(doc, space_before=10, space_after=4, line_spacing=1.4)
+        r = p.add_run(text)
+        set_run(r, size=12, bold=True, color=ACCENT)
+
+    body_para([
+        ("I am applying for the Business Analyst / Information Technology Analyst 2 role. I'd like to address upfront what your screening team will likely see first: my most recent title was Product Manager at Merck, which is more senior than this role. I want to explain why I'm applying anyway, because I'd rather be honest about that than have it raise a flag in your review.", False, False),
+    ])
+
+    subhead("Why I'm applying to this role")
+    body_para([
+        ("I started my career as a Business / Technical Analyst at Merck in 2018, and I spent the first four years of my Merck tenure doing exactly the work this role describes — gathering requirements from non-technical stakeholders, translating them into specifications, coordinating with delivery teams, and maintaining the documentation that compliance audits depend on. I was promoted into product management because I was good at the BA work, not because I wanted to leave it behind. Returning to a Business Analyst seat at the New Jersey Judiciary isn't a step backward for me; it's a choice to do the work that I'm best at in a place where it actually matters — for residents of the state I live in, on systems that affect real people's lives.", False, False),
+    ])
+
+    subhead("What I bring")
+    body_para([
+        ("Seven years inside a Fortune 100 regulated environment. I served as the subject-matter expert for ", False, False),
+        ("regulatory audit-readiness", True, False),
+        (" across three inspection-sensitive systems — audit trails, user access, data integrity. That's a direct skill-set match for the records-integrity and access-control work a court system requires. I led a multi-system program at Merck that eliminated about 10,000 hours of annual manual effort for stakeholder teams across six countries. I designed and shipped a multi-language submission platform that cut a regulated processing cycle from six months to about a week — the same pattern as the multi-jurisdiction, multi-language, accessibility-mandated workflows the Judiciary is modernizing.", False, False),
+    ])
+
+    body_para([
+        ("On tools: I work daily in JIRA, Confluence, Mural, SQL, and the Microsoft 365 stack. I'm trilingual (English, Hindi, Gujarati) — useful in a court system where interpreter coordination and accessibility-mandated translation are real concerns.", False, False),
+    ])
+
+    subhead("Why public service, why now")
+    body_para([
+        ("My family came to the United States from a small village in Anand, Gujarat. We settled in Bristol, Pennsylvania, where my parents built a life from scratch. I now live in Edgewater Park, New Jersey with my wife and son. The community that raised me — teachers, courts, libraries, the people who staff the windows where you renew your driver's license — was the public sector. I want to spend a chapter of my career repaying some of that. The Judiciary's mission — an accessible, accountable court system — is one I'd genuinely be proud to point my son toward someday.", False, False),
+    ])
+
+    body_para([
+        ("A practical note: I hold an active New Jersey Real Estate Salesperson license, which means I already work weekly with state-regulated systems and processes. I'm not new to the rhythms of how New Jersey government does business.", False, False),
+    ])
+
+    subhead("Commitment")
+    body_para([
+        ("A reasonable concern with someone whose résumé shows a senior corporate title is \"flight risk.\" I want to address it plainly: I am not interviewing this role as a stopgap. South Jersey is home; we're not relocating. The small ventures I founded after leaving Merck (a real-estate practice, a brokerage practice, and a few small consumer brands) are explicitly part-time and structured to coexist with a full-time job — I built them on nights and weekends and they were always meant to be that. If hired, I'd plan on staying long enough to ship multiple full project cycles, not 18 months.", False, False),
+    ])
+
+    body_para([
+        ("My résumé, tailored to this role, is at riketpatel.com/resume/nj-judiciary/. My broader background is at riketpatel.com. References are available on request — senior leadership and peer references from Merck, all based in the United States and reachable by phone.", False, False),
+    ])
+
+    body_para([
+        ("Thank you for the work the Judiciary does and for considering this application.", False, False),
+    ])
+
+    p = add_para(doc, space_before=10, space_after=4, line_spacing=1.4)
+    r = p.add_run("Sincerely,")
+    set_run(r, size=11.5, color=INK)
+
+    p = add_para(doc, space_after=2, line_spacing=1.3)
+    r = p.add_run("Riket B. Patel")
+    set_run(r, size=11.5, bold=True, color=INK)
+
+    for line in [
+        "M.P.S. Data Analytics, Pennsylvania State University · Certified Agile Leader (CAL-1), Scrum Alliance",
+        "Certified AI Product Manager · Certified Mental Health First Aider · NJ Real Estate Salesperson",
+    ]:
+        p = add_para(doc, space_after=0, line_spacing=1.3)
+        r = p.add_run(line)
+        set_run(r, size=10.5, color=MUTED)
+
+    out = OUTPUT_DIR / "Riket B Patel — Cover Letter (NJ Judiciary, BA + IT Analyst 2).docx"
+    doc.save(out)
+    print(f"✓ {out.name}")
+
+
 if __name__ == "__main__":
     print(f"Building .docx files into: {OUTPUT_DIR}")
-    build_main_resume()
-    build_adp_resume()
-    build_ia_resume()
-    build_ia_cover_letter()
+    builders = [
+        ("Main résumé", build_main_resume),
+        ("ADP résumé", build_adp_resume),
+        ("Internet Archive résumé", build_ia_resume),
+        ("Internet Archive cover letter", build_ia_cover_letter),
+        ("NJ Judiciary résumé", build_nj_judiciary_resume),
+        ("NJ Judiciary cover letter", build_nj_judiciary_cover_letter),
+    ]
+    skipped = []
+    for label, fn in builders:
+        try:
+            fn()
+        except PermissionError as e:
+            print(f"⚠ SKIPPED {label} — file is open in Word. Close it and re-run to refresh.")
+            skipped.append(label)
+        except Exception as e:
+            print(f"✗ FAILED {label}: {e}")
+            skipped.append(label)
     print()
-    print("Done.")
+    if skipped:
+        print("Done with skips:", ", ".join(skipped))
+    else:
+        print("Done. All files refreshed.")
