@@ -856,6 +856,217 @@ def build_nj_judiciary_cover_letter():
     print(f"✓ {out.name}")
 
 
+# ─── BUILDER 7: Deborah Heart & Lung Center résumé ─────────────────────────
+
+def build_deborah_resume():
+    doc = Document()
+    set_margins(doc)
+
+    name_header(doc, "Riket B. Patel")
+    contact_line(doc, [
+        "56 Benford Ln, Edgewater Park, NJ 08010",
+        "(267) 408-6295",
+        "Riketpatel@gmail.com",
+        "linkedin.com/in/riketpatel",
+        "U.S. Citizen",
+        "Trilingual: English, Hindi, Gujarati",
+    ])
+    headline_bar(doc, "Leadership Development  ·  Mentorship  ·  Healthcare Operations")
+
+    summary_para(doc, [
+        ("Cross-functional leader with seven years inside a Fortune 100 regulated healthcare environment (Merck) doing the work this role asks for — informally. Promoted from Business Analyst to Squad Lead managing sprint cadence and mentorship; served as a ", False),
+        ("Change Champion", True),
+        (" for enterprise O365 / Teams adoption (designed and delivered training across the business); mentored a Cornell Tech master's intern to a successful summer cohort and a Director through a formal reverse-mentoring program. M.S. Data Analytics from Penn State. Certified Agile Leader (Scrum Alliance) and Mental Health First Aider. Local to Browns Mills (~30 min). Looking to professionalize what I've been doing on the side — building leaders, designing programs, and aligning learning with operational priorities — in a healthcare institution whose mission I respect.", False),
+    ])
+
+    section_header(doc, "Selected Wins (Leadership-Development Translatable)")
+
+    bullet_with_quote(doc,
+        [("Enterprise Change Champion", True),
+         (" — designed and delivered training that drove organization-wide O365 and Microsoft Teams adoption at Merck. Technology roadshows, hands-on workshops, manager-level coaching sessions. Same shape as a structured behavior-change learning program.", False)]
+    )
+    bullet_with_quote(doc,
+        [("Formal reverse-mentoring program", True),
+         (" — mentored Robert Wiley, Director of Oncology National Accounts at Merck, through a multi-month structured reverse-mentoring engagement. His written assessment:", False)],
+        '"You were exceptional in how you worked with me in every area we explored. I do not have any further development feedback."'
+    )
+    bullet_with_quote(doc,
+        [("Emerging-leader mentor", True),
+         (" — mentored a Cornell Tech master's student (Jenny Mao) through her 2025 Merck summer cohort. Weekly 1:1s, panel-style mock interviews, resume rewrites, career-decision coaching. Her parting note:", False)],
+        '"I truly don\'t think I would have completed my internship so successfully without your mentorship."'
+    )
+    bullet_with_quote(doc,
+        [("Squad Lead (2022) at Merck", True),
+         (" — managed sprint planning, delivery cadence, and team mentorship for a cross-functional squad. Direct people-leadership experience with managers, contractors, and senior individual contributors across regulated environments. 20+ peer recognitions on Merck's INSPIRE platform — and an even higher count given to others.", False)]
+    )
+    bullet_with_quote(doc,
+        [("ERG leadership", True),
+         (" — active member of Interfaith Organization, Next Gen Network, and capABILITY Network (disability inclusion) at Merck. Mental Health First Aider certified (2024). Workforce diversity and accessibility are domains I have actually shown up in, not just discussed.", False)]
+    )
+
+    section_header(doc, "Experience")
+
+    job_block(doc,
+        "Business Analyst → Squad Lead → Product Manager · Merck & Co., Inc., Upper Gwynedd, PA",
+        "Aug 2018 – Nov 2025",
+        [("Joined as Business / Technical Analyst; promoted through five levels including ", False),
+         ("Squad Lead", True),
+         (" (2022) and Product Manager (2023). Owned cross-functional team mentorship, sprint cadence, and Change-Champion training programs across 6 countries. Subject-matter expert for regulatory audit-readiness across 3 inspection-sensitive systems — equivalent discipline to The Joint Commission and CMS audit-readiness work in a hospital setting. Aligned learning and adoption initiatives with enterprise OKR / KPI frameworks.", False)]
+    )
+
+    job_block(doc,
+        "Solution Specialist II → EHR Application Specialist · NextGen Healthcare, Horsham, PA",
+        "May 2014 – Apr 2017",
+        [("Direct healthcare-industry experience. EHR / Mirth Connect implementations; HL7 / FHIR / SQL Server troubleshooting. Authored SOPs aligned to Public Health policy. Domain knowledge in ", False),
+         ("HIPAA, ICD-10, Health Information Exchange, and clinical documentation", True),
+         (" — foundation for understanding hospital operating context.", False)]
+    )
+
+    job_block(doc,
+        "Founder · Legacy Bridge Alliance Group (concurrent, evenings/weekends)",
+        "2025 – present",
+        [("Small holding company alongside this job search: a local NJ real-estate practice (HomeSmart affiliate), a small-business brokerage practice, two consumer e-commerce stores, and four free public-good content sites (including BestPythonCourse, a free learning guide). Comfortable building free, accessible educational content in my own time — the instinct that draws me to this role.", False)]
+    )
+
+    # Custom edu/certs block — include the SHRM-SCP commitment line
+    section_header(doc, "Education & Certifications")
+    left = [
+        [("Pennsylvania State University", True)],
+        [("M.P.S. Data Analytics — May 2018", False)],
+        [("Graduate Certificate, Business Analytics — Aug 2017", False)],
+        [("B.S. Business Administration (Mgmt. & Marketing) — May 2014", False)],
+    ]
+    right = [
+        [("Certified Agile Leader (CAL-1), Scrum Alliance — Jun 2024", True)],
+        [("Mental Health First Aider — May 2024", True)],
+        [("Certified AI Product Management — Dec 2024", True)],
+        [("AWS Cloud Practitioner Path · NJ Real Estate Salesperson", False)],
+        [("SHRM-SCP — committed to pursuing within Year 1", False)],
+    ]
+    two_column_block(doc, left, right)
+
+    footnote(doc, "References available on request. Local to Burlington County. Available to start within 2 weeks. See cover letter for an honest note about the SHRM-SCP credential.")
+
+    out = OUTPUT_DIR / "Riket B Patel — Résumé (Deborah Heart and Lung, Leadership Development).docx"
+    doc.save(out)
+    print(f"✓ {out.name}")
+
+
+# ─── BUILDER 8: Deborah Heart & Lung cover letter ──────────────────────────
+
+def build_deborah_cover_letter():
+    doc = Document()
+    set_margins(doc, top=0.75, bottom=0.75, left=0.85, right=0.85)
+
+    p = add_para(doc, space_after=2, line_spacing=1.0)
+    r = p.add_run("Riket B. Patel")
+    set_run(r, size=19, bold=True, color=INK)
+    rPr = r._r.get_or_add_rPr()
+    spc = OxmlElement("w:spacing")
+    spc.set(qn("w:val"), "24")
+    rPr.append(spc)
+
+    contact_line(doc, [
+        "56 Benford Ln, Edgewater Park, NJ 08010",
+        "(267) 408-6295",
+        "Riketpatel@gmail.com",
+        "U.S. Citizen",
+    ])
+
+    p = add_para(doc, space_before=16, space_after=12, line_spacing=1.3)
+    r = p.add_run("May 14, 2026")
+    set_run(r, size=11, color=INK)
+
+    for line in [
+        "Talent Acquisition & People Operations",
+        "Deborah Heart and Lung Center",
+        "Browns Mills, New Jersey",
+    ]:
+        p = add_para(doc, space_after=0, line_spacing=1.3)
+        r = p.add_run(line)
+        set_run(r, size=11, color=INK)
+
+    p = add_para(doc, space_before=16, space_after=8, line_spacing=1.4)
+    r = p.add_run("Dear Hiring Team,")
+    set_run(r, size=11.5, color=INK)
+
+    def body_para(text_runs):
+        p = add_para(doc, space_after=8, line_spacing=1.5)
+        for text, bold, italic in text_runs:
+            r = p.add_run(text)
+            set_run(r, size=11.5, bold=bold, italic=italic, color=INK)
+
+    def subhead(text):
+        p = add_para(doc, space_before=10, space_after=4, line_spacing=1.4)
+        r = p.add_run(text)
+        set_run(r, size=12, bold=True, color=ACCENT)
+
+    body_para([
+        ("I'm writing about the Leadership Development role at Deborah Heart and Lung Center. I want to address something important up front, because I'd rather you see it from me than have it raise a flag in screening: I do not currently hold the SHRM-SCP credential listed under \"Required\" in the posting. Everything else in the description — designing leadership programs, management training, succession planning, aligning learning with operational priorities, using engagement data to improve programs — is work I have been doing in adjacent forms for seven years inside a Fortune 100 healthcare environment. I'd like to professionalize that work, with the credential, at Deborah.", False, False),
+    ])
+
+    subhead("What I've actually done that matches this role")
+
+    body_para([
+        ("At Merck I served as the enterprise Change Champion for Microsoft 365 and Teams adoption — designed training, ran roadshows and hands-on workshops, coached managers through the change. That is a structured behavior-change learning program by another name. I served as the regulatory subject-matter expert for audit-readiness across three inspection-sensitive systems — the equivalent rigor of The Joint Commission and CMS audit-readiness work a hospital depends on. I was promoted to Squad Lead in 2022 and owned sprint cadence, delivery accountability, and mentorship for a cross-functional team that included managers and senior individual contributors.", False, False),
+    ])
+
+    body_para([
+        ("On the development side specifically: I participated in Merck's formal reverse-mentoring program with Robert Wiley, Director of Oncology National Accounts. His written assessment of the engagement was ", False, False),
+        ('"You were exceptional in how you worked with me in every area we explored. I do not have any further development feedback."', False, True),
+        (" I mentored a Cornell Tech master's intern named Jenny Mao through her 2025 summer cohort — weekly 1:1s, panel-style mock interviews, resume rewrites, real-time coaching on hard interview questions. Her parting note: ", False, False),
+        ('"I truly don\'t think I would have completed my internship so successfully without your mentorship."', False, True),
+        (" Those are the conversations I am best at. They're the work this role is asking for.", False, False),
+    ])
+
+    subhead("Why Deborah specifically")
+
+    body_para([
+        ("Three reasons, plainly: I live in Edgewater Park, about thirty minutes from Browns Mills, so this is a local commitment, not a remote-arbitrage move. My only prior healthcare-industry job was at NextGen Healthcare in Horsham — I built early-career domain knowledge in HIPAA, ICD-10, and Health Information Exchange standards, so a return to the hospital side of healthcare is a return to context I already understand. And Deborah's tagline — \"healthcare is still about caring\" — matches how I personally think about service. I was raised in the Vedic tradition where work that serves others is treated as a form of practice. My father made a promise at his farewell event from our family's village in Anand, Gujarat to always give back; I am continuing that promise on my own time by setting up a Python and generative-AI teacher position there. Coming to work every day at a place whose mission centers on patient care and team-member experience is a kind of give-back I would be proud to point my son toward someday.", False, False),
+    ])
+
+    subhead("On the SHRM-SCP gap")
+
+    body_para([
+        ("I want to be specific about my commitment, not vague. Based on Merck's recent classification of my role, I believe I meet the SHRM-SCP eligibility requirements through HR-adjacent leadership work. If you hire me, I will sit for the SHRM-SCP exam within the first twelve months of employment. I would rather come into the role honest about pursuing the credential than dress up my background as conventional Human Resources when the most accurate description is \"cross-functional leader with a deep mentorship and change-management track record who is ready to make leadership development the formal job.\" If the credential is a strict gate that has to be in hand before onboarding, I understand and would withdraw the application rather than waste your screening time. If there's room for an internal commitment to earn it, I'd welcome the chance to discuss the role further.", False, False),
+    ])
+
+    subhead("What I bring on day one")
+
+    body_para([
+        ("A Master of Professional Studies in Data Analytics from Penn State — useful for the workforce-analytics piece the posting flags as preferred. Certified Agile Leader (CAL-1) from Scrum Alliance, Certified Mental Health First Aider, and a Certified AI Product Management credential from late 2024. Working knowledge of JIRA, Confluence, Mural, SQL, and the Microsoft 365 stack. Trilingual (English, Hindi, Gujarati). Active employee-resource-group experience at Merck (Interfaith Organization, Next Gen Network, and capABILITY Network for disability inclusion) — I have actually shown up in workforce-inclusion work, not just discussed it.", False, False),
+    ])
+
+    body_para([
+        ("My résumé tailored to this role is at riketpatel.com/resume/deborah-heart-lung/. Five professional references from senior leadership and peer Product Management at Merck are available on request — all U.S.-based, reachable by phone, can speak directly to the mentorship and leadership-development work referenced above.", False, False),
+    ])
+
+    body_para([
+        ("Thank you for considering an unconventional application. I'd welcome a conversation either way.", False, False),
+    ])
+
+    p = add_para(doc, space_before=10, space_after=4, line_spacing=1.4)
+    r = p.add_run("Sincerely,")
+    set_run(r, size=11.5, color=INK)
+
+    p = add_para(doc, space_after=2, line_spacing=1.3)
+    r = p.add_run("Riket B. Patel")
+    set_run(r, size=11.5, bold=True, color=INK)
+
+    for line in [
+        "M.P.S. Data Analytics, Pennsylvania State University",
+        "Certified Agile Leader (CAL-1), Scrum Alliance · Certified AI Product Manager",
+        "Certified Mental Health First Aider · NJ Real Estate Salesperson",
+    ]:
+        p = add_para(doc, space_after=0, line_spacing=1.3)
+        r = p.add_run(line)
+        set_run(r, size=10.5, color=MUTED)
+
+    out = OUTPUT_DIR / "Riket B Patel — Cover Letter (Deborah Heart and Lung, Leadership Development).docx"
+    doc.save(out)
+    print(f"✓ {out.name}")
+
+
 if __name__ == "__main__":
     print(f"Building .docx files into: {OUTPUT_DIR}")
     builders = [
@@ -865,6 +1076,8 @@ if __name__ == "__main__":
         ("Internet Archive cover letter", build_ia_cover_letter),
         ("NJ Judiciary résumé", build_nj_judiciary_resume),
         ("NJ Judiciary cover letter", build_nj_judiciary_cover_letter),
+        ("Deborah Heart & Lung résumé", build_deborah_resume),
+        ("Deborah Heart & Lung cover letter", build_deborah_cover_letter),
     ]
     skipped = []
     for label, fn in builders:
