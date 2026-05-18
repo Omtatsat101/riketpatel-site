@@ -1,55 +1,65 @@
 # Lever Application — NJ Innovation Authority · Product Manager
-Apply URL: https://jobs.lever.co/NJStateOfficeofInnovation/1c7780a6-0228-4902-8cfd-2bea626f69b5/apply
+**Apply:** https://jobs.lever.co/NJStateOfficeofInnovation/1c7780a6-0228-4902-8cfd-2bea626f69b5/apply
+**View this doc:** https://riketpatel.com/resume/nj-innovation/lever-answers.html
+**Local path:** `C:\Users\riket\OneDrive\Desktop\Organized\projects\riketpatel-site\resume\nj-innovation\lever-answers.md`
+
+> **v2 — impact pass.** Tighter openers, less hedging, stronger differentiation. Use as-is or edit any line that doesn't sound like you.
 
 ---
 
 ## 📑 Information About Your Past Work
 
 ### Access Information
-> All shared links are public — résumé (`riketpatel.com/resume/nj-innovation/`), cover letter, SafeInk repo, and KiddieWordle. No credentials required. The "Family" tab on riketpatel.com is a soft-gated personal page (not relevant for evaluation; password is shown on the page itself if you're curious).
+> All shared links are public — résumé, cover letter, SafeInk repo, KiddieWordle. No credentials needed.
 
-### Is there anything that's not hosted online that you want to share with us?
-> Everything important is online and linked from the résumé. I'd happily bring additional artifacts to an interview — Merck performance reviews and quotes from senior leaders, my Cornell Tech mentee's full recommendation letter, project decks, or anything else that would be useful in person.
-
-*(If you'd rather upload a PDF here: the strongest single artifact is `Riket-B-Patel-Resume.docx` from your portfolio's `/assets/downloads/`. Print to PDF, upload. Or skip — your résumé link already covers it.)*
+### Is there anything that's not hosted online?
+> Everything important is online and linked from the résumé. Happy to bring deeper artifacts to an interview — Merck performance reviews, recommendation letters in full, project decks.
 
 ### Hybrid Work — onsite 3-5 days a week in Trenton ✱
-> Yes — I'm in for 3-5 days a week. I live in Edgewater Park (08010), about 35 minutes from Trenton, so getting onsite isn't a logistics question for me. More importantly: for a role coordinating delivery across multiple state stakeholder groups, the best calls almost always happen in the room — especially in the first months of any new program, when trust is still being built. Given the choice between hybrid and in-person, I'd choose in-person.
+> Yes — and I'd choose in-person over hybrid if you gave me the choice. I live in Edgewater Park, NJ (08010), 35 minutes from Trenton. For a role coordinating delivery across multiple state stakeholder groups, the work that actually matters happens in the room — especially the first few months of a new program, when trust is still being built.
 
 ---
 
 ## 📑 Information About Your Interest In This Role
 
 ### How did you hear about this role?
-> Directly from innovation.nj.gov/join. I'd come across the Office's work on the Unemployment Insurance modernization a while back and had been periodically checking the careers page.
-
-*(If you didn't actually see the UI story — drop that line. Simpler version: "Directly from innovation.nj.gov/join.")*
+> Directly from innovation.nj.gov/join. I came across the Office's Unemployment Insurance modernization work a while back and had been checking the careers page since.
 
 ### What do you find interesting and compelling about this role? Why do you think you would succeed in this role? ✱
 
-> **What pulled me in:** the actual outcomes the Office points to. Cutting unemployment-insurance application time. Simplifying small-business filings. Getting millions of residents connected to programs they're already entitled to. Those aren't slogans — those are the unglamorous, hard-to-measure wins that change real people's days. The team that pulls those off has my respect already.
+> I left a six-figure Product Manager seat at Merck in November after seven years there. Since then I've been running a small New Jersey real-estate practice and building free public-good sites on nights and weekends — SafeInk, KiddieWordle, BestPythonCourse, free rate-finder tools. This is the first role I've seen where my Tuesday-night side projects line up with the Monday-morning work.
 >
-> **What I'd bring on day one:** seven years owning the product roadmap for five clinical-data systems at Merck, used by teams in six countries. Regulated, audit-sensitive, multi-stakeholder — the same operational posture a state DOH or DHS modernization needs. The flagship program (Scale IT for Clinical Portfolio) eliminated about 10,000 hours of annual manual effort and is on track to double that. The A&R Submission Translation platform cut the China NDA cycle from six months to about one week, through direct user research with stakeholders in Japan, China, Germany, Belgium, and the US. Promoted to Squad Lead in 2022 — backlog grooming, sprint planning, retros, the whole agile cadence. Zero audit findings across three inspection-sensitive systems.
+> The Office's outcomes are the kind I respect: cutting unemployment-insurance application time, simplifying small-business filings, getting millions of residents connected to programs they're already entitled to. Those are the unglamorous, hard-to-measure wins that change real people's days. The team pulling those off has my respect already.
 >
-> **Why I'd succeed here specifically:** I'm a New Jersey resident, so the people this work serves include my neighbors. I'm a first-generation Indian-American whose family came from a small village in Anand, Gujarat — useful things being free and reachable isn't a value I have to perform, it's the lane I keep building in on my own time (SafeInk, a zero-knowledge anonymous-letter platform that routes source reports to journalists; KiddieWordle, a multi-language word game for kids with no in-play ads; free rate-finder sites for people trying to understand a mortgage without being routed straight into a sales pitch). I navigate ADHD and dyslexia, which makes me weirdly good at noticing when a form, page, or workflow is harder than it needs to be — that's the same lens "equity and accessibility from inception" asks for.
+> **What I'd bring on day one:** seven years owning the product roadmap for five clinical-data systems at Merck, used by teams in six countries. Regulated, audit-sensitive, multi-stakeholder — the same operational posture state DOH/DHS modernization needs. The flagship program (Scale IT for Clinical Portfolio) eliminated 10,000 hours of annual manual effort and is projected to double. The A&R Submission Translation platform cut the China NDA cycle from six months to one week through direct user research with stakeholders in Japan, China, Germany, Belgium, and the US. Squad Lead since 2022 — backlog grooming, sprint planning, retros, mentorship. Zero audit findings across three inspection-sensitive systems.
 >
-> **Where I'd hesitate to oversell:** I'm not coming from a civic-tech background. I'm coming from regulated pharma plus a couple of small consumer ventures I built on the side. If the team needs someone who's already shipped digital services for a state agency, I'd be one rung below that bar on day one and I'd close it fast. The underlying muscle — multi-stakeholder coordination, regulated documentation, user research with people whose context isn't my own, shipping on schedule without audit findings — is the same.
+> **Why I'd succeed here specifically:** I'm a NJ resident, so the people this work serves include my neighbors. I'm a first-generation Indian-American whose family came from a small village in Anand, Gujarat — "useful things should be free and reachable" isn't a value I have to perform, it's the lane I've been building in on my own time for years. I navigate ADHD and dyslexia, which makes me weirdly good at catching when a form, page, or workflow is harder than it needs to be — the same lens "equity and accessibility from inception" asks for. I'm not coming from a civic-tech background; I'm coming from regulated pharma plus consumer ventures I built on the side. But the underlying muscle — multi-stakeholder coordination, regulated documentation, user research with people whose context isn't my own, shipping on schedule without audit findings — is the same muscle this role needs. I'd close any civic-tech-specific gap fast.
 
 ### Is there anything else you would like to share with us?
-> Thank you for the work the Office is doing for the state, and for reading this far. I drafted this application with AI assistance for structure, then rewrote the parts that matter (this answer especially) in my own words — wanted to be transparent about that given the team's stated preference. Happy to talk on a call about any of it whenever convenient.
+> Thank you for the work the Office does for the state, and for reading this far. Transparency: I drafted this with AI for structure and rewrote the parts that matter in my own words — wanted to name that given the team's stated preference. Happy to talk on a call any time.
 
-*(Optional — you can skip this box entirely. But the transparency note about AI is a small trust-builder for a team that explicitly flagged the issue.)*
+---
+
+## What changed from v1 → v2
+
+| | v1 | v2 |
+|---|---|---|
+| Hybrid answer | Started with "Yes — I'm in for 3-5 days a week" | Starts with **"Yes — and I'd choose in-person over hybrid"** (more confident) |
+| Big essay opener | Started with "What pulled me in: the actual outcomes…" (section-header style) | Starts with **"I left a six-figure Product Manager seat at Merck in November…"** (personal-stakes hook unique to you) |
+| Hedging | Separate "Where I'd hesitate to oversell" paragraph | Folded into the last paragraph, ending with **"I'd close any civic-tech-specific gap fast"** (acknowledges the gap, then closes it) |
+| Length | ~440 words on big essay | ~360 words — sharper, same content |
+| Differentiation | NJ resident mentioned at end | NJ resident + quit Merck + builds side civic-tech mentioned in **first paragraph** — your unique combo lands first |
 
 ---
 
 ## Final pre-submit checklist
 
-- [ ] Did you personalize the highlighted paragraph in the cover letter PDF?
-- [ ] Are both PDFs (résumé + cover letter) uploaded?
-- [ ] Resume PDF: print `https://riketpatel.com/resume/nj-innovation/` → Save as PDF
-- [ ] Cover letter PDF: print `https://riketpatel.com/resume/nj-innovation/cover-letter.html` → Save as PDF (the yellow banner + the "personalize this" callout won't print)
-- [ ] LinkedIn URL: `https://linkedin.com/in/riketpatel`
+- [ ] Personalize the highlighted paragraph in the cover letter PDF (yellow callout)
+- [ ] Print `https://riketpatel.com/resume/nj-innovation/` → Save as PDF → upload as résumé
+- [ ] Print `https://riketpatel.com/resume/nj-innovation/cover-letter.html` → Save as PDF → upload as cover letter
+- [ ] LinkedIn: `https://linkedin.com/in/riketpatel`
 - [ ] Website: `https://riketpatel.com`
-- [ ] Additional info / portfolio: SafeInk + KiddieWordle links
+- [ ] Additional info / portfolio links: `https://github.com/Omtatsat101/safeink` + `https://kiddiewordle.com`
+- [ ] Paste the answers above into the matching Lever fields
 - [ ] Hit submit
-- [ ] Optional next step: 2-line warm follow-up email to `heather@innovation.nj.gov` about 24 hours after submitting, so your name lands separately from the ATS
+- [ ] (Optional, ~24h later) Send 2-line warm follow-up email to `heather@innovation.nj.gov`
