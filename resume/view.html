@@ -34,7 +34,7 @@
     color: var(--ink);
     font-family: var(--font-body);
     font-size: 10.5pt;
-    line-height: 1.30;
+    line-height: 1.24;
     -webkit-font-smoothing: antialiased;
   }
   .toolbar {
@@ -125,11 +125,7 @@
     list-style: none;
     margin: 2px 0 0; padding: 0;
   }
-  .wins li {
-    position: relative;
-    padding: 2px 0 2px 16px;
-    font-size: 10.5pt;
-    line-height: 1.35;
+  .wins li { position: relative; padding: 2px 0 1px 16px; font-size: 10.5pt; line-height: 1.28;
   }
   .wins li::before {
     content: "▸";
@@ -144,25 +140,18 @@
   }
 
   /* Experience */
-  .job { margin-top: 6px; }
+  .job { margin-top: 4px; }
   .job-h {
     display: flex; justify-content: space-between; align-items: baseline;
     font-size: 10.5pt;
   }
   .job-h .role { font-weight: 700; color: var(--ink); }
   .job-h .dates { font-style: italic; color: var(--muted); font-size: 9.5pt; }
-  .job-body { font-size: 10.5pt; margin-top: 2px; line-height: 1.32; }
+  .job-body { font-size: 10.5pt; margin-top: 1px; line-height: 1.28; }
   .job-body strong { font-weight: 700; }
 
   /* Two-column block (Education / Certs) */
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin-top: 4px;
-    font-size: 10.5pt;
-    line-height: 1.32;
-  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 3px; font-size: 10.5pt; line-height: 1.28; }
   .two-col strong { font-weight: 700; }
 
   .footnote {
@@ -175,7 +164,53 @@
 
   /* Print: enforce single page */
   @media print {
-    body { background: #fff; font-size: 10pt; line-height: 1.28; }
+    @page { size: letter; margin: 0; }
+    body { background: #fff; font-size: 9.5pt; line-height: 1.20; }
+    .toolbar { display: none; }
+    .page {
+      width: auto; min-height: 0; max-height: none; margin: 0;
+      padding: 0.38in 0.5in;
+      box-shadow: none;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    a { color: var(--ink); text-decoration: none; }
+    h2 { margin-top: 6px; padding-bottom: 1px; font-size: 9.5pt; }
+    .h-name { font-size: 20pt; }
+    .h-contact { font-size: 8.5pt; }
+    .h-headline { font-size: 10pt; padding: 4px 0; margin-top: 6px; }
+    .summary { font-size: 9.5pt; line-height: 1.24; margin-top: 5px; }
+    .wins li { font-size: 9.5pt; line-height: 1.24; padding: 1px 0 1px 14px; }
+    .job { margin-top: 3px; }
+    .job-h { font-size: 9.5pt; }
+    .job-h .dates { font-size: 8.5pt; }
+    .job-body { font-size: 9.5pt; line-height: 1.22; margin-top: 1px; }
+    .two-col { gap: 10px; font-size: 9.5pt; line-height: 1.22; margin-top: 2px; }
+    .footnote { margin-top: 5px; font-size: 8.5pt; }
+  }
+    body { background: #fff; font-size: 9.5pt; line-height: 1.20; }
+    .toolbar { display: none; }
+    .page {
+      width: auto; min-height: 0; max-height: none; margin: 0;
+      padding: 0.38in 0.5in;
+      box-shadow: none;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    a { color: var(--ink); text-decoration: none; }
+    h2 { margin-top: 6px; padding-bottom: 1px; font-size: 9.5pt; }
+    .h-name { font-size: 20pt; }
+    .h-contact { font-size: 8.5pt; }
+    .h-headline { font-size: 10pt; padding: 4px 0; margin-top: 6px; }
+    .summary { font-size: 9.5pt; line-height: 1.24; margin-top: 5px; }
+    .wins li { font-size: 9.5pt; line-height: 1.24; padding: 1px 0 1px 14px; }
+    .job { margin-top: 3px; }
+    .job-h { font-size: 9.5pt; }
+    .job-h .dates { font-size: 8.5pt; }
+    .job-body { font-size: 9.5pt; line-height: 1.22; margin-top: 1px; }
+    .two-col { gap: 10px; font-size: 9.5pt; line-height: 1.22; margin-top: 2px; }
+    .footnote { margin-top: 5px; font-size: 8.5pt; }
+  }
     .toolbar { display: none; }
     .page {
       width: auto; min-height: 0; margin: 0;
