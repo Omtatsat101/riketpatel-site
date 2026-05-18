@@ -44,11 +44,15 @@ window.RP_CONFIG = {
   INSTAGRAM_EMBED_URL: "",
   INSTAGRAM_MODE: "json",
 
-  /* Admin gate: click your own name in the top nav 5 times in quick succession
-   * (or hold for 2+ seconds) to open the password prompt.
-   * Change this password whenever you like. Family tab password is separate.
+  /* Admin gate moved to ohm.homes/admin (Cloudflare Worker, env-var gated).
+   * This site no longer hosts an admin endpoint — see commit 8cdc030.
+   * The old ADMIN_PASSWORD key has been removed (was leaked in this public file).
+   *
+   * Family tab password stays here on purpose — it's a SOFT lock (the password
+   * is shown on the page itself so family who land here can click in). Defeats
+   * casual / search-engine visitors, not real attackers. Do NOT reuse this
+   * value anywhere that needs real security.
    */
-  ADMIN_PASSWORD: "Admin137",
   ADMIN_FAMILY_PASSWORD: "Family137",
 
   /* GitHub repo identifier used for deep-linking to the web editor. */
