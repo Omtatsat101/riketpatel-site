@@ -284,7 +284,7 @@ def build_main_resume():
         ("Spent seven years at Merck building clinical-data systems for teams in six countries — work that eliminated about ", False),
         ("10,000 hours", True),
         (" of annual manual effort and cut a China NDA cycle from ", False),
-        ("six months to one week", True),
+        ("6-7 months to about one month", True),
         (". Left Merck in November 2025 to run ", False),
         ("Legacy Bridge Alliance Group", True),
         (" full time: a New Jersey real-estate practice (HomeSmart affiliate), a business-brokerage practice, two consumer Shopify stores, and four free public-good sites. First-generation Indian-American, ADHD-aware operator. M.S. Data Analytics, Penn State; Certified AI Product Manager + Agile Leader (CAL-1). Open to product or program roles where being trusted with the mission matters more than chasing a title.", False),
@@ -300,8 +300,8 @@ def build_main_resume():
     bullet_with_quote(doc,
         [("A&R Submission Translation (ARST)", True),
          (" — cut China NDA translation cycle from ", False),
-         ("6 months to ~1 week", True),
-         ("; user research with stakeholders in Japan, China, Germany, Belgium, US.", False)]
+         ("6-7 months to about one month", True),
+         (". User research with stakeholders in Tokyo, Shanghai, Berlin, Brussels, and Boston.", False)]
     )
     bullet_with_quote(doc,
         [("Squad Lead (2022)", True),
@@ -375,7 +375,7 @@ def build_adp_resume():
         ("Seven years owning enterprise SaaS product roadmaps at Merck across teams in six countries. Removed ~", False),
         ("10,000 hours", True),
         (" of annual manual effort and cut a regulated submission cycle from ", False),
-        ("six months to about one week", True),
+        ("6-7 months to about one month", True),
         (". Familiar with SOX-adjacent compliance, multi-jurisdiction localization, audit-readiness, and AI / ML integration. Left Merck in November 2025 to run a small holding company of real-estate, brokerage, and e-commerce ventures — comfortable being the central operations person who keeps everything on schedule. First-generation Indian-American, ADHD-aware operator. M.S. Data Analytics, Penn State. Certified AI Product Manager + Agile Leader (CAL-1).", False),
     ])
 
@@ -389,7 +389,7 @@ def build_adp_resume():
     bullet_with_quote(doc,
         [("A&R Submission Translation", True),
          (" — cut China NDA translation cycle from ", False),
-         ("6 months to ~1 week", True),
+         ("6-7 months to about one month", True),
          ("; HCM analog: multi-jurisdiction localization for payroll filings, benefits docs, onboarding flows.", False)]
     )
     bullet_with_quote(doc,
@@ -458,7 +458,7 @@ def build_ia_resume():
         ("Seven years coordinating multi-system product programs at Merck across six countries. Removed ~", False),
         ("10,000 hours", True),
         (" of annual manual effort and cut a regulated submission cycle from ", False),
-        ("six months to about one week", True),
+        ("6-7 months to about one month", True),
         (". Left Merck in November 2025 to run small ventures full-time and build free things on the side. Currently setting up a Python and generative-AI teacher position in my family's village in Anand, Gujarat — continuing my father's promise to give back there. First-generation Indian-American, ADHD-aware operator, trilingual. Universal access to knowledge isn't a pivot — it's already the lane.", False),
     ])
 
@@ -472,8 +472,8 @@ def build_ia_resume():
     bullet_with_quote(doc,
         [("A&R Submission Translation", True),
          (" — cut a regulated translation cycle from ", False),
-         ("6 months to ~1 week", True),
-         ("; user research in Japan, China, Germany, Belgium, US. Comfortable building for users whose language, time zone, and context are not my own.", False)]
+         ("6-7 months to about one month", True),
+         (". User research with stakeholders in Tokyo, Shanghai, Berlin, Brussels, and Boston. Comfortable building for users whose language, time zone, and context are not my own.", False)]
     )
     bullet_with_quote(doc,
         [("BARDS audit-readiness SME", True),
@@ -581,7 +581,7 @@ def build_ia_cover_letter():
 
     subhead("My professional journey")
     body_para([
-        ("At Merck & Co., I led the Scale IT for Clinical Portfolio program — coordinating delivery across four interconnected clinical-data systems (Delta Fusion, CDI, CDDR, SLS) and 15+ stakeholder groups across six countries. The program eliminated about 10,000 hours of annual manual effort, was delivered ahead of plan, and is on track to double to 20,000 hours. I also designed and shipped the A&R Submission Translation platform, which cut the China NDA translation cycle from about six months to about one week — through user research with stakeholders in Japan, China, Germany, Belgium, and the US. I was promoted to Squad Lead in 2022, served as the regulatory subject-matter expert for audit-readiness across three inspection-sensitive systems, and consistently shipped year objectives ahead of schedule with zero audit findings. My summer intern Jenny Mao — a Cornell Tech master's student spending the summer of 2025 on our team — later wrote: ", False, False),
+        ("At Merck & Co., I led the Scale IT for Clinical Portfolio program — coordinating delivery across four interconnected clinical-data systems (Delta Fusion, CDI, CDDR, SLS) and 15+ stakeholder groups across six countries. The program eliminated about 10,000 hours of annual manual effort, was delivered ahead of plan, and is on track to double to 20,000 hours. I also designed and shipped the A&R Submission Translation platform, which cut translated Clinical Study Reports and supporting NDA documents from about 6-7 months to about one month — accelerating regulatory filings to China's NMPA, and the medicines those filings unlock. The research behind it was hands-on stakeholder work in Tokyo, Shanghai, Berlin, Brussels, and Boston. I was promoted to Squad Lead in 2022, served as the regulatory subject-matter expert for audit-readiness across three inspection-sensitive systems, and consistently shipped year objectives ahead of schedule with zero audit findings. My summer intern Jenny Mao — a Cornell Tech master's student spending the summer of 2025 on our team — later wrote: ", False, False),
         ('"I truly don\'t think I would have completed my internship so successfully without your mentorship."', False, True),
         (" That sentence is the one I'm proudest of from the whole tenure.", False, False),
     ])
@@ -677,7 +677,7 @@ def build_nj_judiciary_resume():
         ("Started my career as a Business / Technical Analyst at Merck, was promoted through three levels (Specialist → Squad Lead → Product Manager), and spent seven years translating complex business requirements into delivered software in a heavily regulated environment. Removed ~", False),
         ("10,000 hours", True),
         (" of annual manual work for stakeholder teams across six countries and led a regulated submission program that cut processing time from ", False),
-        ("six months to about one week", True),
+        ("6-7 months to about one month", True),
         (". M.S. Data Analytics, Penn State. New Jersey resident, U.S. citizen, NJ Real Estate Salesperson — already engaged with state systems. Drawn to this role for what the Judiciary actually does: keep records honest, court processes accessible, and the public served by systems they trust.", False),
     ])
 
@@ -690,7 +690,7 @@ def build_nj_judiciary_resume():
     bullet_with_quote(doc,
         [("Multi-jurisdiction submission platform", True),
          (" — designed the A&R Submission Translation platform that cut regulated filing cycle time from ", False),
-         ("6 months to ~1 week", True),
+         ("6-7 months to about one month", True),
          (". User research with stakeholders in 5 countries; iterative MVP (R1.0 → R1.1). Pattern directly translates to court-record translation, eFiling localization, and accessibility-mandated multi-language workflows.", False)]
     )
     bullet_with_quote(doc,
@@ -806,7 +806,7 @@ def build_nj_judiciary_cover_letter():
     body_para([
         ("Seven years inside a Fortune 100 regulated environment. I served as the subject-matter expert for ", False, False),
         ("regulatory audit-readiness", True, False),
-        (" across three inspection-sensitive systems — audit trails, user access, data integrity. That's a direct skill-set match for the records-integrity and access-control work a court system requires. I led a multi-system program at Merck that eliminated about 10,000 hours of annual manual effort for stakeholder teams across six countries. I designed and shipped a multi-language submission platform that cut a regulated processing cycle from six months to about a week — the same pattern as the multi-jurisdiction, multi-language, accessibility-mandated workflows the Judiciary is modernizing.", False, False),
+        (" across three inspection-sensitive systems — audit trails, user access, data integrity. That's a direct skill-set match for the records-integrity and access-control work a court system requires. I led a multi-system program at Merck that eliminated about 10,000 hours of annual manual effort for stakeholder teams across six countries. I designed and shipped a multi-language submission platform that cut translated Clinical Study Reports and supporting NDA documents from about 6-7 months to about one month — the same pattern as the multi-jurisdiction, multi-language, accessibility-mandated workflows the Judiciary is modernizing.", False, False),
     ])
 
     body_para([
