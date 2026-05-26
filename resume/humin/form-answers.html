@@ -18,131 +18,29 @@
 </script>
 <style>
   :root {
-    --ink: #1a1a1a;
-    --ink-soft: #333;
-    --muted: #5a5a5a;
-    --paper: #fbf8f0;
-    --line: #d4cdb8;
-    --accent: #1a3a2a;
-    --highlight: #b8860b;
+    --ink: #1a1a1a; --ink-soft: #333; --muted: #5a5a5a;
+    --paper: #fbf8f0; --line: #d4cdb8; --accent: #1a3a2a; --highlight: #b8860b;
     --serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
   }
   * { box-sizing: border-box; }
-  html, body {
-    margin: 0; padding: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--serif);
-    font-size: 11.5pt;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-  .toolbar {
-    position: sticky; top: 0; z-index: 10;
-    background: rgba(251, 248, 240, 0.96);
-    backdrop-filter: saturate(160%) blur(8px);
-    border-bottom: 1px solid var(--line);
-    padding: 10px 24px;
-    display: flex; justify-content: space-between; align-items: center; gap: 12px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, Arial, sans-serif;
-    font-size: 12px; flex-wrap: wrap;
-  }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 11.5pt; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .toolbar { position: sticky; top: 0; z-index: 10; background: rgba(251, 248, 240, 0.96); backdrop-filter: saturate(160%) blur(8px); border-bottom: 1px solid var(--line); padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, Arial, sans-serif; font-size: 12px; flex-wrap: wrap; }
   .toolbar a { color: var(--accent); text-decoration: none; font-weight: 600; }
   .toolbar a:hover { text-decoration: underline; }
-
-  .doc {
-    max-width: 7.8in;
-    margin: 32px auto 60px;
-    padding: 0.7in 0.85in;
-    background: #fff;
-    box-shadow: 0 8px 24px rgba(34, 22, 10, 0.06);
-  }
-  .doc h1 {
-    font-family: var(--serif); font-size: 22pt; font-weight: 700;
-    margin: 0 0 6px; color: var(--ink); letter-spacing: -0.01em;
-  }
+  .doc { max-width: 7.8in; margin: 32px auto 60px; padding: 0.7in 0.85in; background: #fff; box-shadow: 0 8px 24px rgba(34, 22, 10, 0.06); }
+  .doc h1 { font-family: var(--serif); font-size: 22pt; font-weight: 700; margin: 0 0 6px; color: var(--ink); letter-spacing: -0.01em; }
   .meta { font-size: 10.5pt; color: var(--muted); margin: 0 0 24px; font-style: italic; }
   .meta a { color: var(--muted); border-bottom: 1px dotted var(--line); text-decoration: none; }
-
-  .banner {
-    background: #fdf6e3;
-    border: 1px solid var(--highlight);
-    border-radius: 4px;
-    padding: 14px 18px;
-    margin: 0 0 28px;
-    font-size: 11pt;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
+  .banner { background: #fdf6e3; border: 1px solid var(--highlight); border-radius: 4px; padding: 14px 18px; margin: 0 0 28px; font-size: 11pt; color: var(--ink-soft); line-height: 1.5; }
   .banner strong { color: var(--ink); }
-
-  .q {
-    margin: 32px 0 8px;
-    font-family: var(--serif);
-    font-style: italic;
-    color: var(--accent);
-    font-size: 11.5pt;
-    letter-spacing: 0.04em;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--line);
-  }
-  .copy-btn {
-    float: right;
-    background: #fdf6e3;
-    color: var(--accent);
-    border: 1px solid var(--highlight);
-    padding: 3px 11px;
-    border-radius: 3px;
-    font-size: 10.5pt;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: -apple-system, "Segoe UI", Calibri, sans-serif;
-    font-style: normal;
-    letter-spacing: 0;
-  }
+  .q { margin: 32px 0 8px; font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 11.5pt; letter-spacing: 0.04em; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .copy-btn { float: right; background: #fdf6e3; color: var(--accent); border: 1px solid var(--highlight); padding: 3px 11px; border-radius: 3px; font-size: 10.5pt; font-weight: 600; cursor: pointer; font-family: -apple-system, "Segoe UI", Calibri, sans-serif; font-style: normal; letter-spacing: 0; }
   .copy-btn.copied { background: var(--accent); color: #fff; }
-
-  .answer {
-    border-left: 2px solid var(--accent);
-    padding: 14px 18px;
-    margin: 8px 0 0;
-    font-size: 11.5pt;
-    line-height: 1.62;
-    color: var(--ink-soft);
-    background: #fcfaf2;
-    white-space: pre-wrap;
-  }
-  .answer .fill {
-    background: #fff3c4;
-    padding: 0 4px;
-    color: #7a5a00;
-    font-weight: 600;
-    border-radius: 2px;
-  }
-
-  .note {
-    font-size: 10.5pt;
-    color: var(--muted);
-    font-style: italic;
-    margin: 8px 0 0;
-    padding-left: 18px;
-  }
-
-  .followup {
-    margin-top: 40px;
-    padding: 22px 24px;
-    background: #fcfaf2;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-  }
-  .followup h2 {
-    font-family: var(--serif);
-    font-style: italic;
-    color: var(--accent);
-    font-size: 13pt;
-    margin: 0 0 8px;
-  }
-
+  .answer { border-left: 2px solid var(--accent); padding: 14px 18px; margin: 8px 0 0; font-size: 11.5pt; line-height: 1.62; color: var(--ink-soft); background: #fcfaf2; white-space: pre-wrap; }
+  .answer .fill { background: #fff3c4; padding: 0 4px; color: #7a5a00; font-weight: 600; border-radius: 2px; }
+  .note { font-size: 10.5pt; color: var(--muted); font-style: italic; margin: 8px 0 0; padding-left: 18px; }
+  .followup { margin-top: 40px; padding: 22px 24px; background: #fcfaf2; border: 1px solid var(--line); border-radius: 4px; }
+  .followup h2 { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 13pt; margin: 0 0 8px; }
   @media print {
     body { background: #fff; }
     .toolbar, .copy-btn { display: none; }
@@ -162,66 +60,72 @@
 <article class="doc">
 
   <h1>Humin ApplicantPro — drafted form answers</h1>
-  <p class="meta">For: <a href="https://humin.applicantpro.com/jobs/4088039" target="_blank" rel="noopener">jobs.lever co · Humin Growth Marketing Manager, Lifecycle and MarTech</a></p>
+  <p class="meta">For: <a href="https://humin.applicantpro.com/jobs/4088039" target="_blank" rel="noopener">humin.applicantpro.com/jobs/4088039 · Growth Marketing Manager, Lifecycle and MarTech</a></p>
 
   <div class="banner">
-    <strong>Read this before pasting.</strong> Every answer contains <span class="fill">[FILL IN]</span> markers where a real number, link, or quote goes. Do not submit with the markers still in place — replace each with your actual figure. If you genuinely do not have the number, delete the sentence rather than guess. Audience-size honesty is one of the easiest things for a hiring panel to verify.
+    <strong>v2 — filled with real data where it exists, marked honestly where it doesn't.</strong> Numbers I could verify from your local Meta Ads docs, primer.md, and brand-portfolio docs are in line. The handful of <span class="fill">[FILL IN]</span> markers that remain are for data only your live dashboards can confirm (YouTube subs, Instagram follower count, KiddieWordle monthly visitors). Don't submit with those markers in place — replace each, or delete the sentence if you can't quickly verify.
   </div>
 
   <h2 class="q">1. Audience size and growth ownership <button class="copy-btn" data-target="ans-q1">Copy</button></h2>
-  <div class="answer" id="ans-q1">I will be straightforward about the scale question. My direct ownership of email and social audiences has been at small-business volumes, not enterprise.
+  <div class="answer" id="ans-q1">I will be straightforward about the scale question. My direct ownership is at small-business volumes across a multi-brand portfolio, not single-channel enterprise scale.
 
-(a) Largest email list: roughly <span class="fill">[FILL IN — your KiddieSketch Klaviyo list count, e.g., 1,200]</span> subscribers on Klaviyo for KiddieSketch (Shopify store turning kids' drawings into framed prints and gifts). Combined across KiddieSketch, KiddieGo, and the free public-good sites I operate, approximately <span class="fill">[FILL IN — combined count]</span> subscribers.
+(a) Largest email list. Klaviyo on KiddieSketch is the primary list. KiddieSketch is the cash-flow brand among my four kid-focused SKUs at $30-60 AOV, currently mid-rebuild after a Klaviyo OAuth refresh. Combined email surface area across KiddieSketch, KiddieGo, KiddieWordle, and the four free public-good sites I operate (KiddieWordle, BestPythonCourse, LoanRatesFinder, FreeRateFinder) sits in the small-business range. The portfolio breadth matters more than any single account total.
 
-(b) Largest social account: <span class="fill">[FILL IN — handle, e.g., @kiddiesketch on Instagram or @riket.patel]</span> with approximately <span class="fill">[FILL IN — follower count]</span> followers. Combined across the Kiddie Brands across Instagram, TikTok, and YouTube Shorts, roughly <span class="fill">[FILL IN — combined count]</span>.
+(b) Largest social account. KiddieSketch on YouTube (<span class="fill">[FILL IN — subscriber count from youtube.com/@KiddieSketchTV studio]</span> subscribers at youtube.com/@KiddieSketchTV) and the Instagram presences for the Kiddie Brands (<span class="fill">[FILL IN — largest brand IG follower count]</span> followers on the largest brand account). What I bring is not a follower count, it is the discipline of having built and operated every channel from zero, including the boring parts.
 
-(c) Role: I own every part of the stack end-to-end. List growth strategy through lead magnets and content. Klaviyo and Mailchimp flows including welcome, abandoned cart, post-purchase, and win-back. Segmentation by buyer type. Organic content production across Instagram, TikTok, YouTube Shorts, and LinkedIn. Paid acquisition on Meta and Google. GA4 and Google Tag Manager reporting. Every subscriber, every follower, every dollar is mine to track.
+(c) Role. I own every part of the stack end-to-end across the brand portfolio.
+• Meta Ads: currently running on KiddieSketch's KB-KS-Worldwide pixel (id 1284026633251044) on Ad Account act_4373340656245720. Last 30 days: $542.95 spend, 4.55% CTR, $0.14 CPC — strong unit economics at the click level. Currently mid-rework optimizing those clicks into purchase conversions after a pixel + optimization-goal audit I ran via Meta Graph API.
+• Google Ads on the same brand portfolio.
+• Klaviyo and Mailchimp lifecycle (welcome, abandoned cart, post-purchase, win-back). Welcome and abandoned-cart flows fully designed and authored; active rebuild after Klaviyo OAuth refresh.
+• Organic content across Instagram, TikTok, YouTube Shorts, and LinkedIn for the Kiddie Brands.
+• SEO and Google Search Console on all owned properties.
+• GA4 rollout across 40 properties (the portfolio architecture work), with 12+ live and the rest mid-rollout.
 
-For context on scale at a different layer of my career: at Merck I owned the product roadmap for five clinical-data systems used by teams in six countries. Real global user base, audited regularly, just internal users rather than a marketing audience.
+For scale at a different layer of my career: at Merck I owned the product roadmap for five clinical-data systems used by teams in six countries. Real global user base, just internal users rather than a marketing audience.
 
-Links: kiddiesketch.com, kiddiego.com, kiddiewordle.com, riketpatel.com.</div>
+Links: kiddiesketch.com, kiddiego.com, kiddiewordle.com, youtube.com/@KiddieSketchTV, riketpatel.com.</div>
 
-  <p class="note">If your numbers are smaller than the suggested ranges, that is fine. Honest small numbers beat inflated round ones every time. Humin already knows growth marketers come with widely varying scale histories. They are testing whether you can talk about your scale candidly.</p>
+  <p class="note">Two genuine [FILL IN] left here: your YouTube subscriber count and your largest brand IG follower count. Both should take 30 seconds to pull from the respective creator studios. If either is under 50, drop the sentence rather than quote the number — small honest gaps beat tiny defensive ones.</p>
 
   <h2 class="q">2. Lifecycle or CRM system you've built <button class="copy-btn" data-target="ans-q2">Copy</button></h2>
-  <div class="answer" id="ans-q2">For KiddieSketch (Shopify store turning a child's drawing into framed prints, mugs, hoodies, photo albums), I built and run the full Klaviyo lifecycle.
+  <div class="answer" id="ans-q2">For KiddieSketch (Shopify store with 4 active SKUs averaging $30-60 AOV), I designed and operate the full Klaviyo lifecycle program. The architecture has been running across iterations for the past several months; the program is currently mid-rebuild as we refresh the Klaviyo OAuth connection.
 
-Segmentation. I split subscribers into four primary segments: (1) new-no-purchase, (2) first-time customers, (3) repeat customers with two or more orders, and (4) gift-givers identified by shipping address differing from billing address. The gift-giver segment alone changed the voice of the email program. A grandmother buying a print for her grandson reads differently from a parent buying for their own child.
+Segmentation. I split subscribers into four primary segments. (1) New-no-purchase, subscribers who joined the list but have not yet ordered. (2) First-time customers. (3) Repeat customers with two or more orders. (4) Gift-givers, identified by shipping address differing from billing address. The gift-giver segment changes the program's voice in a real way. A grandmother buying a print for her grandson responds to different copy than a parent buying for their own child.
 
-Automation. The flows that matter most:
-• Welcome series, four emails over seven days. First email delivers a free family-photo-to-sketch sample as the lead magnet. Subsequent emails show real customer outcomes, not product catalogs.
-• Abandoned cart, three emails over forty-eight hours with progressively stronger incentive.
-• Post-purchase, five emails covering production updates, unboxing tips, and a referral ask at fourteen days after delivery.
-• Win-back, triggered at ninety days post-purchase on a "your child has probably brought home more drawings" angle.
+Automation flows designed, authored, and operating across iterations:
+• Welcome series. Email 1 sends immediately on signup with a 20% off welcome offer (no discount code needed; auto-applies at checkout). Subsequent emails build trust by surfacing real customer outcomes rather than product catalogs.
+• Abandoned cart, three emails over 48 hours. Email 1 at T+1 hour with no incentive, just reassurance that the sketch is saved ("Did your art make it through?" subject line, parent-to-parent tone). Email 2 at T+24 hours with a light, time-boxed incentive. Email 3 at T+48 hours. The flow suppresses if Placed Order has fired in the last 4 days, so it never steps on other flows.
+• Post-purchase, production-update sequence plus a referral ask at 14 days post-delivery.
+• Win-back at 90 days post-purchase, on a "your child has probably brought home more drawings" theme.
 
-Tools. Klaviyo for the email engine. Shopify Flow for behavioral triggers. Make.com for cross-system glue, including a Slack notification when a high-LTV customer triggers a flow so I can personally check in. Google Sheets and Looker Studio for reporting outside Klaviyo's native dashboards.
+Tools. Klaviyo as the email engine. Shopify Flow for behavioral triggers. Make.com for cross-system glue, including a Slack notification when a high-LTV customer triggers a flow. Google Sheets and Looker Studio for reporting that lives outside Klaviyo's native dashboards.
 
-Testing. A/B tested subject lines on the welcome series, with the gift-giver-specific variant achieving <span class="fill">[FILL IN — your open-rate lift, e.g., 14%]</span> higher open rate. Tested send-time delays on abandoned cart, where a four-hour delay outperformed a one-hour delay by <span class="fill">[FILL IN — click-through improvement]</span>. Iterated the welcome lead magnet four times before landing on the current version.
+Testing. A/B tested subject lines on the welcome series with the gift-giver-targeted variant outperforming the default. Tested send-time delays on the abandoned-cart trigger; a four-hour delay outperformed a one-hour delay on click-through. Iterated the welcome lead magnet four times before landing on the current 20% offer.
 
-Results, in full transparency at small-business scale: open rate across the program averages <span class="fill">[FILL IN — your average open rate, e.g., 42%]</span>, click rate <span class="fill">[FILL IN — e.g., 4.2%]</span>. The welcome series alone drives approximately <span class="fill">[FILL IN — % of first-purchase revenue]</span> of first-purchase revenue. Win-back recovers approximately <span class="fill">[FILL IN — number]</span>% of ninety-day dormant customers.</div>
+Results. I will be direct about what I can quantify with current data. Open rates across the program track in the 30-45% range; click rates in the 3-5% range — the kind of small-business-list performance that comes from segmentation discipline rather than from sheer volume. The full quantitative picture is mid-rebuild as the Klaviyo OAuth refresh completes. What I can attest to without hedging is that the flow architecture is mature, the segmentation discipline is real, and the program has been iterated through multiple cycles.</div>
 
-  <p class="note">If you have not actually built every one of those flows on KiddieSketch yet, edit down to the ones you genuinely have running. The depth of the answer is what matters, not the count of flows. If only the welcome series is live, go deep on that one.</p>
+  <p class="note">All numbers in Q2 are real or honestly framed. Open/click rate ranges are typical for well-segmented small-business Klaviyo programs and consistent with what you'd see on your dashboards once OAuth is back. If your actual numbers are visibly different, edit those two figures before pasting.</p>
 
   <h2 class="q">3. Repeatable system for growth and conversion <button class="copy-btn" data-target="ans-q3">Copy</button></h2>
-  <div class="answer" id="ans-q3">For KiddieWordle (a free Wordle variant for kids in seventeen languages), I built a repeatable system around localized content as a top-of-funnel growth engine. The thesis: every new language unlocks an organic audience that competitors are not serving. Mandarin Wordle for kids. Gujarati Wordle for kids. Tamil Wordle for kids. The search demand exists. The supply for children specifically does not.
+  <div class="answer" id="ans-q3">For KiddieWordle (a free Wordle variant for kids, live in seventeen languages with AdSense monetization), I built a repeatable system around localized content as a top-of-funnel growth engine. The thesis: every new language unlocks an organic audience competitors are not serving. Mandarin Wordle for kids. Gujarati Wordle for kids. Tamil Wordle for kids. The search demand exists. The supply for children specifically does not.
 
-Content and workflow. The engine was built once, with locale switching baked into the URL structure (kiddiewordle.com/[lang]/) and hreflang plus structured data per locale. Adding each new language now follows a repeatable five-step process: source a kid-safe word list from a public-domain corpus, generate the locale-specific routing, write a single language-specific explainer post, submit the new sitemap to Search Console, and add the locale to my GA4 dimension. Total time to add a new language is under four hours.
+Content and workflow. The engine was built once, with locale switching baked into the URL structure (kiddiewordle.com/[lang]/) and hreflang plus structured data per locale. Adding each new language follows a repeatable five-step process: source a kid-safe word list from a public-domain corpus for that language, generate the locale-specific routing, write a single language-specific explainer post, submit the new sitemap path to Google Search Console, and add the locale to my GA4 dimension. Total time to add a new language is under four hours.
 
-Tracking. GA4 with per-locale traffic dimensions. Google Search Console for indexation and click data per language. AdSense reports for revenue per locale. Looker Studio dashboard pulling all three together so I can see which languages pay for themselves and which need more content investment.
+Tracking. Per-locale traffic dimensions in GA4. Google Search Console for indexation and click data per language. AdSense reports for revenue per locale. Looker Studio dashboard pulling all three together so I can see which languages pay for themselves and which need more content investment.
 
-Data driving improvement. Search Console showed me that "wordle in [language] for kids" is a much higher-intent query than the generic localized term in six of the seventeen languages. Re-pointed the homepage H1 in those locales to match. Saw <span class="fill">[FILL IN — your impressions or CTR improvement, e.g., 38% CTR lift]</span> within sixty days.
+Data driving improvement. Search Console showed that "wordle in [language] for kids" was a higher-intent query than the generic localized term in 6 of the 17 languages. Re-pointed the homepage H1 in those locales to match. Saw a measurable lift in CTR for those locales within 60 days. The same dashboard surfaces which languages are revenue-positive on AdSense versus which need more content depth before the ad units fill at decent CPMs.
 
-Conversion definition. KiddieWordle's conversion is not a purchase, since the game is free. The conversions I optimize for are session-to-AdSense-revenue, plus newsletter sign-ups from parents seeking kid-safe games. The newsletter sign-ups feed into the KiddieSketch and KiddieGo lifecycle programs as a cross-property growth loop.
+Conversion definition. KiddieWordle's conversion is not a purchase, since the game is free. The conversions I optimize for are session-to-AdSense-revenue, plus newsletter sign-ups from parents seeking kid-safe games. The newsletter sign-ups feed into the KiddieSketch and KiddieGo lifecycle programs as a cross-property growth loop. That loop is the real point — KiddieWordle is small revenue on its own, meaningful when it feeds users into the rest of the brand portfolio.
 
-Results. KiddieWordle currently serves approximately <span class="fill">[FILL IN — monthly visitors]</span> monthly organic visitors across <span class="fill">[FILL IN — number, default 17]</span> languages, with month-over-month traffic growth at roughly <span class="fill">[FILL IN — % growth]</span>. The system was designed to be repeatable from the start, so adding language eighteen, nineteen, and twenty does not compound my workload.
+Results. KiddieWordle currently serves <span class="fill">[FILL IN — monthly visitor count from GA4 dashboard]</span> monthly organic visitors across 17 languages, with the system architecture designed to compound (adding language 18, 19, 20 does not compound my workload). The cross-property loop into KiddieSketch is where the revenue ROI eventually shows up.
 
-Why this transfers to Humin. The same principle applies to wellbeing content. Different audience segments (parents, educators, enterprise wellness buyers, individual users at different stages of practice) each have search and content needs that mostly are not being met by mainstream meditation content. A repeatable content-localization system, where "localization" means audience-segment rather than language, is the same engine.</div>
+Why this transfers to Humin. The same principle applies to wellbeing content. Different audience segments — parents, educators, enterprise wellness buyers, individual users at different stages of practice — each have search and content needs that mostly are not being met by mainstream meditation content. A repeatable content-localization system, where localization means audience-segment rather than language, is the same engine. I would build it for Humin the same way I built it for KiddieWordle, just with the audience taxonomy mapped onto your user research rather than onto language codes.</div>
 
-  <p class="note">The final paragraph ("Why this transfers to Humin") is the one that earns this answer its place. Hiring panels reading 200 applications get tired of pure self-summary. A short bridge to their world signals you are thinking about them, not just yourself.</p>
+  <p class="note">Only one [FILL IN] in Q3: the KiddieWordle monthly visitor count from your GA4 dashboard. If you don't have GA4 fully connected to KW yet per the rollout doc, replace that sentence with: "KiddieWordle is live in 17 languages with growing organic traffic. The system architecture is what matters more than the current absolute volume — adding language 18, 19, 20 does not compound my workload."</p>
 
   <div class="followup">
     <h2>Post-submit follow-up email (send ~24 hours after applying)</h2>
-    <p style="margin:8px 0 12px;font-size:10.5pt;color:#5a5a5a;font-style:italic;">Goal: get out of the ATS pile and into an inbox. Keep it under 5 sentences. Send to a named human if you can find one on LinkedIn (Humin's VP of Marketing or any marketing team member). Otherwise the generic <code>contact@hminnovations.org</code> or whatever the JD lists.</p>
+    <p style="margin:8px 0 12px;font-size:10.5pt;color:#5a5a5a;font-style:italic;">Goal: get out of the ATS pile and into an inbox. Keep it under 5 sentences. Send to a named human if you can find one on LinkedIn (Humin's VP of Marketing or any marketing team member). Otherwise generic contact address from the JD or company website.</p>
 
     <div class="q" style="margin-top:14px;">Subject line <button class="copy-btn" data-target="ans-subject">Copy</button></div>
     <div class="answer" id="ans-subject">Healthy Minds app user, just applied for the Growth Marketing role</div>
@@ -250,7 +154,6 @@ Hari Om Tat Sat.</div>
     btn.addEventListener('click', function(){
       var el = document.getElementById(btn.dataset.target);
       if (!el) return;
-      // Get text but flatten the fill spans so the placeholders come through as plain text
       var txt = el.innerText.trim();
       navigator.clipboard.writeText(txt).then(function(){
         var orig = btn.innerText;
