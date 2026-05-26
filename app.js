@@ -371,6 +371,72 @@
     });
   }
 
+  // ─── AI Product Management capstone — password-gated download ────────────
+  // Soft lock pattern. Password lives in config.js. Files at obfuscated URLs
+  // under assets/downloads/private/. On correct password, triggers BOTH
+  // downloads (the capstone .pptx + the cert PDF) via temporary anchor clicks.
+  var AIPM_PW = (window.RP_CONFIG && window.RP_CONFIG.AIPM_DOWNLOAD_PASSWORD) || "AIPM137";
+  var AIPM_FILES = [
+    { url: "assets/downloads/private/aipm-capstone-riket-b-patel-X9F2K3.pptx", name: "Riket-B-Patel-AIPM-Capstone.pptx" },
+    { url: "assets/downloads/private/aipm-certificate-riket-b-patel-X9F2K3.pdf", name: "Riket-B-Patel-AIPM-Certificate.pdf" }
+  ];
+
+  function openAipmGate() {
+    var ov = document.getElementById("aipm-gate-modal");
+    if (ov) {
+      ov.removeAttribute("hidden");
+      setTimeout(function () {
+        var i = document.getElementById("aipm-gate-input");
+        if (i) i.focus();
+      }, 50);
+    }
+  }
+  function closeAipmGate() {
+    var ov = document.getElementById("aipm-gate-modal");
+    if (ov) ov.setAttribute("hidden", "");
+  }
+  function triggerDownload(url, filename) {
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename || "";
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { document.body.removeChild(a); }, 0);
+  }
+
+  var aipmBtn = document.getElementById("aipm-download-btn");
+  if (aipmBtn) {
+    aipmBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      openAipmGate();
+    });
+  }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("[data-aipm-close]")) {
+      e.preventDefault();
+      closeAipmGate();
+    }
+  });
+  var aipmForm = document.getElementById("aipm-gate-form");
+  if (aipmForm) {
+    aipmForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var input = document.getElementById("aipm-gate-input");
+      var status = document.getElementById("aipm-gate-status");
+      if ((input.value || "").trim() === AIPM_PW) {
+        if (status) { status.textContent = "Unlocked. Downloading both files…"; status.className = "cm-status is-ok"; }
+        if (window.gtag) gtag("event", "aipm_download_unlocked", { domain: "riketpatel.com" });
+        // Stagger the two downloads slightly so the browser doesn't block the second
+        triggerDownload(AIPM_FILES[0].url, AIPM_FILES[0].name);
+        setTimeout(function () { triggerDownload(AIPM_FILES[1].url, AIPM_FILES[1].name); }, 600);
+        setTimeout(closeAipmGate, 1400);
+      } else {
+        if (status) { status.textContent = "That's not the right password. Reach out via the Get-in-touch page if you'd like access."; status.className = "cm-status is-error"; }
+      }
+    });
+  }
+
   // ─── Instagram feed render ──────────────────────────────
   function renderInstagram() {
     var mount = document.getElementById("ig-mount");

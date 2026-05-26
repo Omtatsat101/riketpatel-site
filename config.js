@@ -55,6 +55,14 @@ window.RP_CONFIG = {
    */
   ADMIN_FAMILY_PASSWORD: "Family137",
 
+  /* AI Product Management capstone download — separate password.
+   * Files live at assets/downloads/private/ with obfuscated filenames so
+   * they're not casually crawlable. Share the password with people you
+   * want to give the deck to (recruiters, future teammates). To rotate:
+   * change this value AND rename the two files in the private folder.
+   */
+  AIPM_DOWNLOAD_PASSWORD: "AIPM137",
+
   /* GitHub repo identifier used for deep-linking to the web editor. */
   GITHUB_REPO: "Omtatsat101/riketpatel-site"
 };

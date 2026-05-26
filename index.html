@@ -34,7 +34,7 @@
   "sameAs": [
     "https://www.linkedin.com/in/riketpatel",
     "https://www.instagram.com/riket.patel",
-    "https://github.com/Omtatsat101"
+    "https://github.com/Omtatsat101/safeink"
   ],
   "worksFor": {
     "@type": "Organization",
@@ -91,6 +91,7 @@
             <a class="btn btn-primary" href="connect/">Get in touch</a>
             <button type="button" class="btn btn-ghost" id="resume-download-btn">Download résumé</button>
             <a class="btn btn-ghost" href="https://www.linkedin.com/in/riketpatel" rel="noopener" target="_blank">LinkedIn</a>
+            <a class="btn btn-ghost" href="https://github.com/Omtatsat101/safeink" rel="noopener" target="_blank" onclick="if(window.gtag) gtag('event', 'github_safeink_click');">GitHub <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <figure class="hero-photo reveal">
@@ -213,10 +214,26 @@
       </div>
     </section>
 
+    <section class="subsection" id="featured">
+      <div class="container">
+        <h2>Featured project</h2>
+        <p class="section-intro">My capstone from the Certified AI Product Management program (Dec 2024). Available for download with a password — message me if you'd like access.</p>
+        <article class="story-card reveal" style="max-width:760px;">
+          <span class="story-tag">AIPMM Capstone · Dec 2024</span>
+          <h3>AI Product Management — Final Presentation</h3>
+          <p>End-to-end PM artifact: problem framing, user research, model selection trade-offs (build vs. buy vs. fine-tune), evaluation strategy, rollout plan, and risk register. Useful as a reference for how I think about applied AI products from "should we build this?" to "how do we measure that it's working?"</p>
+          <p style="margin-top:14px;">
+            <button type="button" class="btn btn-primary" id="aipm-download-btn">Download (password required)</button>
+            <span style="display:inline-block;margin-left:10px;font-size:13px;color:#555;font-style:italic;">~9 MB · .pptx + bonus certificate PDF</span>
+          </p>
+        </article>
+      </div>
+    </section>
+
     <section class="subsection alt" id="skills">
       <div class="container">
         <h2>Skills</h2>
-        <p class="skills-prose">Product management — Agile, design thinking, OKR/KPI tracking, JIRA, Confluence, Figma, Mural. Growth &amp; marketing — Meta Ads (Facebook + Instagram), Google Ads (Search, Display, Performance Max), Klaviyo, Mailchimp, HubSpot CRM, lifecycle email + segmentation, GA4, Google Tag Manager, Google Search Console, AdSense, organic social (Instagram, TikTok, YouTube Shorts, LinkedIn), SEO + content ops, conversion-rate optimization. Data and engineering — SQL, Python, SAS, R, AWS, Supabase, Cloudflare Workers. AI — applied LLM work, prompt engineering, AI product management, local-model deployment on Ollama and vLLM. Healthcare standards — CDISC (SDTM, ADaM), HL7, FHIR, MedDRA, GxP. Operating side — Shopify (CustomSketch app dev, Shopify Partner), print-on-demand fulfillment (Printful + Printify), basic business brokerage, commercial real-estate underwriting (cap rate, DSCR, IRR), and Make.com automations.</p>
+        <p class="skills-prose">Product management — Agile, design thinking, OKR/KPI tracking, JIRA, Confluence, Figma, Mural. Growth &amp; marketing — Meta Ads (Facebook + Instagram), Google Ads (Search, Display, Performance Max), Klaviyo, Mailchimp, HubSpot CRM, lifecycle email + segmentation, GA4, Google Tag Manager, Google Search Console, AdSense, organic social (Instagram, TikTok, YouTube Shorts, LinkedIn), SEO + content ops, conversion-rate optimization. Data and engineering — SQL, Python, SAS, R, AWS, Supabase, Cloudflare Workers. AI &amp; LLM tooling — daily user of <strong>Claude Code</strong> and <strong>OpenAI Codex CLI</strong> for production-grade software work; comfortable across frontier models (Claude Opus / Sonnet, GPT-5, Gemini 2.5) and open-weights (Llama 3.1 / 3.3, Mistral, Qwen, DeepSeek) deployed locally on Ollama + vLLM. Following the Indian sovereign-AI stack: <strong>Sarvam-M, Krutrim, BharatGen, Bhashini</strong> (Indic-language NLP). Applied LLM work, prompt engineering, RAG, agent frameworks (LangChain, CrewAI, AutoGen), structured-output with Instructor / Outlines, Anthropic Cookbook patterns. <strong>Certified AI Product Manager</strong> (2024) — see capstone download below. Healthcare standards — CDISC (SDTM, ADaM), HL7, FHIR, MedDRA, GxP. Operating side — Shopify (CustomSketch app dev, Shopify Partner), print-on-demand fulfillment (Printful + Printify), basic business brokerage, commercial real-estate underwriting (cap rate, DSCR, IRR), Make.com automations. Open-source side project on GitHub: <a href="https://github.com/Omtatsat101/safeink" rel="noopener" target="_blank">SafeInk</a> — zero-knowledge anonymous-letter platform routing source reports to journalists.</p>
       </div>
     </section>
 
@@ -376,6 +393,25 @@
           <button type="button" class="btn btn-ghost" data-rg-close>Cancel</button>
         </div>
         <p class="cm-status" id="resume-gate-status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ─────────────── AIPM PROJECT DOWNLOAD GATE ─────────────── -->
+  <div id="aipm-gate-modal" class="cm-backdrop" hidden>
+    <div class="cm-card" role="dialog" aria-modal="true" aria-labelledby="aipm-title">
+      <button class="cm-close" aria-label="Close" data-aipm-close>&times;</button>
+      <h2 id="aipm-title">AI Product Management — capstone</h2>
+      <p class="cm-sub">This deck is gated. If I've shared the password with you, enter it below — both the presentation and the certificate will download.</p>
+      <form id="aipm-gate-form" autocomplete="off">
+        <label class="family-gate-label">Access password
+          <input type="password" id="aipm-gate-input" name="password" autocomplete="off" required />
+        </label>
+        <div class="cm-row">
+          <button type="submit" class="btn btn-primary">Unlock &amp; download</button>
+          <button type="button" class="btn btn-ghost" data-aipm-close>Cancel</button>
+        </div>
+        <p class="cm-status" id="aipm-gate-status" aria-live="polite"></p>
       </form>
     </div>
   </div>
