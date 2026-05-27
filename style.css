@@ -3,17 +3,28 @@
    riketpatel.com, mettalegacypartners.com, mettarealtypartners.com. */
 
 :root {
+  /* ============================================================
+     BRAND TOKENS — edit to rebrand. Shared across the personal +
+     metta sites. See projects/flipwala-vibeflippers/THEME-TOGGLE-SNIPPET.md
+     ============================================================ */
+  --brand-name: "Riket Patel";
+  --brand-accent: #c96f32;        /* saffron */
+  --brand-accent-2: #9a4f1b;      /* saffron deep */
+  --brand-accent-3: #1a3a2a;      /* forest (secondary brand) */
+  --brand-highlight: #b8860b;     /* gold */
+
+  /* ===== LIGHT THEME (default) — paper aesthetic ===== */
   --ink: #181413;
   --ink-soft: #4a4239;
   --muted: #6d635c;
   --paper: #fafaf7;
   --paper-alt: #f1ede4;
   --line: rgba(55, 34, 18, 0.12);
-  --saffron: #c96f32;
-  --saffron-deep: #9a4f1b;
-  --gold: #b8860b;
+  --saffron: var(--brand-accent);
+  --saffron-deep: var(--brand-accent-2);
+  --gold: var(--brand-highlight);
   --gold-light: #fdf6e3;
-  --forest: #1a3a2a;
+  --forest: var(--brand-accent-3);
   --forest-deep: #0d1f16;
   --shadow-sm: 0 2px 8px rgba(34, 22, 10, 0.06);
   --shadow-md: 0 8px 24px rgba(34, 22, 10, 0.10);
@@ -24,7 +35,39 @@
   --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
   --max: 1080px;
+  /* Surface tokens — used by .card / .topbar / inputs so dark mode actually flips them */
+  --card-bg: #fff;
+  --topbar-bg: rgba(250, 250, 247, 0.92);
+  --input-bg: #fff;
 }
+
+/* ============================================================
+   DARK THEME — warm-dark to honor the saffron + forest brand.
+   Tuned for readability: paper is warm charcoal, panels lift
+   clearly off paper, brand greens brighten so labels read,
+   surface tokens flip so cards stop staying hard-coded white.
+   ============================================================ */
+[data-theme="dark"] {
+  --ink: #f5ede0;
+  --ink-soft: #d4c8b8;
+  --muted: #a89f93;
+  --paper: #1d1815;
+  --paper-alt: #2c2520;
+  --line: rgba(255, 240, 220, 0.14);
+  --gold-light: rgba(184, 134, 11, 0.22);
+  --saffron: #e88a4f;
+  --saffron-deep: #c96f32;
+  --forest: #5fa37d;
+  --forest-deep: #4a8a6a;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.60);
+  /* Surface tokens flip to warm-dark panels */
+  --card-bg: #2c2520;
+  --topbar-bg: rgba(29, 24, 21, 0.92);
+  --input-bg: #1d1815;
+}
+html { transition: background-color 0.2s ease, color 0.2s ease; }
 
 * { box-sizing: border-box; }
 
@@ -51,7 +94,7 @@ a:hover { color: var(--saffron-deep); }
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(250, 250, 247, 0.92);
+  background: var(--topbar-bg);
   backdrop-filter: saturate(160%) blur(10px);
   -webkit-backdrop-filter: saturate(160%) blur(10px);
   border-bottom: 1px solid var(--line);
@@ -254,7 +297,7 @@ a:hover { color: var(--saffron-deep); }
   opacity: 0.5;
 }
 .t-item {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 20px 22px;
@@ -323,7 +366,7 @@ a:hover { color: var(--saffron-deep); }
   margin-top: 8px;
 }
 .edu-card {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 22px;
@@ -365,7 +408,7 @@ a:hover { color: var(--saffron-deep); }
   margin-bottom: 36px;
 }
 .brag-quote {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-left: 4px solid var(--saffron);
   border-radius: var(--radius);
@@ -444,7 +487,7 @@ a:hover { color: var(--saffron-deep); }
   margin-bottom: 36px;
 }
 .brag-card {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
@@ -530,7 +573,7 @@ a:hover { color: var(--saffron-deep); }
 }
 .slot-hint code {
   font-family: var(--font-mono);
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   padding: 2px 6px;
   border-radius: 4px;
@@ -596,7 +639,7 @@ a:hover { color: var(--saffron-deep); }
 }
 .brag-fallback code {
   font-family: var(--font-mono);
-  background: #fff;
+  background: var(--card-bg);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 12px;
@@ -618,7 +661,7 @@ a:hover { color: var(--saffron-deep); }
 .cm-backdrop[hidden] { display: none; }
 @keyframes cmFade { from { opacity: 0; } to { opacity: 1; } }
 .cm-card {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
@@ -741,7 +784,7 @@ a:hover { color: var(--saffron-deep); }
 .chip {
   display: inline-block;
   padding: 8px 16px;
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: 999px;
   font-size: 14px;
@@ -781,7 +824,7 @@ a:hover { color: var(--saffron-deep); }
   gap: 22px;
 }
 .card {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 22px;
@@ -890,7 +933,7 @@ a:hover { color: var(--saffron-deep); }
 }
 .admin-overlay[hidden] { display: none; }
 .admin-card {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
@@ -1053,7 +1096,7 @@ a:hover { color: var(--saffron-deep); }
   margin-top: 18px;
 }
 .story-card {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-left: 4px solid var(--saffron);
   border-radius: var(--radius);
@@ -1102,7 +1145,7 @@ a:hover { color: var(--saffron-deep); }
   margin-top: 18px;
 }
 .hobby-card {
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 22px;
@@ -1145,7 +1188,7 @@ a:hover { color: var(--saffron-deep); }
 .family-gate-card {
   max-width: 480px;
   margin: 56px auto;
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   padding: 36px 32px 28px;
@@ -1288,7 +1331,7 @@ a:hover { color: var(--saffron-deep); }
 }
 .ig-placeholder code {
   font-family: var(--font-mono);
-  background: #fff;
+  background: var(--card-bg);
   border: 1px solid var(--line);
   padding: 2px 6px;
   border-radius: 4px;

@@ -73,6 +73,10 @@
       <button class="tab" role="tab" data-route="projects" aria-selected="false">Products &amp; Services</button>
       <button class="tab" role="tab" data-route="family" aria-selected="false">Family <span class="tab-lock" aria-hidden="true" id="family-tab-lock">🔒</span></button>
     </div>
+    <button id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark/light mode" title="Toggle theme (Shift+D)"
+            style="background:transparent;border:1px solid var(--line);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:inline-flex;align-items:center;justify-content:center;margin-left:12px;flex-shrink:0;">
+      <span id="themeToggleIcon">&#9728;</span>
+    </button>
   </div>
 </nav>
 
@@ -501,5 +505,42 @@
 
 <script src="config.js"></script>
 <script src="app.js" defer></script>
+
+<script>
+/* THEME TOGGLE — see projects/flipwala-vibeflippers/THEME-TOGGLE-SNIPPET.md
+   Default = light (paper); toggle adds dark. Honors OS preference + persists. */
+(function() {
+  const stored = localStorage.getItem('theme');
+  const osPref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const initial = stored || osPref;
+  document.documentElement.setAttribute('data-theme', initial);
+
+  function syncIcon(theme) {
+    const icon = document.getElementById('themeToggleIcon');
+    if (icon) icon.innerHTML = theme === 'dark' ? '&#9790;' : '&#9728;';
+  }
+  window.addEventListener('DOMContentLoaded', () => syncIcon(initial));
+
+  window.toggleTheme = function() {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    syncIcon(next);
+  };
+
+  document.addEventListener('keydown', e => {
+    if (e.shiftKey && (e.key === 'D' || e.key === 'd') && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) toggleTheme();
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (localStorage.getItem('theme')) return;
+    const next = e.matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    syncIcon(next);
+  });
+})();
+</script>
+
 </body>
 </html>
