@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Riket B. Patel — Applications Pipeline</title>
+<meta name="description" content="Private application pipeline dashboard." />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-383FDKRG70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-383FDKRG70', { send_page_view: true });
+</script>
+<script src="../config.js"></script>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #333;
+    --muted: #5a5a5a;
+    --paper: #fbf8f0;
+    --line: #d4cdb8;
+    --accent: #1a3a2a;
+    --highlight: #b8860b;
+    --serif: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, Arial, sans-serif;
+    --col-pending: #fdf6e3;
+    --col-approved: #f0f7e8;
+    --col-submitted: #e8f4f7;
+    --col-followup: #f7eae8;
+    --col-interview: #faf2c7;
+    --col-offer: #d4e8d4;
+    --col-rejected: #f0e4e4;
+    --col-ghosted: #ebebeb;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  header.topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(251, 248, 240, 0.96);
+    backdrop-filter: saturate(160%) blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+  header.topbar h1 {
+    font-family: var(--serif);
+    font-size: 18pt; font-weight: 700;
+    margin: 0; letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  header.topbar .meta {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+  header.topbar a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  /* Gate */
+  #gate {
+    max-width: 460px; margin: 80px auto; padding: 40px;
+    background: #fff; border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(34, 22, 10, 0.08);
+    border: 1px solid var(--line);
+  }
+  #gate h2 { font-family: var(--serif); margin: 0 0 8px; font-size: 18pt; color: var(--ink); }
+  #gate p { color: var(--muted); margin: 0 0 20px; font-size: 14px; }
+  #gate input { display: block; width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid var(--line); border-radius: 4px; font-family: inherit; }
+  #gate .actions { margin-top: 16px; display: flex; gap: 10px; }
+  #gate button { background: var(--accent); color: #fff; border: none; padding: 9px 18px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  #gate button:hover { background: #0d1f16; }
+  #gate .ghost { background: transparent; color: var(--muted); }
+  #gate .error { color: #b00020; font-size: 13px; margin-top: 10px; }
+
+  /* Main */
+  main { display: none; padding: 24px; max-width: 1600px; margin: 0 auto; }
+  main.unlocked { display: block; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #fff; border: 1px solid var(--line); border-radius: 6px;
+    padding: 14px 16px;
+  }
+  .stat-card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .stat-card .value { font-family: var(--serif); font-size: 22pt; font-weight: 700; color: var(--accent); line-height: 1.2; margin-top: 2px; }
+  .stat-card .sub { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+  .toolbar label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .toolbar select, .toolbar input { padding: 6px 10px; border: 1px solid var(--line); border-radius: 4px; font-size: 13px; background: #fff; font-family: inherit; }
+
+  .pipeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .col {
+    background: var(--col-pending);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 12px;
+    min-height: 120px;
+  }
+  .col[data-status="approved"] { background: var(--col-approved); }
+  .col[data-status="submitted"] { background: var(--col-submitted); }
+  .col[data-status="followup_sent"] { background: var(--col-followup); }
+  .col[data-status="interview"] { background: var(--col-interview); }
+  .col[data-status="offer"] { background: var(--col-offer); }
+  .col[data-status="rejected"] { background: var(--col-rejected); }
+  .col[data-status="ghosted"] { background: var(--col-ghosted); }
+  .col .col-header {
+    font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--accent);
+    letter-spacing: 0.06em; text-transform: uppercase;
+    padding-bottom: 8px; margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex; align-items: baseline; gap: 6px;
+  }
+  .col .col-count {
+    font-family: var(--sans);
+    background: rgba(26, 58, 42, 0.12);
+    color: var(--accent);
+    font-style: normal;
+    border-radius: 999px;
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 11px 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .card .company {
+    font-family: var(--serif);
+    font-size: 13pt;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.25;
+    margin: 0;
+  }
+  .card .role {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+  .card .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .card .badges { display: flex; gap: 4px; flex-wrap: wrap; }
+  .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #fdf6e3;
+    color: var(--accent);
+    border: 1px solid var(--line);
+  }
+  .badge.type-job { background: #e7f0fe; color: #1a4ea3; border-color: #c6dcf9; }
+  .badge.type-contract { background: #fef3e7; color: #a35e1a; border-color: #f9dcc6; }
+  .badge.type-fractional { background: #f3e7fe; color: #5e1aa3; border-color: #dcc6f9; }
+  .badge.type-grant { background: #e7fef0; color: #1a8a3f; border-color: #c6f9d3; }
+  .badge.type-partner { background: #fee7f0; color: #a31a4e; border-color: #f9c6db; }
+  .badge.type-referral { background: #f0fee7; color: #5e8a1a; border-color: #d3f9c6; }
+
+  .card .salary {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .card .notes {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  .card .actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .card .actions a {
+    font-size: 11px;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    background: rgba(255,255,255,0.5);
+  }
+  .card .actions a:hover { background: var(--accent); color: #fff; }
+
+  footer.legend {
+    margin-top: 32px;
+    padding: 18px 20px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  footer.legend h3 { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 13pt; margin: 0 0 12px; letter-spacing: 0.04em; }
+  footer.legend dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; }
+  footer.legend dt { font-weight: 600; color: var(--ink); font-family: var(--sans); }
+  footer.legend dd { margin: 0; }
+
+  @media (max-width: 720px) {
+    .pipeline { grid-template-columns: 1fr; }
+    header.topbar h1 { font-size: 14pt; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Gate ─────────────────────────────────── -->
+<section id="gate">
+  <h2>🔒 Pipeline</h2>
+  <p>Private dashboard. Enter the pipeline access code.</p>
+  <form id="gate-form" autocomplete="off">
+    <input type="password" id="gate-input" placeholder="Access code" autocomplete="off" required />
+    <div class="actions">
+      <button type="submit">Unlock</button>
+      <a href="../" style="color:#5a5a5a;text-decoration:none;font-size:13px;padding:9px 14px;">← Back</a>
+    </div>
+    <p class="error" id="gate-error" style="display:none;">That's not the code.</p>
+  </form>
+</section>
+
+<!-- ── Main dashboard ──────────────────────────── -->
+<header class="topbar" id="topbar" style="display:none;">
+  <h1>📋 Applications Pipeline</h1>
+  <span class="meta" id="last-updated"></span>
+  <a href="../">← riketpatel.com</a>
+</header>
+
+<main id="main">
+  <div class="stats" id="stats"></div>
+
+  <div class="toolbar">
+    <label for="filter-type">Filter</label>
+    <select id="filter-type">
+      <option value="all">All types</option>
+      <option value="job">Jobs only</option>
+      <option value="contract">Contracts only</option>
+      <option value="fractional">Fractional only</option>
+      <option value="grant">Grants only</option>
+      <option value="partner">Partner programs only</option>
+      <option value="referral">Referrals only</option>
+    </select>
+    <label for="search">Search</label>
+    <input type="text" id="search" placeholder="company, role, slug…" />
+    <span style="font-size:11px;color:#5a5a5a;font-style:italic;margin-left:auto;">
+      Updates land via this conversation. To add a new row, message Riket's AI: <code>apply to [URL]</code> or <code>track contract [URL]</code>.
+    </span>
+  </div>
+
+  <div class="pipeline" id="pipeline"></div>
+
+  <footer class="legend">
+    <h3>Status legend</h3>
+    <dl>
+      <dt>pending_review</dt><dd>Materials drafted, awaiting Riket's eyeball</dd>
+      <dt>approved</dt><dd>Riket approved, ready to submit</dd>
+      <dt>submitted</dt><dd>Application submitted to the ATS</dd>
+      <dt>followup_sent</dt><dd>Post-submit follow-up email sent</dd>
+      <dt>interview</dt><dd>Interview scheduled or in progress</dd>
+      <dt>offer</dt><dd>Offer received</dd>
+      <dt>rejected</dt><dd>Rejected</dd>
+      <dt>ghosted</dt><dd>60+ days no response, deemed rejected</dd>
+    </dl>
+  </footer>
+</main>
+
+<script>
+  // ── Gate ────────────────────────────────────
+  // Soft lock. Defeats casual / search visitors, not real attackers.
+  // Code lives in config.js as JOBS_PIPELINE_PASSWORD. Default fallback if config missing.
+  var GATE_CODE = (window.RP_CONFIG && window.RP_CONFIG.JOBS_PIPELINE_PASSWORD) || 'Pipeline137';
+  var GATE_KEY = 'rp_jobs_unlocked';
+
+  function isUnlocked() { try { return localStorage.getItem(GATE_KEY) === '1'; } catch (e) { return false; } }
+  function unlock() {
+    try { localStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('topbar').style.display = 'flex';
+    document.getElementById('main').classList.add('unlocked');
+    loadDashboard();
+    if (window.gtag) gtag('event', 'jobs_pipeline_unlocked');
+  }
+
+  document.getElementById('gate-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = (document.getElementById('gate-input').value || '').trim();
+    if (v === GATE_CODE) unlock();
+    else document.getElementById('gate-error').style.display = 'block';
+  });
+
+  if (isUnlocked()) unlock();
+
+  // ── Dashboard ───────────────────────────────
+  var DATA = null;
+
+  var STATUS_ORDER = ['pending_review', 'approved', 'submitted', 'followup_sent', 'interview', 'offer', 'rejected', 'ghosted'];
+  var STATUS_LABELS = {
+    pending_review: 'Pending review',
+    approved: 'Approved · ready to submit',
+    submitted: 'Submitted',
+    followup_sent: 'Follow-up sent',
+    interview: 'Interview',
+    offer: 'Offer',
+    rejected: 'Rejected',
+    ghosted: 'Ghosted'
+  };
+
+  function fmtSalary(min, max) {
+    if (!min && !max) return '';
+    if (min && max) return '$' + Math.round(min/1000) + 'K – $' + Math.round(max/1000) + 'K';
+    if (max) return 'Up to $' + Math.round(max/1000) + 'K';
+    return 'From $' + Math.round(min/1000) + 'K';
+  }
+  function fmtDate(s) {
+    if (!s) return '';
+    var d = new Date(s);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function renderStats() {
+    var apps = DATA.applications || [];
+    var total = apps.length;
+    var byStatus = {};
+    STATUS_ORDER.forEach(function (s) { byStatus[s] = 0; });
+    apps.forEach(function (a) { if (byStatus[a.status] !== undefined) byStatus[a.status]++; });
+
+    var submittedPlus = byStatus.submitted + byStatus.followup_sent + byStatus.interview + byStatus.offer + byStatus.rejected + byStatus.ghosted;
+    var responded = byStatus.interview + byStatus.offer + byStatus.rejected;
+    var responseRate = submittedPlus > 0 ? Math.round((responded / submittedPlus) * 100) : null;
+    var interviewRate = submittedPlus > 0 ? Math.round((byStatus.interview + byStatus.offer) / submittedPlus * 100) : null;
+
+    var html = '';
+    html += '<div class="stat-card"><div class="label">Total tracked</div><div class="value">' + total + '</div><div class="sub">applications + opportunities</div></div>';
+    html += '<div class="stat-card"><div class="label">Live pipeline</div><div class="value">' + (byStatus.pending_review + byStatus.approved + byStatus.submitted + byStatus.followup_sent + byStatus.interview) + '</div><div class="sub">not yet closed</div></div>';
+    html += '<div class="stat-card"><div class="label">Submitted</div><div class="value">' + submittedPlus + '</div><div class="sub">across all time</div></div>';
+    html += '<div class="stat-card"><div class="label">Response rate</div><div class="value">' + (responseRate === null ? '—' : responseRate + '%') + '</div><div class="sub">' + responded + ' of ' + submittedPlus + ' submitted</div></div>';
+    html += '<div class="stat-card"><div class="label">Interview rate</div><div class="value">' + (interviewRate === null ? '—' : interviewRate + '%') + '</div><div class="sub">' + (byStatus.interview + byStatus.offer) + ' interviews / offers</div></div>';
+    document.getElementById('stats').innerHTML = html;
+  }
+
+  function cardHtml(a) {
+    var slug = a.materials_slug;
+    var actions = '';
+    if (slug) actions += '<a href="../resume/' + slug + '/" target="_blank">Résumé</a>';
+    if (slug) actions += '<a href="../resume/' + slug + '/cover-letter.html" target="_blank">Cover</a>';
+    if (slug === 'humin') actions += '<a href="../resume/' + slug + '/form-answers.html" target="_blank">Answers</a>';
+    if (slug === 'nj-innovation') actions += '<a href="../resume/' + slug + '/lever-answers.html" target="_blank">Lever Q's</a>';
+    if (a.jd_url) actions += '<a href="' + a.jd_url + '" target="_blank">JD ↗</a>';
+
+    var salary = fmtSalary(a.salary_min, a.salary_max);
+
+    return ''
+      + '<article class="card">'
+      +   '<p class="company">' + escapeHtml(a.company) + '</p>'
+      +   '<p class="role">' + escapeHtml(a.role_title) + '</p>'
+      +   (salary ? '<p class="salary">' + salary + '</p>' : '')
+      +   '<div class="row">'
+      +     '<div class="badges">'
+      +       '<span class="badge type-' + a.type + '">' + a.type + '</span>'
+      +       (a.location ? '<span class="badge">' + escapeHtml(a.location) + '</span>' : '')
+      +     '</div>'
+      +     '<span>' + (a.submitted_at ? 'submitted ' + fmtDate(a.submitted_at) : 'added ' + fmtDate(a.added_at)) + '</span>'
+      +   '</div>'
+      +   (a.notes ? '<p class="notes">' + escapeHtml(a.notes) + '</p>' : '')
+      +   (actions ? '<div class="actions">' + actions + '</div>' : '')
+      + '</article>';
+  }
+
+  function escapeHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function renderPipeline() {
+    var apps = DATA.applications || [];
+    var filterType = document.getElementById('filter-type').value;
+    var search = (document.getElementById('search').value || '').toLowerCase().trim();
+
+    var filtered = apps.filter(function (a) {
+      if (filterType !== 'all' && a.type !== filterType) return false;
+      if (search) {
+        var hay = (a.company + ' ' + a.role_title + ' ' + (a.materials_slug || '') + ' ' + (a.notes || '')).toLowerCase();
+        if (hay.indexOf(search) === -1) return false;
+      }
+      return true;
+    });
+
+    var byStatus = {};
+    STATUS_ORDER.forEach(function (s) { byStatus[s] = []; });
+    filtered.forEach(function (a) {
+      if (byStatus[a.status]) byStatus[a.status].push(a);
+    });
+
+    var html = '';
+    STATUS_ORDER.forEach(function (status) {
+      var list = byStatus[status];
+      if (list.length === 0) return;
+      html += '<section class="col" data-status="' + status + '">';
+      html += '<div class="col-header">' + STATUS_LABELS[status] + '<span class="col-count">' + list.length + '</span></div>';
+      list.forEach(function (a) { html += cardHtml(a); });
+      html += '</section>';
+    });
+
+    document.getElementById('pipeline').innerHTML = html || '<p style="color:#5a5a5a;font-style:italic;padding:32px;text-align:center;">No applications match the current filter.</p>';
+  }
+
+  function loadDashboard() {
+    fetch('../data/applications.json?v=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        DATA = data;
+        document.getElementById('last-updated').textContent = 'last updated ' + (data.last_updated || '');
+        renderStats();
+        renderPipeline();
+      })
+      .catch(function (e) {
+        document.getElementById('pipeline').innerHTML = '<p style="color:#b00020;padding:32px;text-align:center;">Failed to load pipeline data: ' + e.message + '</p>';
+      });
+  }
+
+  document.getElementById('filter-type').addEventListener('change', renderPipeline);
+  document.getElementById('search').addEventListener('input', renderPipeline);
+</script>
+
+</body>
+</html>

@@ -63,6 +63,14 @@ window.RP_CONFIG = {
    */
   AIPM_DOWNLOAD_PASSWORD: "AIPM137",
 
+  /* Applications pipeline dashboard at /jobs/ — separate password.
+   * Soft lock; the dashboard reads from data/applications.json which is
+   * publicly available in the repo. The point is to keep the URL out of
+   * search results + casual visitors, not to hide from a real attacker.
+   * Don't put genuinely sensitive data in the JSON.
+   */
+  JOBS_PIPELINE_PASSWORD: "Pipeline137",
+
   /* GitHub repo identifier used for deep-linking to the web editor. */
   GITHUB_REPO: "Omtatsat101/riketpatel-site"
 };
