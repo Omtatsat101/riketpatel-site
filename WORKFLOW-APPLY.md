@@ -114,7 +114,14 @@ interview → offer → (closed)
 
 Setup runbook: [`scripts/make-com-followup-setup.md`](scripts/make-com-followup-setup.md)
 
-After a one-time 20-minute Make.com + Slack Pipeline Bot setup, the flow becomes:
+Infrastructure pre-built (2026-05-25):
+- ✅ Make.com webhook `https://hook.us2.make.com/7x9fftdphh64z0bdwhg91sme9hgp1uvn` (hook id 2406027)
+- ✅ Supabase table `public.application_followups` in project `doxmbwizpsyqruyrmffs`
+- ✅ Webhook URL wired into `config.js`
+
+The queue lives in Supabase (NOT a Make Data Store — Make's data-store quota was full on 2026-05-25).
+
+After a one-time 15-minute Make.com + Slack Pipeline Bot setup, the flow becomes:
 
 ```
 [Riket says "mark submitted: humin" in chat]
@@ -123,22 +130,27 @@ After a one-time 20-minute Make.com + Slack Pipeline Bot setup, the flow becomes
 [Claude commits + pushes]
 [Claude runs `node scripts/queue-followup.mjs --slug humin`]
    ↓
-[Make.com Scenario A receives webhook, stores row in rp_followup_queue Data Store]
+[Make.com Scenario A receives webhook]
+   - INSERTs row into Supabase application_followups
    ↓ ⏰ 24 hours pass
    ↓
-[Make.com Scenario B (cron, every 30 min) picks up the row]
+[Make.com Scenario B (cron, every 30 min)]
+   - SELECT * FROM application_followups
+     WHERE status='pending' AND run_at < now()
    - Pulls email template from riketpatel.com/data/email-templates.json
    - Interpolates {recipient_name}, {role_title}, {company}, {slug}
    - Creates a Gmail DRAFT in riketpatel@gmail.com
-   - Posts a Block Kit card to #applications-pipeline (or main org channel)
-     via Pipeline Bot, with 3 one-click buttons:
+   - Posts a Block Kit card to #applications-pipeline via Pipeline Bot,
+     with 3 one-click buttons:
        [Open Gmail Drafts]  [View materials]  [Pipeline]
+   - UPDATE row SET status='draft_created', drafted_at=now(), gmail_draft_id=...
    ↓
 [Riket sees the Slack ping in workspace, clicks Open Gmail Drafts,
  reviews the body, edits anything off, clicks send in Gmail]
 [Riket says "mark followup sent: humin" in chat]
    ↓
 [Claude updates applications.json: status -> followup_sent]
+[Optionally also UPDATE supabase row SET sent_at=now()]
 ```
 
 The email templates are versioned in `data/email-templates.json`. To edit a template, just edit the JSON and push — Make.com fetches it fresh on every run, no Make redeploy needed.

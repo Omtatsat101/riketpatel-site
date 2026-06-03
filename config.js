@@ -81,7 +81,7 @@ window.RP_CONFIG = {
    * scripts/make-com-followup-setup.md. Until then, the queue-followup
    * helper script will skip the webhook call and just print a warning.
    */
-  MAKE_FOLLOWUP_WEBHOOK_URL: "REPLACE_WITH_MAKE_FOLLOWUP_WEBHOOK_URL",
+  MAKE_FOLLOWUP_WEBHOOK_URL: "https://hook.us2.make.com/7x9fftdphh64z0bdwhg91sme9hgp1uvn",
 
   /* Slack channel where Pipeline Bot posts the follow-up draft ping.
    * Configured in Make.com Scenario B Module 7. This value is reference

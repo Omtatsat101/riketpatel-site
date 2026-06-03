@@ -1,33 +1,51 @@
 # Make.com Follow-up Scenarios — Setup Runbook
 
-20-minute setup. Two scenarios + one Data Store + a Slack channel. After this, every application Riket marks as `submitted` automatically gets a follow-up Gmail draft created at T+24h, with Riket pinged on Slack to review and send.
+15-minute setup. Two scenarios + a Slack channel. The queue lives in Supabase (NOT a Make Data Store — your Make quota is full as of 2026-05-25 so we use Supabase as the queue). After this, every application Riket marks as `submitted` automatically gets a follow-up Gmail draft created at T+24h, with Riket pinged on Slack to review and send.
 
 Per the **Drafts-Only rule**: Make.com creates Gmail DRAFTS. Riket clicks Send.
+
+---
+
+## Pre-built infrastructure (already done)
+
+| Component | Status | Identifier |
+|---|---|---|
+| Webhook URL (Scenario A trigger) | ✅ Created via Make API | `https://hook.us2.make.com/7x9fftdphh64z0bdwhg91sme9hgp1uvn` |
+| Webhook name in Make UI | ✅ | `RP \| Application Follow-up Queue Trigger` (hook id 2406027) |
+| Supabase queue table | ✅ Migration applied | `public.application_followups` in project `doxmbwizpsyqruyrmffs` |
+| Data structure for legacy Data Store approach | Created but unused | id 390536 (kept for future if quota frees up) |
+
+You only need to do the steps below for **Scenarios A and B and the Slack bot**.
 
 ---
 
 ## Architecture in one diagram
 
 ```
-[Claude updates applications.json → status: submitted]
+[Claude says "mark submitted: humin"]
         ↓
-[Claude posts to Make.com Webhook A]
+[Claude updates applications.json → status: submitted, submitted_at: now]
+[Claude commits + pushes]
+[Claude POSTs to Make webhook → URL above]
         ↓
 [Scenario A: "RP — Queue Follow-up"]
-   - Receives slug, template_id, recipient
-   - Adds row to Data Store: rp_followup_queue
+   - Receives slug, template_id, recipient, submitted_at_iso
+   - Inserts row into Supabase application_followups
+     (uses Riket's existing Supabase connection in Make, service_role key)
    - Returns 200
         ↓ ⏰ time passes (24h, 7d, 30d depending on template)
         ↓
-[Scenario B: "RP — Process Follow-up Queue"]  ←  Runs every 30 min on schedule
-   - Searches Data Store for rows where run_at < now AND status = pending
+[Scenario B: "RP — Process Follow-up Queue"]  ← Schedule every 30 min
+   - Supabase: SELECT * FROM application_followups
+              WHERE status = 'pending' AND run_at < now()
    - For each:
-     - Fetches email-templates.json from riketpatel.com
-     - Interpolates {recipient_name}, {role_title}, etc.
-     - Creates Gmail DRAFT in riketpatel@gmail.com (account)
-     - Posts a Slack message to #applications-pipeline (or wherever Riket configured)
-       with company / role / subject preview / direct link to Gmail Drafts
-     - Marks Data Store row status = draft_created
+     - Fetches email-templates.json from riketpatel.com (live, always fresh)
+     - Interpolates {recipient_name}, {role_title}, {company}, {slug}
+     - Creates Gmail DRAFT in riketpatel@gmail.com
+     - Posts a Slack Block Kit card to #applications-pipeline via Pipeline Bot
+     - Supabase: UPDATE application_followups
+                SET status='draft_created', drafted_at=now(), gmail_draft_id=...
+                WHERE id = current
 ```
 
 The Slack notification is the only signal Riket needs — it surfaces the draft, has a one-click link to Gmail, and stays in the workspace context Riket already lives in. No more email-to-self pings.
@@ -38,11 +56,13 @@ The Slack notification is the only signal Riket needs — it surfaces the draft,
 
 | | What | Notes |
 |---|---|---|
-| ☐ | Make.com account with Core plan or better | $9/mo. You already have this per primer.md (11 active scenarios). |
-| ☐ | Gmail OAuth connection in Make for `riketpatel@gmail.com` | Used to create the Gmail drafts. |
+| ✅ | Make.com account with Core plan | 11 active scenarios per primer.md. |
+| ☐ | Gmail OAuth connection in Make for `riketpatel@gmail.com` | Used to create the Gmail drafts. May already exist. |
 | ☐ | Slack OAuth connection in Make for your main workspace | Used to ping you on Slack when a draft is ready. |
-| ☐ | A Slack channel for these notifications | Recommended: a dedicated `#applications-pipeline` channel (clean signal), OR your main org channel if you want it visible to your team. Decide before Step 3. |
-| ☐ | The slug for this scenario suite: `rp-followup` | Use this prefix on all module names so they group cleanly in Make. |
+| ☐ | Supabase connection in Make for project `doxmbwizpsyqruyrmffs` | Use service_role key (full access to public schema). May already exist. |
+| ☐ | A Slack channel for these notifications | Recommended: dedicated `#applications-pipeline` channel (clean signal), OR your main org channel for team visibility. Decide before Step 3. |
+| ✅ | Webhook URL `https://hook.us2.make.com/7x9fftdphh64z0bdwhg91sme9hgp1uvn` | Already created via Make API (hook id 2406027). Bind to Scenario A in Step 2. |
+| ✅ | Supabase table `public.application_followups` | Already migrated. |
 
 ### Slack channel + bot decision (5-min consideration before setup)
 
@@ -77,32 +97,29 @@ Skip this if you picked Option 1 (default Make integration) above.
 
 ---
 
-## Step 1 — Create the Data Store
+## Step 1 — (Skipped: queue lives in Supabase, not Make Data Store)
 
-In Make.com → **Data Stores → Add data store**.
+Make Data Store quota was full as of 2026-05-25 so this scenario suite uses Supabase as the queue. The migration creating `public.application_followups` in project `doxmbwizpsyqruyrmffs` has already been applied via the Supabase MCP. Schema:
 
-| Setting | Value |
-|---|---|
-| Name | `rp_followup_queue` |
-| Data structure | Create new (see below) |
-| Data storage size | 1 MB is fine — each row is ~1KB so this holds 1000+ queued follow-ups |
-
-**Data structure** (call it `rp_followup_row`):
-
-| Field name | Type | Notes |
+| Field | Type | Notes |
 |---|---|---|
-| `id` | Text | Primary key. Format: `{slug}__{template_id}__{submitted_at_iso}` |
-| `slug` | Text | e.g. `humin` |
-| `company` | Text | |
-| `role_title` | Text | |
-| `recipient_name` | Text | Defaults to `team` if missing |
-| `recipient_email` | Text | Gmail To: field |
-| `template_id` | Text | e.g. `humin_24h_followup` |
-| `submitted_at_iso` | Date | When the app was submitted |
-| `run_at_iso` | Date | When to create the draft (submitted_at + template.delay_hours) |
-| `status` | Text | `pending` → `draft_created` → `sent` (Riket can update manually) |
-| `drafted_at_iso` | Date | When Make created the draft |
-| `notes` | Text | Free text |
+| `id` | text PK | Format: `{slug}__{template_id}__{submitted_at_iso}` |
+| `created_at` | timestamptz | auto-default `now()` |
+| `slug` | text NOT NULL | e.g. `humin` |
+| `company` | text NOT NULL | |
+| `role_title` | text NOT NULL | |
+| `recipient_name` | text | defaults to `team` at template-render time |
+| `recipient_email` | text | Gmail To: field |
+| `template_id` | text NOT NULL | e.g. `humin_24h_followup` |
+| `submitted_at` | timestamptz NOT NULL | when the app was submitted |
+| `run_at` | timestamptz NOT NULL | when to create the draft (submitted_at + template.delay_hours) |
+| `status` | text NOT NULL | `pending` → `draft_created` → `sent` |
+| `drafted_at` | timestamptz | when Make created the draft |
+| `sent_at` | timestamptz | manually set when Riket actually sends from Gmail |
+| `gmail_draft_id` | text | the Gmail message ID for direct linkback from dashboard |
+| `notes` | text | free text |
+
+RLS is enabled with no anon policies — only Make.com (via service_role connection) can read or write this table.
 
 ---
 
@@ -114,10 +131,8 @@ This is the webhook receiver. It runs once per submission.
 
 Add module → **Webhooks → Custom Webhook**.
 
-- Click **Add** to create a new webhook
-- Name: `rp-followup-queue`
-- Click **Save** and copy the URL Make.com gives you
-- This URL becomes `RP_CONFIG.MAKE_FOLLOWUP_WEBHOOK_URL` in config.js
+- Click **Add hook** → select the pre-existing webhook **`RP | Application Follow-up Queue Trigger`**. URL: `https://hook.us2.make.com/7x9fftdphh64z0bdwhg91sme9hgp1uvn`
+- (If for some reason the pre-existing hook isn't visible, create one with name `RP | Application Follow-up Queue Trigger` and paste the URL into `config.js → MAKE_FOLLOWUP_WEBHOOK_URL` — already done at the existing URL.)
 
 **Expected payload Make will receive:**
 
@@ -134,7 +149,7 @@ Add module → **Webhooks → Custom Webhook**.
 }
 ```
 
-Click **Run once** with a sample payload to let Make learn the structure.
+Click **Determine data structure → Run once** with a sample payload to let Make learn the structure.
 
 ### Module 2 — Tools → Set Variables
 
@@ -143,11 +158,11 @@ Click **Run once** with a sample payload to let Make learn the structure.
 - Variable: `id`
   - Value: `{{1.slug}}__{{1.template_id}}__{{1.submitted_at_iso}}`
 
-### Module 3 — Data Stores → Add/Replace a Record
+### Module 3 — Supabase → Insert a Row (new module type)
 
-- Data store: `rp_followup_queue`
-- Key: `{{2.id}}` (the id from Module 2)
-- Record:
+- Connection: your existing Supabase connection (or add one with the service_role key from `API-KEYS.env → SUPABASE_SERVICE_ROLE_KEY`, base URL `https://doxmbwizpsyqruyrmffs.supabase.co`)
+- Table: `application_followups`
+- Columns to insert:
   - `id`: `{{2.id}}`
   - `slug`: `{{1.slug}}`
   - `company`: `{{1.company}}`
@@ -155,9 +170,19 @@ Click **Run once** with a sample payload to let Make learn the structure.
   - `recipient_name`: `{{1.recipient_name}}`
   - `recipient_email`: `{{1.recipient_email}}`
   - `template_id`: `{{1.template_id}}`
-  - `submitted_at_iso`: `{{1.submitted_at_iso}}`
-  - `run_at_iso`: `{{2.run_at_iso}}`
+  - `submitted_at`: `{{1.submitted_at_iso}}`
+  - `run_at`: `{{2.run_at_iso}}`
   - `status`: `pending`
+
+If Make.com's Supabase module is unavailable, use **HTTP → Make a request** instead:
+- URL: `https://doxmbwizpsyqruyrmffs.supabase.co/rest/v1/application_followups`
+- Method: `POST`
+- Headers:
+  - `apikey`: `{{SUPABASE_SERVICE_ROLE_KEY}}`
+  - `Authorization`: `Bearer {{SUPABASE_SERVICE_ROLE_KEY}}`
+  - `Content-Type`: `application/json`
+  - `Prefer`: `resolution=merge-duplicates` (upsert on id collision)
+- Body: JSON with all the columns above
 
 ### Module 4 — Webhook Response
 
@@ -186,13 +211,23 @@ Add module → **Tools → Scheduler**.
 - Run scenario: **At regular intervals**
 - Interval: **30 minutes**
 
-### Module 2 — Data Stores → Search Records
+### Module 2 — Supabase → Select Rows (or HTTP GET)
 
-- Data store: `rp_followup_queue`
+If Make's Supabase module is available:
+- Connection: same service_role connection from Scenario A
+- Table: `application_followups`
 - Filter:
-  - `status` equals `pending`
-  - AND `run_at_iso` less than `{{now}}`
-- Limit: `20` rows per run (defensive)
+  - `status` = `pending`
+  - AND `run_at` less than `now()`
+- Limit: `20` rows per run
+
+If using HTTP fallback (no Supabase module):
+- URL: `https://doxmbwizpsyqruyrmffs.supabase.co/rest/v1/application_followups?status=eq.pending&run_at=lt.{{formatDate(now; "YYYY-MM-DDTHH:mm:ssZ")}}&limit=20&order=run_at.asc`
+- Method: `GET`
+- Headers:
+  - `apikey`: `{{SUPABASE_SERVICE_ROLE_KEY}}`
+  - `Authorization`: `Bearer {{SUPABASE_SERVICE_ROLE_KEY}}`
+- Parse response: `Yes` (JSON array of rows)
 
 ### Module 3 — HTTP → Make a request
 
@@ -349,13 +384,32 @@ Notes:
 - `{{4.slug}}` and `{{4.company}}` etc. are Make.com variables from the iterator (Module 4)
 - `{{5.subject_filled}}` is the interpolated subject from Module 5
 
-### Module 8 — Data Stores → Update a Record
+### Module 8 — Supabase → Update Row (or HTTP PATCH)
 
-- Data store: `rp_followup_queue`
-- Key: `{{4.id}}`
-- Record updates:
+If Make's Supabase module is available:
+- Connection: same service_role connection
+- Table: `application_followups`
+- Filter: `id` equals `{{4.id}}`
+- Set columns:
   - `status`: `draft_created`
-  - `drafted_at_iso`: `{{now}}`
+  - `drafted_at`: `{{now}}`
+  - `gmail_draft_id`: `{{6.id}}` (the Gmail draft ID from Module 6)
+
+If using HTTP fallback:
+- URL: `https://doxmbwizpsyqruyrmffs.supabase.co/rest/v1/application_followups?id=eq.{{4.id}}`
+- Method: `PATCH`
+- Headers:
+  - `apikey`: `{{SUPABASE_SERVICE_ROLE_KEY}}`
+  - `Authorization`: `Bearer {{SUPABASE_SERVICE_ROLE_KEY}}`
+  - `Content-Type`: `application/json`
+- Body:
+  ```json
+  {
+    "status": "draft_created",
+    "drafted_at": "{{formatDate(now; \"YYYY-MM-DDTHH:mm:ssZ\")}}",
+    "gmail_draft_id": "{{6.id}}"
+  }
+  ```
 
 ### Schedule for Scenario B
 
@@ -365,36 +419,20 @@ Already set in Module 1 (every 30 min). Click **Save** and **Activate**.
 
 ## Step 4 — Wire the webhook URL into riketpatel.com
 
-After Scenario A is created, Make.com gives you a URL like:
+✅ Already done. `config.js → MAKE_FOLLOWUP_WEBHOOK_URL` is set to the live URL:
 
 ```
-https://hook.us2.make.com/abc123def456...
+https://hook.us2.make.com/7x9fftdphh64z0bdwhg91sme9hgp1uvn
 ```
-
-Edit `config.js` in the repo:
-
-```js
-window.RP_CONFIG = {
-  // ...existing config...
-
-  // Make.com follow-up webhook (Scenario A). Posting here queues a
-  // follow-up. Keep this value out of public Git if you can — even
-  // though it's a write-only endpoint, anyone with the URL can spam
-  // it. For now it lives in config.js as a soft secret.
-  MAKE_FOLLOWUP_WEBHOOK_URL: "PASTE_YOUR_MAKE_WEBHOOK_URL_HERE",
-};
-```
-
-Commit and push.
 
 ---
 
 ## Step 5 — Test the end-to-end flow
 
-Run this curl from any terminal (or have Claude do it):
+Run this curl from any terminal (or have Claude do it from chat):
 
 ```bash
-curl -X POST "$MAKE_FOLLOWUP_WEBHOOK_URL" \
+curl -X POST "https://hook.us2.make.com/7x9fftdphh64z0bdwhg91sme9hgp1uvn" \
   -H "Content-Type: application/json" \
   -d '{
     "slug": "test",
@@ -413,10 +451,11 @@ curl -X POST "$MAKE_FOLLOWUP_WEBHOOK_URL" \
 **Success looks like:**
 1. Curl returns 200 with `{"queued": true, ...}`
 2. Make.com → Scenario A history shows 1 execution, green
-3. Within 30 min, Scenario B fires and creates a Gmail draft
-4. A Slack message lands in `#applications-pipeline` (or your chosen channel) from Pipeline Bot with the 3-button card
-5. The draft is in `riketpatel@gmail.com` → Drafts folder
-6. The Data Store row's status flipped to `draft_created`
+3. Supabase: `select * from application_followups where slug='test'` returns the row
+4. Within 30 min, Scenario B fires and creates a Gmail draft
+5. A Slack message lands in `#applications-pipeline` (or your chosen channel) from Pipeline Bot with the 3-button card
+6. The draft is in `riketpatel@gmail.com` → Drafts folder
+7. The Supabase row's status flipped to `draft_created` with `gmail_draft_id` populated
 
 ---
 
