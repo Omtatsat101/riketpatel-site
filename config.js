@@ -71,6 +71,17 @@ window.RP_CONFIG = {
    */
   JOBS_PIPELINE_PASSWORD: "Pipeline137",
 
+  /* Make.com webhook for queuing follow-up emails. POST a payload
+   * matching scripts/make-com-followup-setup.md to this URL when an
+   * application status flips to "submitted". Make.com queues the
+   * follow-up and creates a Gmail DRAFT at T+24h (Drafts-Only rule).
+   *
+   * IMPORTANT: paste your real Make.com webhook URL here after running
+   * scripts/make-com-followup-setup.md. Until then, the queue-followup
+   * helper script will skip the webhook call and just print a warning.
+   */
+  MAKE_FOLLOWUP_WEBHOOK_URL: "REPLACE_WITH_MAKE_FOLLOWUP_WEBHOOK_URL",
+
   /* GitHub repo identifier used for deep-linking to the web editor. */
   GITHUB_REPO: "Omtatsat101/riketpatel-site"
 };

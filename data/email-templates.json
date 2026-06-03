@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "last_updated": "2026-05-25",
+  "_note": "Email templates for the Make.com follow-up scenarios. The Make scenario fetches this file from https://riketpatel.com/data/email-templates.json, picks the template by template_id, interpolates {placeholders}, creates a Gmail DRAFT in riketpatel@gmail.com (never auto-sends — Riket reviews and clicks send per the Drafts-Only rule).",
+  "placeholders": {
+    "{recipient_name}": "Person being addressed (defaults to 'team' if not provided)",
+    "{recipient_email}": "Recipient email (used as Gmail To: field, not in body)",
+    "{role_title}": "The role being applied for",
+    "{company}": "Company / org name",
+    "{slug}": "The materials slug under /resume/{slug}/",
+    "{submitted_date}": "Human-readable submission date (e.g. 'yesterday')"
+  },
+  "templates": {
+    "default_24h_followup": {
+      "delay_hours": 24,
+      "label": "Generic 24-hour follow-up",
+      "subject": "Following up — {role_title} application",
+      "body": "Hi {recipient_name},\n\nQuick note alongside the application I submitted {submitted_date} for the {role_title} role at {company}.\n\nI wanted to put a face and a sentence next to the file rather than let it sit in the ATS pile.\n\nThe tailored résumé and cover letter are at riketpatel.com/resume/{slug}. The broader portfolio is at riketpatel.com.\n\nAvailable any time for a conversation, even a short one.\n\nBest,\nRiket B. Patel\n(267) 408-6295  ·  riketpatel.com\nHari Om Tat Sat."
+    },
+    "humin_24h_followup": {
+      "delay_hours": 24,
+      "label": "Humin — Growth Marketing Manager (Healthy Minds app user hook)",
+      "subject": "Healthy Minds app user, just applied for the Growth Marketing role",
+      "body": "Hi {recipient_name},\n\nQuick note alongside the ApplicantPro submission I sent {submitted_date} for the Growth Marketing Manager, Lifecycle and MarTech role.\n\nI wanted to put a face and a sentence next to the file. I am a Healthy Minds Program app user, a Certified Mental Health First Aider, and a former Merck product manager who has spent the past two years running the full growth-marketing stack for my own consumer brands on my own time. The combination is unusual enough that I wanted to make sure it was visible, not just buried in the application form.\n\nThe tailored materials are at riketpatel.com/resume/humin. The AI Product Management capstone is linked from the résumé page and open without a password for your team.\n\nAvailable any time for a conversation. Thank you for the work the Healthy Minds team is doing.\n\nBest,\nRiket B. Patel\n(267) 408-6295  ·  riketpatel.com\nHari Om Tat Sat."
+    },
+    "nj_innovation_24h_followup": {
+      "delay_hours": 24,
+      "label": "NJ Innovation — Product Manager (NJ resident angle)",
+      "subject": "Quick note from a NJ resident — Product Manager role",
+      "body": "Hi {recipient_name},\n\nQuick note alongside the application I submitted {submitted_date} for the Product Manager role at the Office of Innovation.\n\nI live in Edgewater Park, NJ, about an hour from Trenton, so the residents the Office is building services for include my neighbors. I wanted to put a face and a sentence next to the file rather than let it sit in the ATS pile.\n\nThe tailored résumé and cover letter are at riketpatel.com/resume/nj-innovation. The broader portfolio is at riketpatel.com.\n\nAvailable any time for a conversation. Thank you for the work the Office is doing for the state.\n\nBest,\nRiket B. Patel\n(267) 408-6295  ·  riketpatel.com\nHari Om Tat Sat."
+    },
+    "universal_pure_24h_followup": {
+      "delay_hours": 24,
+      "label": "Universal Pure — Director of Business Development",
+      "subject": "Director of Business Development application — quick personal note",
+      "body": "Hi {recipient_name},\n\nQuick note alongside the application I submitted {submitted_date} for the Director of Business Development role.\n\nNewark is 45 minutes from my home in Edgewater Park, NJ. The role description reads like a job built for someone who has lived both sides of the commercial conversation — seven years inside Merck owning the operating outcomes, plus an active NJ business-brokerage practice today. I wanted to put a face and a sentence next to the file.\n\nThe full résumé and longer narrative are at riketpatel.com.\n\nAvailable any time for a conversation. Thank you for the time and consideration.\n\nBest,\nRiket B. Patel\n(267) 408-6295  ·  riketpatel.com\nHari Om Tat Sat."
+    },
+    "default_7d_checkin": {
+      "delay_hours": 168,
+      "label": "Generic 7-day check-in (sent if no response after the 24h follow-up)",
+      "subject": "Following up on my {role_title} application",
+      "body": "Hi {recipient_name},\n\nFollowing up on the application I sent a week ago for the {role_title} role at {company}. I know the team is likely deep in candidates. Wanted to make sure my materials landed and to offer myself for a conversation whenever it is useful.\n\nThe tailored résumé and cover letter remain at riketpatel.com/resume/{slug}.\n\nThank you again for the consideration.\n\nBest,\nRiket"
+    },
+    "default_30d_final": {
+      "delay_hours": 720,
+      "label": "Generic 30-day final ping (last touch before status -> ghosted)",
+      "subject": "Final note on my {role_title} application",
+      "body": "Hi {recipient_name},\n\nLast note from me on this one. It has been a month since I sent in my application for the {role_title} role at {company}, and I have not heard back. Wanted to close the loop on my end and let you know I am still genuinely interested if anything has shifted.\n\nIf the role is filled or the timing is off, I completely understand. The portfolio at riketpatel.com is still the easiest way to reach me if a future opening comes up.\n\nThank you for the time.\n\nBest,\nRiket"
+    }
+  }
+}

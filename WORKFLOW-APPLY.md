@@ -105,14 +105,46 @@ interview → offer → (closed)
 | Riket review + approve | 🤚 | Human-in-the-loop by design |
 | Submit application on the ATS | 🤚 | Riket clicks final submit button |
 | Mark status changes | 🤚 + ✅ | Riket says it, Claude updates the JSON |
-| Schedule 24h follow-up email | ⚠️ partial | Drafted in form-answers.html; sending is manual |
+| Queue 24h follow-up email | ✅ | Claude posts to Make.com webhook on "submitted" → Make.com schedules + creates Gmail draft at T+24h |
+| Send the follow-up | 🤚 | Riket reviews the Make-created draft in Gmail, edits, clicks send (Drafts-Only rule) |
 | Detect outcome emails (rejection / interview) | ❌ not yet | Future: Gmail MCP scans inbox + auto-updates |
 | Pre-fill form fields on ATS | ❌ not yet | Future: Chrome MCP per-platform helpers |
 
+## The follow-up layer (Make.com)
+
+Setup runbook: [`scripts/make-com-followup-setup.md`](scripts/make-com-followup-setup.md)
+
+After a one-time 20-minute Make.com setup, the flow becomes:
+
+```
+[Riket says "mark submitted: humin" in chat]
+   ↓
+[Claude updates applications.json: status -> submitted, submitted_at -> now]
+[Claude commits + pushes]
+[Claude runs `node scripts/queue-followup.mjs --slug humin`]
+   ↓
+[Make.com Scenario A receives webhook, stores row in rp_followup_queue Data Store]
+   ↓ ⏰ 24 hours pass
+   ↓
+[Make.com Scenario B (cron, every 30 min) picks up the row]
+   - Pulls email template from riketpatel.com/data/email-templates.json
+   - Interpolates {recipient_name}, {role_title}, {company}, {slug}
+   - Creates a Gmail DRAFT in riketpatel@gmail.com
+   - Sends notification to riketpatel@hariomtatsatinvestments.com
+   ↓
+[Riket sees the notification, reviews the draft, clicks send]
+[Riket says "mark followup sent: humin" in chat]
+   ↓
+[Claude updates applications.json: status -> followup_sent]
+```
+
+The email templates are versioned in `data/email-templates.json`. To edit a template, just edit the JSON and push — Make.com fetches it fresh on every run, no Make redeploy needed.
+
 ## Future upgrades (in priority order)
 
-1. **Make.com follow-up scenario** — webhook fires when Riket says "mark submitted: {slug}", schedules an email at T+24h to the named recruiter contact.
+1. ✅ **Make.com follow-up scenarios** — done.
 2. **Gmail outcome detection** — Make.com scenario or Gmail MCP runs daily, parses inbox for application-related emails, auto-flips status to `interview`/`rejected`.
-3. **Supabase migration** — move `applications.json` to Supabase `applications` table with RLS. Required if Riket wants to share the dashboard with a referral partner, recruiter, or build the SaaS version.
-4. **Capability Statement generator** — auto-generate a 1-page PDF for contract bids (different format than a job résumé).
-5. **Productize as SaaS** — strip personal data, expose as "AI Job Application Co-Pilot." (Mode 2 in the design.)
+3. **7-day check-in template + scenario** — second follow-up queued automatically if status hasn't progressed beyond `followup_sent` after 7 days.
+4. **Supabase migration** — move `applications.json` to Supabase `applications` table with RLS. Required if Riket wants to share the dashboard with a referral partner, recruiter, or build the SaaS version.
+5. **Capability Statement generator** — auto-generate a 1-page PDF for contract bids (different format than a job résumé).
+6. **Productize as SaaS** — strip personal data, expose as "AI Job Application Co-Pilot." (Mode 2 in the design.)
