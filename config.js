@@ -74,13 +74,26 @@ window.RP_CONFIG = {
   /* Make.com webhook for queuing follow-up emails. POST a payload
    * matching scripts/make-com-followup-setup.md to this URL when an
    * application status flips to "submitted". Make.com queues the
-   * follow-up and creates a Gmail DRAFT at T+24h (Drafts-Only rule).
+   * follow-up, creates a Gmail DRAFT at T+24h (Drafts-Only rule), and
+   * pings the Slack channel below.
    *
    * IMPORTANT: paste your real Make.com webhook URL here after running
    * scripts/make-com-followup-setup.md. Until then, the queue-followup
    * helper script will skip the webhook call and just print a warning.
    */
   MAKE_FOLLOWUP_WEBHOOK_URL: "REPLACE_WITH_MAKE_FOLLOWUP_WEBHOOK_URL",
+
+  /* Slack channel where Pipeline Bot posts the follow-up draft ping.
+   * Configured in Make.com Scenario B Module 7. This value is reference
+   * only (Make.com is the actual source of truth). Update both here and
+   * in Make if you change channels.
+   *
+   * Recommended: a dedicated channel like #applications-pipeline so the
+   * signal stays clean. Or use your main org channel if you want the
+   * team to see it.
+   */
+  SLACK_PIPELINE_CHANNEL: "#applications-pipeline",
+  SLACK_PIPELINE_BOT_NAME: "Pipeline Bot",
 
   /* GitHub repo identifier used for deep-linking to the web editor. */
   GITHUB_REPO: "Omtatsat101/riketpatel-site"

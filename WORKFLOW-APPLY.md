@@ -110,11 +110,11 @@ interview → offer → (closed)
 | Detect outcome emails (rejection / interview) | ❌ not yet | Future: Gmail MCP scans inbox + auto-updates |
 | Pre-fill form fields on ATS | ❌ not yet | Future: Chrome MCP per-platform helpers |
 
-## The follow-up layer (Make.com)
+## The follow-up layer (Make.com + Slack)
 
 Setup runbook: [`scripts/make-com-followup-setup.md`](scripts/make-com-followup-setup.md)
 
-After a one-time 20-minute Make.com setup, the flow becomes:
+After a one-time 20-minute Make.com + Slack Pipeline Bot setup, the flow becomes:
 
 ```
 [Riket says "mark submitted: humin" in chat]
@@ -130,15 +130,20 @@ After a one-time 20-minute Make.com setup, the flow becomes:
    - Pulls email template from riketpatel.com/data/email-templates.json
    - Interpolates {recipient_name}, {role_title}, {company}, {slug}
    - Creates a Gmail DRAFT in riketpatel@gmail.com
-   - Sends notification to riketpatel@hariomtatsatinvestments.com
+   - Posts a Block Kit card to #applications-pipeline (or main org channel)
+     via Pipeline Bot, with 3 one-click buttons:
+       [Open Gmail Drafts]  [View materials]  [Pipeline]
    ↓
-[Riket sees the notification, reviews the draft, clicks send]
+[Riket sees the Slack ping in workspace, clicks Open Gmail Drafts,
+ reviews the body, edits anything off, clicks send in Gmail]
 [Riket says "mark followup sent: humin" in chat]
    ↓
 [Claude updates applications.json: status -> followup_sent]
 ```
 
 The email templates are versioned in `data/email-templates.json`. To edit a template, just edit the JSON and push — Make.com fetches it fresh on every run, no Make redeploy needed.
+
+The Slack notification is the only signal needed — surfaces the draft + gives one-click access to Gmail. No more email-to-self pings cluttering the master inbox.
 
 ## Future upgrades (in priority order)
 

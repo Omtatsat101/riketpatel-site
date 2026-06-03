@@ -1,6 +1,6 @@
 # Make.com Follow-up Scenarios — Setup Runbook
 
-20-minute setup. Two scenarios + one Data Store. After this, every application Riket marks as `submitted` automatically gets a follow-up Gmail draft created at T+24h, with Riket notified via the master inbox to review and send.
+20-minute setup. Two scenarios + one Data Store + a Slack channel. After this, every application Riket marks as `submitted` automatically gets a follow-up Gmail draft created at T+24h, with Riket pinged on Slack to review and send.
 
 Per the **Drafts-Only rule**: Make.com creates Gmail DRAFTS. Riket clicks Send.
 
@@ -24,10 +24,13 @@ Per the **Drafts-Only rule**: Make.com creates Gmail DRAFTS. Riket clicks Send.
    - For each:
      - Fetches email-templates.json from riketpatel.com
      - Interpolates {recipient_name}, {role_title}, etc.
-     - Creates Gmail DRAFT in riketpatel@gmail.com
-     - Emails Riket at riketpatel@hariomtatsatinvestments.com: "Draft ready for {company}"
+     - Creates Gmail DRAFT in riketpatel@gmail.com (account)
+     - Posts a Slack message to #applications-pipeline (or wherever Riket configured)
+       with company / role / subject preview / direct link to Gmail Drafts
      - Marks Data Store row status = draft_created
 ```
+
+The Slack notification is the only signal Riket needs — it surfaces the draft, has a one-click link to Gmail, and stays in the workspace context Riket already lives in. No more email-to-self pings.
 
 ---
 
@@ -37,8 +40,40 @@ Per the **Drafts-Only rule**: Make.com creates Gmail DRAFTS. Riket clicks Send.
 |---|---|---|
 | ☐ | Make.com account with Core plan or better | $9/mo. You already have this per primer.md (11 active scenarios). |
 | ☐ | Gmail OAuth connection in Make for `riketpatel@gmail.com` | Used to create the Gmail drafts. |
-| ☐ | Gmail OAuth (or just SMTP) for `riketpatel@hariomtatsatinvestments.com` | Used for the notification email. |
+| ☐ | Slack OAuth connection in Make for your main workspace | Used to ping you on Slack when a draft is ready. |
+| ☐ | A Slack channel for these notifications | Recommended: a dedicated `#applications-pipeline` channel (clean signal), OR your main org channel if you want it visible to your team. Decide before Step 3. |
 | ☐ | The slug for this scenario suite: `rp-followup` | Use this prefix on all module names so they group cleanly in Make. |
+
+### Slack channel + bot decision (5-min consideration before setup)
+
+You have three reasonable options for **who/what posts the message in Slack**:
+
+1. **Make.com app integration (default)** — Make's built-in Slack module posts as "Make" / "Make.com" using your personal OAuth. Simple, no extra setup, but the sender name is "Make".
+
+2. **Custom Slack app / bot (recommended)** — Create a Slack app in your workspace called something like "Pipeline Bot" or "Application Tracker" with a friendly icon. Posts under that name. Looks like a real agent. Takes 5 extra min.
+
+3. **Incoming webhook** — Slack's old-school incoming webhook URL, fully customizable sender name + icon per-post. Simplest of all but loses Block Kit interactivity.
+
+**Recommended:** Option 2 (Custom Slack app). The 5 extra minutes pay off forever in clarity. Quick steps in Step 0 below.
+
+---
+
+## Step 0 — Create the Pipeline Bot in Slack (5 min, optional but recommended)
+
+Skip this if you picked Option 1 (default Make integration) above.
+
+1. Go to https://api.slack.com/apps → **Create New App** → **From scratch**
+2. **App name:** `Pipeline Bot` (or `Application Tracker`, or whatever you want)
+3. **Workspace:** select your main org workspace
+4. After creation, go to **OAuth & Permissions** in the left sidebar
+5. Under **Bot Token Scopes**, add:
+   - `chat:write` (post messages)
+   - `chat:write.customize` (use custom username/icon per post — optional)
+   - `channels:read` (find channels)
+6. Click **Install to Workspace** at the top, authorize
+7. Copy the **Bot User OAuth Token** (starts with `xoxb-`) — you'll paste this in Make's Slack connection setup
+8. Optional polish: under **Basic Information** → **Display Information**, give the bot a name, icon, and short description. The icon shows up on every message.
+9. In Slack itself, invite the bot to your target channel: `/invite @Pipeline Bot` from the channel
 
 ---
 
@@ -211,22 +246,108 @@ For each queued row, pick the right template from Module 3's output:
 - Content: `{{5.body_filled}}`
 - Content type: `Text` (not HTML)
 
-### Module 7 — Email → Send an Email (notification to master inbox)
+### Module 7 — Slack → Create a Message (notification)
 
-- Connection: `riketpatel@hariomtatsatinvestments.com` (or any SMTP you trust)
-- To: `riketpatel@hariomtatsatinvestments.com`
-- Subject: `📬 Follow-up draft ready: {{4.company}}`
-- Content:
+This is the ping that surfaces the draft in your workspace. Use the Pipeline Bot from Step 0 if you set one up, otherwise the default Make integration.
+
+- **Connection:** the Slack connection you set up (Pipeline Bot or Make default)
+- **Channel:** the channel you picked. Make supports either:
+  - Channel name: `#applications-pipeline` (or your main org channel)
+  - Or channel ID: `C0123ABCDEF` (more reliable; copy from Slack channel details)
+- **Message text** (used as the fallback for notifications and the search index):
   ```
-  Make.com just created a Gmail draft for the {{4.role_title}} role at {{4.company}}.
-
-  Draft is in riketpatel@gmail.com. Review the body, edit anything that needs your voice, and send.
-
-  Pipeline row: {{4.id}}
-  Subject: {{5.subject_filled}}
-
-  When sent, reply in chat: "mark followup sent: {{4.slug}}"
+  📬 Follow-up draft ready: {{4.company}} — {{4.role_title}}
   ```
+- **Blocks** (Block Kit JSON — paste this in the Blocks field):
+
+```json
+[
+  {
+    "type": "header",
+    "text": {
+      "type": "plain_text",
+      "text": "📬 Follow-up draft ready",
+      "emoji": true
+    }
+  },
+  {
+    "type": "section",
+    "fields": [
+      {
+        "type": "mrkdwn",
+        "text": "*Company:*\n{{4.company}}"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Role:*\n{{4.role_title}}"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Slug:*\n`{{4.slug}}`"
+      },
+      {
+        "type": "mrkdwn",
+        "text": "*Template:*\n`{{4.template_id}}`"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": "*Subject preview:*\n{{5.subject_filled}}"
+    }
+  },
+  {
+    "type": "actions",
+    "elements": [
+      {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "text": "Open Gmail Drafts",
+          "emoji": true
+        },
+        "url": "https://mail.google.com/mail/u/0/#drafts",
+        "style": "primary"
+      },
+      {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "text": "View materials",
+          "emoji": true
+        },
+        "url": "https://riketpatel.com/resume/{{4.slug}}/"
+      },
+      {
+        "type": "button",
+        "text": {
+          "type": "plain_text",
+          "text": "Pipeline",
+          "emoji": true
+        },
+        "url": "https://riketpatel.com/jobs/"
+      }
+    ]
+  },
+  {
+    "type": "context",
+    "elements": [
+      {
+        "type": "mrkdwn",
+        "text": "Review the draft, edit the parts that need your voice, click send. Then reply in Claude chat: `mark followup sent: {{4.slug}}`"
+      }
+    ]
+  }
+]
+```
+
+Notes:
+- The 3-button row gives you one-click access to: the Gmail draft, the tailored materials, and the dashboard
+- The context line at the bottom reminds you of the chat trigger to flip status
+- `{{4.slug}}` and `{{4.company}}` etc. are Make.com variables from the iterator (Module 4)
+- `{{5.subject_filled}}` is the interpolated subject from Module 5
 
 ### Module 8 — Data Stores → Update a Record
 
@@ -293,7 +414,7 @@ curl -X POST "$MAKE_FOLLOWUP_WEBHOOK_URL" \
 1. Curl returns 200 with `{"queued": true, ...}`
 2. Make.com → Scenario A history shows 1 execution, green
 3. Within 30 min, Scenario B fires and creates a Gmail draft
-4. You get the notification email at the master inbox
+4. A Slack message lands in `#applications-pipeline` (or your chosen channel) from Pipeline Bot with the 3-button card
 5. The draft is in `riketpatel@gmail.com` → Drafts folder
 6. The Data Store row's status flipped to `draft_created`
 
