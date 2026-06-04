@@ -116,6 +116,16 @@ window.RP_CONFIG = {
    */
   GOOGLE_CONTACTS_WEB_APP_URL: "REPLACE_WITH_APPS_SCRIPT_WEB_APP_URL",
 
+  /* Riket OS routing endpoint — single Apps Script web app URL that
+   * the dashboards use to read live data from the "Riket OS" folder
+   * in Drive (editable sheets for wins, todos, outreach).
+   * Setup: scripts/riket-os/SETUP.md.
+   *
+   * If unset, dashboards fall through to the GitHub JSON files in
+   * data/ (the durable backup).
+   */
+  RIKET_OS_WEB_APP_URL: "REPLACE_WITH_RIKET_OS_WEB_APP_URL",
+
   /* GitHub repo identifier used for deep-linking to the web editor. */
   GITHUB_REPO: "Omtatsat101/riketpatel-site"
 };
