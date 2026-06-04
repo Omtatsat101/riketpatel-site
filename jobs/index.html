@@ -229,6 +229,12 @@
   .card .followup-state.sent { background: rgba(42, 122, 63, 0.10); color: #1a5a2a; }
   .card .followup-state .icon { font-size: 13px; }
   .card .followup-state .when { color: var(--muted); font-size: 10px; margin-left: auto; font-style: italic; }
+  .card .contacts-block { margin-top: 7px; padding: 5px 8px; background: #fcfaf2; border-radius: 3px; font-size: 10.5px; }
+  .card .contacts-block .label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; font-size: 9.5px; font-weight: 600; margin-bottom: 3px; }
+  .card .contacts-block .contact-row { display: flex; align-items: baseline; gap: 4px; padding: 1px 0; flex-wrap: wrap; }
+  .card .contacts-block .contact-name { font-weight: 600; color: var(--ink); }
+  .card .contacts-block .contact-title { color: var(--muted); font-style: italic; }
+  .card .contacts-block .contact-email { font-family: "SF Mono", Menlo, monospace; color: var(--accent); font-size: 10px; }
 
   footer.legend {
     margin-top: 32px;
@@ -411,9 +417,29 @@
       +     '<span>' + (a.submitted_at ? 'submitted ' + fmtDate(a.submitted_at) : 'added ' + fmtDate(a.added_at)) + '</span>'
       +   '</div>'
       +   (a.notes ? '<p class="notes">' + escapeHtml(a.notes) + '</p>' : '')
+      +   contactsHtml(a)
       +   followupHtml(slug)
       +   (actions ? '<div class="actions">' + actions + '</div>' : '')
       + '</article>';
+  }
+
+  function contactsHtml(a) {
+    // Build a unified contacts array: explicit a.contacts wins; legacy single-contact fallback otherwise.
+    var contacts = [];
+    if (Array.isArray(a.contacts) && a.contacts.length > 0) {
+      contacts = a.contacts;
+    } else if (a.contact_name || a.contact_email) {
+      contacts = [{ name: a.contact_name, email: a.contact_email, linkedin: a.contact_linkedin }];
+    }
+    if (contacts.length === 0) return '';
+    var rows = contacts.map(function (c) {
+      var nameStr = '<span class="contact-name">' + escapeHtml(c.name || 'TBD') + '</span>';
+      var titleStr = c.title ? '<span class="contact-title">· ' + escapeHtml(c.title) + '</span>' : '';
+      var emailStr = c.email ? '<a class="contact-email" href="mailto:' + escapeHtml(c.email) + '">' + escapeHtml(c.email) + '</a>' : '';
+      var liStr = c.linkedin ? '<a class="contact-email" href="' + escapeHtml(c.linkedin) + '" target="_blank">LinkedIn ↗</a>' : '';
+      return '<div class="contact-row">' + nameStr + ' ' + titleStr + ' ' + emailStr + ' ' + liStr + '</div>';
+    }).join('');
+    return '<div class="contacts-block"><div class="label">📇 Contacts (' + contacts.length + ')</div>' + rows + '</div>';
   }
 
   function followupHtml(slug) {

@@ -144,9 +144,35 @@ The split is: **automated/frequent → Git or Supabase. Manual/occasional → Dr
 
 ---
 
+---
+
+## Step 7 — (Optional) Drive → GitHub write-back
+
+So your Drive edits persist into the GitHub repo as the durable backup:
+
+1. Generate a **fine-grained Personal Access Token** at https://github.com/settings/tokens?type=beta
+   - Repository access: **Only select repositories** → `riketpatel-site`
+   - Permissions: **Contents** → **Read and write** (just the `data/` folder is fine if your token UI supports path restrictions)
+   - Expiration: 1 year is fine
+2. In Apps Script → **Project Settings** (gear icon, left sidebar) → scroll to **Script properties** → **Add script property**:
+   - Property: `GITHUB_TOKEN`
+   - Value: paste the token (starts with `github_pat_`)
+3. Run `syncSheetsToGitHub()` once manually to verify:
+   - Should log `Committed data/wins.json → sha abc1234` for each file
+   - Or `No diff for data/X.json, skipping commit.` if nothing changed
+4. Run `setupGitHubSyncTrigger()` to install a 6-hour cron:
+   - Every 6 hours, the script checks all three sheets and commits any diffs
+   - Skips files where Drive content matches the current Git version (no spurious commits)
+
+When you edit a Drive sheet, the change shows up in the riketpatel.com dashboards within seconds (live read via routing endpoint), then lands in Git on the next 6-hour cron.
+
+To force an immediate sync (e.g., before closing your laptop), run `syncSheetsToGitHub()` from the Apps Script editor.
+
+---
+
 ## Future enhancements
 
-1. **Write-back to GitHub** — when a Drive sheet changes, this script commits the regenerated JSON to `riketpatel-site/data/*.json` via the GitHub API. Requires a PAT in Script Properties.
-2. **Daily snapshot to 07-Output/** — generate a PDF of `/digest/` content and drop it in `07-Output/Daily Briefs/{YYYY-MM-DD}.pdf` every morning. Email the link.
-3. **Weekly summary** — every Friday, generate a summary doc covering shipped wins this week + applied jobs + drafted follow-ups + interviews scheduled.
-4. **Move Personal Development structure under here** — migrate `5 - Personal Development/` from local Desktop into `Riket OS / 03-Capability` so it's all in one tree.
+1. **Daily snapshot to 07-Output/** — generate a PDF of `/digest/` content and drop it in `07-Output/Daily Briefs/{YYYY-MM-DD}.pdf` every morning. Email the link.
+2. **Weekly summary** — every Friday, generate a summary doc covering shipped wins this week + applied jobs + drafted follow-ups + interviews scheduled.
+3. **Move Personal Development structure under here** — migrate `5 - Personal Development/` from local Desktop into `Riket OS / 03-Capability` so it's all in one tree.
+4. **Conflict resolution** — if Drive and GitHub diverge (Riket edited Drive AND Claude edited GitHub between syncs), the current behavior is "Drive wins" on the 6-hour cron. A smarter merge could check `last_synced_at` timestamps per row.

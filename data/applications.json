@@ -20,6 +20,10 @@
     "referral": "Real estate or business brokerage referral",
     "partner": "Partner program (Klaviyo, Shopify, etc.)"
   },
+  "_contacts_schema": {
+    "note": "Each application can now carry multiple named contacts via the `contacts` array (recruiter, hiring manager, peer interviewer, etc.). The legacy `contact_name` / `contact_email` / `contact_linkedin` fields still work as the primary contact and are auto-promoted to contacts[0] if `contacts` is empty.",
+    "contact_fields": ["name", "title", "email", "linkedin", "phone", "first_contacted_at", "last_contacted_at", "notes"]
+  },
   "applications": [
     {
       "id": "humin-2026-05-25",
@@ -41,6 +45,18 @@
       "contact_name": null,
       "contact_email": null,
       "contact_linkedin": null,
+      "contacts": [
+        {
+          "name": "VP of Marketing",
+          "title": "Hiring Manager (named in JD reports-to)",
+          "email": null,
+          "linkedin": null,
+          "phone": null,
+          "first_contacted_at": null,
+          "last_contacted_at": null,
+          "notes": "Find name on LinkedIn before submitting. Search 'Humin VP marketing' or 'Healthy Minds Innovations marketing leader'."
+        }
+      ],
       "source": "direct_search",
       "notes": "Strong fit. Mental Health First Aider + Healthy Minds Program app user hook. 9k Kiddie Brands email list, June launch wave framing."
     },
@@ -64,6 +80,18 @@
       "contact_name": "Heather",
       "contact_email": "heather@innovation.nj.gov",
       "contact_linkedin": null,
+      "contacts": [
+        {
+          "name": "Heather",
+          "title": "Application contact (named in JD)",
+          "email": "heather@innovation.nj.gov",
+          "linkedin": null,
+          "phone": null,
+          "first_contacted_at": null,
+          "last_contacted_at": null,
+          "notes": "Primary application contact per the JD's 'contact heather@innovation.nj.gov for questions' line."
+        }
+      ],
       "source": "innovation.nj.gov/join",
       "notes": "Bullseye fit. NJ resident angle + civic-tech instinct (SafeInk + KiddieWordle). Heather is the named contact."
     },

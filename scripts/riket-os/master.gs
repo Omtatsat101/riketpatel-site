@@ -309,13 +309,208 @@ function jsonResponse_(obj, status) {
 	return out;
 }
 
+// ── GitHub write-back (Drive → GitHub JSON) ────────────────────────────────
+//
+// When you hand-edit a sheet in Drive, this serializes the current Drive
+// state back into the GitHub repo's data/*.json files so:
+//   1. Git remains the durable backup
+//   2. The dashboards work even if the Apps Script web app is unreachable
+//   3. The repo log shows the diff per edit (small audit trail)
+//
+// Required Script Property:
+//   GITHUB_TOKEN  → a fine-grained PAT for Omtatsat101/riketpatel-site with
+//                    Contents: read+write on the data/ folder. Generate at
+//                    https://github.com/settings/tokens?type=beta
+//
+// Optional Script Properties:
+//   GITHUB_REPO_OWNER  → defaults to "Omtatsat101"
+//   GITHUB_REPO_NAME   → defaults to "riketpatel-site"
+//   GITHUB_BRANCH      → defaults to "main"
+
+var GITHUB_DEFAULT_OWNER  = "Omtatsat101";
+var GITHUB_DEFAULT_REPO   = "riketpatel-site";
+var GITHUB_DEFAULT_BRANCH = "main";
+
+function getGitHubConfig_() {
+	var props = PropertiesService.getScriptProperties();
+	var token = props.getProperty("GITHUB_TOKEN");
+	if (!token) throw new Error("Set GITHUB_TOKEN in Script Properties (Apps Script → Project Settings → Script properties).");
+	return {
+		token: token,
+		owner: props.getProperty("GITHUB_REPO_OWNER") || GITHUB_DEFAULT_OWNER,
+		repo:  props.getProperty("GITHUB_REPO_NAME")  || GITHUB_DEFAULT_REPO,
+		branch: props.getProperty("GITHUB_BRANCH")    || GITHUB_DEFAULT_BRANCH,
+	};
+}
+
+// Serializers per source key. Each takes raw sheet rows and returns the
+// JSON shape the dashboards expect.
+
+function serializeWins_(rows) {
+	return {
+		schema_version: 1,
+		last_updated: new Date().toISOString().slice(0, 10),
+		_note: "Source of truth: Drive sheet 'Wins'. Synced via riket-os/master.gs syncSheetsToGitHub.",
+		wins: rows.map(function (r) {
+			return {
+				id: String(r.id || ""),
+				category: String(r.category || ""),
+				date: String(r.date || ""),
+				title: String(r.title || ""),
+				detail: String(r.detail || ""),
+				tags: String(r.tags || "").split(",").map(function (t) { return t.trim(); }).filter(Boolean),
+			};
+		}).filter(function (w) { return w.title; }),
+	};
+}
+
+function serializeTodos_(rows) {
+	return {
+		schema_version: 1,
+		last_updated: new Date().toISOString().slice(0, 10),
+		_note: "Source of truth: Drive sheet 'Email Todos'. Synced via riket-os/master.gs syncSheetsToGitHub.",
+		todos: rows.map(function (r) {
+			return {
+				id: String(r.id || ""),
+				from_name: r.from_name || null,
+				from_email: r.from_email || null,
+				subject: r.subject || null,
+				received_at: r.received_at || null,
+				action: String(r.action || ""),
+				due_at: r.due_at || null,
+				priority: String(r.priority || "medium"),
+				status: String(r.status || "open"),
+				linked_app: r.linked_app || null,
+				notes: r.notes || null,
+			};
+		}).filter(function (t) { return t.action; }),
+	};
+}
+
+function serializeOutreach_(rows) {
+	return {
+		schema_version: 1,
+		last_updated: new Date().toISOString().slice(0, 10),
+		_note: "Source of truth: Drive sheet 'Outreach'. Synced via riket-os/master.gs syncSheetsToGitHub.",
+		outreach: rows.map(function (r) {
+			return {
+				id: String(r.id || ""),
+				target_company: String(r.target_company || ""),
+				target_person: r.target_person || null,
+				target_title: r.target_title || null,
+				target_linkedin: r.target_linkedin || null,
+				channel: String(r.channel || ""),
+				purpose: r.purpose || null,
+				first_touch_date: r.first_touch_date || null,
+				last_touch_date: r.last_touch_date || null,
+				touch_count: Number(r.touch_count) || 0,
+				status: String(r.status || "cold"),
+				next_action_date: r.next_action_date || null,
+				next_action: r.next_action || null,
+				notes: r.notes || null,
+			};
+		}).filter(function (o) { return o.target_company; }),
+	};
+}
+
+function readSheetRows_(sheetId) {
+	var sheet = SpreadsheetApp.openById(sheetId).getSheets()[0];
+	if (sheet.getLastRow() < 2) return [];
+	var values = sheet.getRange(1, 1, sheet.getLastRow(), sheet.getLastColumn()).getValues();
+	var headers = values[0];
+	return values.slice(1).map(function (row) {
+		var obj = {};
+		headers.forEach(function (h, i) { obj[String(h)] = row[i]; });
+		return obj;
+	});
+}
+
+// Encode for GitHub Contents API (base64 of UTF-8 bytes).
+function base64Utf8_(str) {
+	return Utilities.base64Encode(str, Utilities.Charset.UTF_8);
+}
+
+function githubGetFile_(cfg, path) {
+	var url = "https://api.github.com/repos/" + cfg.owner + "/" + cfg.repo + "/contents/" + path + "?ref=" + cfg.branch;
+	var res = UrlFetchApp.fetch(url, {
+		method: "get",
+		muteHttpExceptions: true,
+		headers: { Authorization: "Bearer " + cfg.token, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" },
+	});
+	if (res.getResponseCode() === 404) return null;
+	if (res.getResponseCode() !== 200) throw new Error("GET " + path + " → " + res.getResponseCode() + " " + res.getContentText().slice(0, 200));
+	return JSON.parse(res.getContentText());
+}
+
+function githubPutFile_(cfg, path, content, sha, message) {
+	var url = "https://api.github.com/repos/" + cfg.owner + "/" + cfg.repo + "/contents/" + path;
+	var payload = {
+		message: message,
+		content: base64Utf8_(content),
+		branch: cfg.branch,
+	};
+	if (sha) payload.sha = sha;
+	var res = UrlFetchApp.fetch(url, {
+		method: "put",
+		contentType: "application/json",
+		muteHttpExceptions: true,
+		headers: { Authorization: "Bearer " + cfg.token, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" },
+		payload: JSON.stringify(payload),
+	});
+	var code = res.getResponseCode();
+	if (code !== 200 && code !== 201) throw new Error("PUT " + path + " → " + code + " " + res.getContentText().slice(0, 300));
+	return JSON.parse(res.getContentText());
+}
+
+function syncOneToGitHub_(cfg, sourceKey, path, serializer) {
+	var props = PropertiesService.getScriptProperties();
+	var sheetId = props.getProperty("SHEET_ID_" + sourceKey);
+	if (!sheetId) { Logger.log("Skip " + sourceKey + " — no sheet id."); return { skipped: true }; }
+	var rows = readSheetRows_(sheetId);
+	var data = serializer(rows);
+	var nextJson = JSON.stringify(data, null, 2) + "\n";
+
+	var existing = githubGetFile_(cfg, path);
+	if (existing) {
+		var currentJson = Utilities.newBlob(Utilities.base64Decode(existing.content.replace(/\n/g, ""))).getDataAsString("UTF-8");
+		if (currentJson === nextJson) {
+			Logger.log("No diff for " + path + ", skipping commit.");
+			return { unchanged: true };
+		}
+	}
+	var msg = "riket-os: sync " + path + " from Drive (" + rows.length + " rows)";
+	var result = githubPutFile_(cfg, path, nextJson, existing ? existing.sha : null, msg);
+	Logger.log("Committed " + path + " → sha " + result.content.sha.slice(0, 7));
+	return { committed: true, sha: result.content.sha };
+}
+
+function syncSheetsToGitHub() {
+	var cfg = getGitHubConfig_();
+	var results = {
+		wins:     syncOneToGitHub_(cfg, "wins",     "data/wins.json",        serializeWins_),
+		todos:    syncOneToGitHub_(cfg, "todos",    "data/email-todos.json", serializeTodos_),
+		outreach: syncOneToGitHub_(cfg, "outreach", "data/outreach.json",    serializeOutreach_),
+	};
+	PropertiesService.getScriptProperties().setProperty("last_sync_to_github_iso", new Date().toISOString());
+	Logger.log("Sync complete: " + JSON.stringify(results, null, 2));
+	return results;
+}
+
+function setupGitHubSyncTrigger() {
+	var triggers = ScriptApp.getProjectTriggers();
+	triggers.forEach(function (t) {
+		if (t.getHandlerFunction() === "syncSheetsToGitHub") ScriptApp.deleteTrigger(t);
+	});
+	ScriptApp.newTrigger("syncSheetsToGitHub").timeBased().everyHours(6).create();
+	Logger.log("6-hour trigger installed for syncSheetsToGitHub.");
+}
+
 // ── Manual helpers ──────────────────────────────────────────────────────────
 
 function setupScriptProperties() {
-	// Currently no manual properties to set — setup auto-creates the folder.
-	// Future: if you want this script to write back to GitHub, paste a token:
-	// PropertiesService.getScriptProperties().setProperty("GITHUB_TOKEN", "ghp_...");
-	Logger.log("No properties required. Run setupRiketOS() to create the folder structure.");
+	// Optional: paste a GitHub PAT so syncSheetsToGitHub can commit:
+	//   PropertiesService.getScriptProperties().setProperty("GITHUB_TOKEN", "ghp_...");
+	Logger.log("Run setupRiketOS() first. For Drive→GitHub sync, also set GITHUB_TOKEN in Script Properties.");
 }
 
 function showFolderUrl() {
