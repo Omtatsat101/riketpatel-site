@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Morning Brief — Riket B. Patel</title>
+<meta name="description" content="Daily aggregate view: pending todos, follow-ups ready, pipeline state, recent contacts, a rotating win." />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+<script src="../config.js"></script>
+<style>
+  :root {
+    --ink: #1a1a1a; --ink-soft: #2a2a2a; --muted: #5a5a5a;
+    --paper: #fbf8f0; --line: #d4cdb8; --accent: #1a3a2a; --highlight: #b8860b;
+    --serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, sans-serif;
+    --good: #2a7a3f;
+    --warn: #b8860b;
+    --bad: #b00020;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  header.greeting { padding: 36px 24px 24px; max-width: 880px; margin: 0 auto; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header.greeting h1 { font-family: var(--serif); font-size: 28pt; font-weight: 700; margin: 0; line-height: 1.1; letter-spacing: -0.01em; }
+  header.greeting h1 em { color: var(--accent); font-style: italic; }
+  header.greeting .date { font-size: 14px; color: var(--muted); font-style: italic; }
+  header.greeting nav { font-size: 13px; }
+  header.greeting nav a { color: var(--accent); text-decoration: none; font-weight: 600; margin-left: 14px; }
+
+  /* Gate */
+  #gate { max-width: 460px; margin: 80px auto; padding: 40px; background: #fff; border-radius: 8px; box-shadow: 0 8px 24px rgba(34, 22, 10, 0.08); border: 1px solid var(--line); }
+  #gate h2 { font-family: var(--serif); margin: 0 0 8px; font-size: 18pt; }
+  #gate p { color: var(--muted); margin: 0 0 20px; }
+  #gate input { display: block; width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid var(--line); border-radius: 4px; font-family: inherit; }
+  #gate .actions { margin-top: 16px; display: flex; gap: 10px; }
+  #gate button { background: var(--accent); color: #fff; border: none; padding: 9px 18px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  #gate .error { color: #b00020; font-size: 13px; margin-top: 10px; }
+
+  main { display: none; max-width: 880px; margin: 0 auto; padding: 24px; }
+  main.unlocked { display: block; }
+
+  .summary-bar { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 26px; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; }
+  .summary-bar .item { text-align: center; }
+  .summary-bar .item .val { font-family: var(--serif); font-size: 24pt; font-weight: 700; color: var(--accent); line-height: 1; }
+  .summary-bar .item .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  section.block { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 20px 24px; margin-bottom: 18px; }
+  section.block h2 { font-family: var(--serif); font-size: 17pt; font-weight: 700; color: var(--accent); margin: 0 0 4px; letter-spacing: -0.01em; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  section.block h2 .count { background: rgba(26,58,42,0.10); color: var(--accent); font-style: normal; font-family: var(--sans); font-size: 12px; padding: 2px 9px; border-radius: 999px; font-weight: 700; }
+  section.block .lede { font-size: 12.5px; color: var(--muted); font-style: italic; margin: 0 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  section.block .empty { padding: 12px 0; color: var(--muted); font-style: italic; font-size: 13px; }
+  section.block .more { font-size: 12px; color: var(--accent); text-decoration: none; font-weight: 600; }
+
+  /* Action items */
+  .action { padding: 10px 12px; margin-bottom: 8px; border-left: 3px solid var(--accent); background: #fcfaf2; border-radius: 4px; }
+  .action.urgent { border-left-color: var(--bad); background: #fef0f0; }
+  .action.high { border-left-color: var(--highlight); background: #fdfaf0; }
+  .action.medium { border-left-color: var(--accent); }
+  .action.low { border-left-color: var(--muted); }
+  .action .h { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .action .from { font-size: 11px; color: var(--muted); font-style: italic; }
+  .action .due { font-size: 11px; font-weight: 700; }
+  .action .due.overdue { color: var(--bad); }
+  .action .due.today { color: var(--highlight); }
+  .action .due.soon { color: var(--accent); }
+  .action .text { font-size: 13.5px; color: var(--ink); margin: 4px 0; line-height: 1.55; }
+  .action .meta { font-size: 10.5px; color: var(--muted); margin-top: 4px; }
+  .action .meta .badge { background: #fdf6e3; color: var(--accent); padding: 1px 6px; border-radius: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 4px; }
+
+  /* Pipeline status pills */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { background: #fdf6e3; color: var(--accent); padding: 6px 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+  .pill strong { font-family: var(--serif); margin-right: 4px; font-size: 14px; }
+  .pill.draft { background: #e8f4f7; color: #1a4ea3; }
+  .pill.pending { background: #fdf6e3; color: var(--warn); }
+  .pill.interview { background: #faf2c7; color: var(--warn); }
+  .pill.offer { background: #d4e8d4; color: var(--good); }
+
+  /* Follow-up cards */
+  .fu-card { background: #fcfaf2; border: 1px solid var(--line); border-radius: 4px; padding: 11px 13px; margin-bottom: 8px; }
+  .fu-card .h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .fu-card .co { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 13.5px; }
+  .fu-card .when { font-size: 11px; color: var(--muted); font-style: italic; }
+  .fu-card .role { font-size: 12px; color: var(--ink-soft); margin-top: 1px; }
+  .fu-card.draft_created { border-left: 3px solid #1a4ea3; }
+  .fu-card.pending { border-left: 3px solid var(--warn); }
+
+  /* Win panel - hero style */
+  .win-hero { background: linear-gradient(135deg, #fdf6e3 0%, #fff 100%); border: 1px solid var(--highlight); padding: 24px; border-radius: 8px; text-align: center; margin-bottom: 18px; }
+  .win-hero .label { font-family: var(--sans); font-size: 11px; color: var(--highlight); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
+  .win-hero .title { font-family: var(--serif); font-size: 19pt; font-weight: 700; color: var(--ink); line-height: 1.25; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .win-hero .detail { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin: 0 0 8px; }
+  .win-hero .date-tag { font-size: 11px; color: var(--muted); font-style: italic; }
+  .win-hero button { background: transparent; color: var(--highlight); border: 1px solid var(--highlight); padding: 4px 12px; border-radius: 3px; font-size: 11px; cursor: pointer; margin-top: 12px; font-family: inherit; }
+
+  footer { text-align: center; padding: 24px; font-size: 11px; color: var(--muted); font-style: italic; }
+
+  @media (max-width: 600px) {
+    header.greeting h1 { font-size: 22pt; }
+    .win-hero .title { font-size: 16pt; }
+  }
+</style>
+</head>
+<body>
+
+<section id="gate">
+  <h2>☀️ Morning Brief</h2>
+  <p>Private daily aggregate. Enter the code.</p>
+  <form id="gate-form" autocomplete="off">
+    <input type="password" id="gate-input" placeholder="Access code" autocomplete="off" required />
+    <div class="actions">
+      <button type="submit">Unlock</button>
+      <a href="../" style="color:#5a5a5a;text-decoration:none;font-size:13px;padding:9px 14px;">← Back</a>
+    </div>
+    <p class="error" id="gate-error" style="display:none;">That's not the code.</p>
+  </form>
+</section>
+
+<header class="greeting" id="greeting" style="display:none;">
+  <div>
+    <h1 id="hello">Hello, <em>Riket</em>.</h1>
+    <p class="date" id="today"></p>
+  </div>
+  <nav>
+    <a href="../jobs/">Pipeline</a>
+    <a href="../contacts/">Contacts</a>
+    <a href="../admin/">🛠 Admin</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- Summary bar -->
+  <div class="summary-bar" id="summary">
+    <div class="item"><div class="val" id="s-todos">…</div><div class="lbl">to-dos</div></div>
+    <div class="item"><div class="val" id="s-drafts">…</div><div class="lbl">drafts ready</div></div>
+    <div class="item"><div class="val" id="s-live">…</div><div class="lbl">live pipeline</div></div>
+    <div class="item"><div class="val" id="s-contacts7">…</div><div class="lbl">contacts (7d)</div></div>
+  </div>
+
+  <!-- Top priority — daily win reminder -->
+  <div class="win-hero" id="win-hero">
+    <div class="label">Today's reminder</div>
+    <p class="title" id="win-title">Loading…</p>
+    <p class="detail" id="win-detail"></p>
+    <p class="date-tag" id="win-date"></p>
+    <button id="win-shuffle">🎲 Another one</button>
+  </div>
+
+  <!-- What's urgent + due today -->
+  <section class="block">
+    <h2>📌 What to do today <a class="more" href="../admin/#todos">All to-dos →</a></h2>
+    <p class="lede">Sorted by priority and due date. Hides done + skipped automatically.</p>
+    <div id="todos"><div class="empty">Loading…</div></div>
+  </section>
+
+  <!-- Follow-ups ready to send -->
+  <section class="block">
+    <h2>📬 Follow-ups <a class="more" href="../jobs/">Open pipeline →</a></h2>
+    <p class="lede">Drafts the Worker created — review in Slack or Gmail and send. Plus what's queued for the next 48 hrs.</p>
+    <h3 style="font-family:var(--serif);font-size:11.5pt;margin:14px 0 6px;color:var(--ink);">✅ Drafts ready in Gmail</h3>
+    <div id="drafts-ready"><div class="empty">Loading…</div></div>
+    <h3 style="font-family:var(--serif);font-size:11.5pt;margin:14px 0 6px;color:var(--ink);">⏳ Queued for next 48 hours</h3>
+    <div id="drafts-pending"><div class="empty">Loading…</div></div>
+  </section>
+
+  <!-- Pipeline snapshot -->
+  <section class="block">
+    <h2>📋 Pipeline snapshot <a class="more" href="../jobs/">Full dashboard →</a></h2>
+    <p class="lede">Where each active application currently sits.</p>
+    <div class="pill-row" id="pipeline-pills"><div class="empty">Loading…</div></div>
+  </section>
+
+  <!-- Recent contacts -->
+  <section class="block">
+    <h2>📇 Recent contacts <a class="more" href="../contacts/">All contacts →</a></h2>
+    <p class="lede">People who showed up in your inbox in the last 7 days. Top 8 by message count.</p>
+    <div id="recent-contacts"><div class="empty">Set up the contacts sync first (see <a href="../contacts/">contacts page</a>) for this section to populate.</div></div>
+  </section>
+
+</main>
+
+<footer>Morning brief · refreshes on each visit · bookmark as your start-of-day landing. Hari Om Tat Sat.</footer>
+
+<script>
+  // Gate
+  var GATE_CODE = (window.RP_CONFIG && window.RP_CONFIG.JOBS_PIPELINE_PASSWORD) || 'Pipeline137';
+  var GATE_KEY = 'rp_jobs_unlocked';
+  function isUnlocked() { try { return localStorage.getItem(GATE_KEY) === '1'; } catch (e) { return false; } }
+  function unlock() {
+    try { localStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('greeting').style.display = 'flex';
+    document.getElementById('main').classList.add('unlocked');
+    loadBrief();
+  }
+  document.getElementById('gate-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = (document.getElementById('gate-input').value || '').trim();
+    if (v === GATE_CODE) unlock();
+    else document.getElementById('gate-error').style.display = 'block';
+  });
+  if (isUnlocked()) unlock();
+
+  // ── Helpers ───────────────────────────────────────────
+  function escapeHtml(s) {
+    if (!s && s !== 0) return '';
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function dueClass(dueAt) {
+    if (!dueAt) return '';
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var due = new Date(dueAt + 'T00:00:00');
+    var diff = (due - today) / (24 * 3600 * 1000);
+    if (diff < 0) return 'overdue';
+    if (diff < 1) return 'today';
+    if (diff < 4) return 'soon';
+    return '';
+  }
+  function fmtDue(dueAt) {
+    if (!dueAt) return 'no deadline';
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var due = new Date(dueAt + 'T00:00:00');
+    var diff = Math.round((due - today) / (24 * 3600 * 1000));
+    if (diff < 0) return 'overdue · ' + Math.abs(diff) + 'd';
+    if (diff === 0) return 'today';
+    if (diff === 1) return 'tomorrow';
+    if (diff < 7) return 'in ' + diff + 'd';
+    return new Date(dueAt + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+  function fmtRel(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return iso;
+    var diffHrs = (Date.now() - d.getTime()) / 3600000;
+    if (Math.abs(diffHrs) < 1) return 'now';
+    if (Math.abs(diffHrs) < 24) return diffHrs > 0 ? Math.round(diffHrs) + 'h ago' : 'in ' + Math.round(-diffHrs) + 'h';
+    var diffDays = diffHrs / 24;
+    if (Math.abs(diffDays) < 7) return diffDays > 0 ? Math.round(diffDays) + 'd ago' : 'in ' + Math.round(-diffDays) + 'd';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+  function greetingByHour() {
+    var h = new Date().getHours();
+    if (h < 5) return 'Late night';
+    if (h < 12) return 'Good morning';
+    if (h < 17) return 'Afternoon';
+    if (h < 21) return 'Evening';
+    return 'Late evening';
+  }
+
+  // ── Win hero ─────────────────────────────────────────
+  var ALL_WINS = [];
+  function showRandomWin() {
+    if (!ALL_WINS.length) return;
+    var w = ALL_WINS[Math.floor(Math.random() * ALL_WINS.length)];
+    document.getElementById('win-title').textContent = w.title || '';
+    document.getElementById('win-detail').textContent = w.detail || '';
+    document.getElementById('win-date').textContent = (w.category || '') + (w.date ? ' · ' + w.date : '');
+  }
+
+  // ── Loaders ──────────────────────────────────────────
+  function loadTodos() {
+    return fetch('../data/email-todos.json?v=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var open = (data.todos || []).filter(function (t) { return t.status !== 'done' && t.status !== 'skipped'; });
+        var PRIO = { urgent: 0, high: 1, medium: 2, low: 3 };
+        open.sort(function (a, b) {
+          var pa = PRIO[a.priority] || 9, pb = PRIO[b.priority] || 9;
+          if (pa !== pb) return pa - pb;
+          if (a.due_at && b.due_at) return a.due_at.localeCompare(b.due_at);
+          if (a.due_at) return -1;
+          if (b.due_at) return 1;
+          return 0;
+        });
+        document.getElementById('s-todos').textContent = open.length;
+
+        // Show top 5 in the brief
+        var top = open.slice(0, 5);
+        if (top.length === 0) {
+          document.getElementById('todos').innerHTML = '<div class="empty">All clear. Inbox zero. 🎉</div>';
+          return;
+        }
+        var html = top.map(function (t) {
+          var prio = t.priority || 'medium';
+          var dueCls = dueClass(t.due_at);
+          return '<div class="action ' + prio + '">'
+            + '<div class="h">'
+            +   '<span class="from">' + escapeHtml(t.from_name || t.from_email || 'self') + (t.subject ? ' · ' + escapeHtml(t.subject) : '') + '</span>'
+            +   '<span class="due ' + dueCls + '">' + fmtDue(t.due_at) + '</span>'
+            + '</div>'
+            + '<p class="text">' + escapeHtml(t.action) + '</p>'
+            + '<div class="meta"><span class="badge">' + prio + '</span>' + (t.linked_app ? '<a href="../jobs/" style="color:#1a3a2a;text-decoration:none;">→ ' + escapeHtml(t.linked_app) + '</a>' : '') + '</div>'
+            + '</div>';
+        }).join('');
+        if (open.length > 5) html += '<p style="font-size:11.5px;color:#5a5a5a;font-style:italic;margin:10px 0 0;text-align:center;">+ ' + (open.length - 5) + ' more in <a href="../admin/#todos" style="color:#1a3a2a;">admin</a></p>';
+        document.getElementById('todos').innerHTML = html;
+      })
+      .catch(function () {
+        document.getElementById('s-todos').textContent = '—';
+        document.getElementById('todos').innerHTML = '<div class="empty">Could not load to-dos.</div>';
+      });
+  }
+
+  function loadFollowups() {
+    var cfg = window.RP_CONFIG || {};
+    if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY) {
+      document.getElementById('s-drafts').textContent = '—';
+      return Promise.resolve();
+    }
+    return fetch(cfg.SUPABASE_URL + '/rest/v1/application_followups_admin?select=*&order=run_at.asc&limit=50', {
+      headers: { apikey: cfg.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + cfg.SUPABASE_ANON_KEY }
+    })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (rows) {
+        var now = Date.now();
+        var drafts = rows.filter(function (r) { return r.status === 'draft_created' && !r.sent_at; });
+        var soon = rows.filter(function (r) {
+          if (r.status !== 'pending') return false;
+          var runAt = new Date(r.run_at).getTime();
+          return runAt > now && runAt < now + 48 * 3600000;
+        });
+        document.getElementById('s-drafts').textContent = drafts.length;
+
+        document.getElementById('drafts-ready').innerHTML = drafts.length === 0
+          ? '<div class="empty">No drafts waiting. The Worker queues them automatically when you mark applications submitted.</div>'
+          : drafts.map(function (r) {
+              return '<div class="fu-card draft_created"><div class="h"><span class="co">' + escapeHtml(r.company) + '</span><span class="when">drafted ' + fmtRel(r.drafted_at) + '</span></div><div class="role">' + escapeHtml(r.role_title) + '</div></div>';
+            }).join('');
+
+        document.getElementById('drafts-pending').innerHTML = soon.length === 0
+          ? '<div class="empty">Nothing queued for the next 48 hours.</div>'
+          : soon.map(function (r) {
+              return '<div class="fu-card pending"><div class="h"><span class="co">' + escapeHtml(r.company) + '</span><span class="when">fires ' + fmtRel(r.run_at) + '</span></div><div class="role">' + escapeHtml(r.role_title) + '</div></div>';
+            }).join('');
+      })
+      .catch(function () {
+        document.getElementById('s-drafts').textContent = '—';
+        document.getElementById('drafts-ready').innerHTML = '<div class="empty">Could not load Supabase queue.</div>';
+        document.getElementById('drafts-pending').innerHTML = '<div class="empty"></div>';
+      });
+  }
+
+  function loadPipeline() {
+    return fetch('../data/applications.json?v=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var apps = data.applications || [];
+        var byStatus = {};
+        apps.forEach(function (a) { byStatus[a.status] = (byStatus[a.status] || 0) + 1; });
+        var live = (byStatus.pending_review || 0) + (byStatus.approved || 0) + (byStatus.submitted || 0) + (byStatus.followup_sent || 0) + (byStatus.interview || 0);
+        document.getElementById('s-live').textContent = live;
+
+        var displayOrder = [
+          { k: 'pending_review', label: 'Pending review', cls: 'pending' },
+          { k: 'approved', label: 'Ready to submit', cls: '' },
+          { k: 'submitted', label: 'Submitted', cls: 'draft' },
+          { k: 'followup_sent', label: 'Follow-up sent', cls: '' },
+          { k: 'interview', label: 'Interview', cls: 'interview' },
+          { k: 'offer', label: 'Offer', cls: 'offer' },
+          { k: 'rejected', label: 'Rejected', cls: '' },
+          { k: 'ghosted', label: 'Ghosted', cls: '' }
+        ];
+        var html = displayOrder.filter(function (o) { return byStatus[o.k]; })
+          .map(function (o) { return '<span class="pill ' + o.cls + '"><strong>' + byStatus[o.k] + '</strong>' + o.label + '</span>'; })
+          .join('');
+        document.getElementById('pipeline-pills').innerHTML = html || '<div class="empty">No applications tracked yet.</div>';
+      })
+      .catch(function () {
+        document.getElementById('s-live').textContent = '—';
+        document.getElementById('pipeline-pills').innerHTML = '<div class="empty">Could not load pipeline.</div>';
+      });
+  }
+
+  function loadContacts() {
+    var cfg = window.RP_CONFIG || {};
+    var url = cfg.GOOGLE_CONTACTS_WEB_APP_URL;
+    if (!url || url.indexOf('REPLACE_') === 0) {
+      document.getElementById('s-contacts7').textContent = '—';
+      return Promise.resolve();
+    }
+    return fetch(url)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var rows = data.contacts || [];
+        var weekAgo = Date.now() - 7 * 24 * 3600000;
+        var recent = rows.filter(function (c) {
+          if (!c.last_seen_at) return false;
+          return new Date(c.last_seen_at).getTime() >= weekAgo;
+        }).filter(function (c) {
+          var tags = String(c.tags || '').toLowerCase();
+          return tags.indexOf('automated') < 0; // exclude automated notifications
+        });
+        document.getElementById('s-contacts7').textContent = recent.length;
+        recent.sort(function (a, b) { return (Number(b.msg_count) || 0) - (Number(a.msg_count) || 0); });
+        var top = recent.slice(0, 8);
+        if (top.length === 0) {
+          document.getElementById('recent-contacts').innerHTML = '<div class="empty">No recent human contacts (automated notifications filtered out).</div>';
+          return;
+        }
+        document.getElementById('recent-contacts').innerHTML = top.map(function (c) {
+          return '<div class="action medium"><div class="h"><span class="from">' + escapeHtml(c.name || c.email) + '</span><span class="due">' + (c.msg_count || 0) + ' msgs</span></div><p class="text" style="font-family:monospace;font-size:11.5px;color:#1a3a2a;margin:2px 0;">' + escapeHtml(c.email) + '</p><div class="meta">' + escapeHtml(c.tags || '') + '</div></div>';
+        }).join('');
+      })
+      .catch(function () {
+        document.getElementById('s-contacts7').textContent = '—';
+        document.getElementById('recent-contacts').innerHTML = '<div class="empty">Could not load contacts. Set up the Apps Script first (see contacts page).</div>';
+      });
+  }
+
+  function loadWins() {
+    return fetch('../data/wins.json?v=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        ALL_WINS = data.wins || [];
+        showRandomWin();
+      })
+      .catch(function () {
+        document.getElementById('win-title').textContent = '—';
+      });
+  }
+
+  function loadBrief() {
+    // Set greeting
+    var now = new Date();
+    document.getElementById('hello').innerHTML = greetingByHour() + ', <em>Riket</em>.';
+    document.getElementById('today').textContent = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+    loadWins();
+    loadTodos();
+    loadFollowups();
+    loadPipeline();
+    loadContacts();
+
+    document.getElementById('win-shuffle').addEventListener('click', showRandomWin);
+  }
+</script>
+
+</body>
+</html>
