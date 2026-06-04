@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "_note": "Blog post manifest. The /blog/ index page reads this file. Each post is a fully static HTML page at /blog/{slug}/index.html with the Source Serif typography used across the rest of the site. To add a post, message Claude: 'new blog post: title — body' and the system generates the page + appends to this manifest.",
+  "site": {
+    "title": "Riket's Notes",
+    "tagline": "Things I'm learning about product, AI, and building useful free stuff.",
+    "author": "Riket B. Patel"
+  },
+  "posts": [
+    {
+      "slug": "why-i-left-merck-after-seven-years",
+      "title": "Why I left Merck after seven years",
+      "subtitle": "Notes on choosing to leave a Fortune-100 product role to run small ventures full-time.",
+      "date": "2026-05-25",
+      "tags": ["career", "product", "merck"],
+      "excerpt": "I spent seven years owning the product roadmap for five clinical-data systems. The work was meaningful, the people were good, the salary was real. In November 2025 I left. Here's the honest version of why.",
+      "reading_time_min": 4,
+      "published": true,
+      "url": "/blog/why-i-left-merck-after-seven-years/"
+    }
+  ]
+}

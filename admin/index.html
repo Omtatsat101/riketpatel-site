@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Riket B. Patel — Admin</title>
+<meta name="description" content="Private admin module." />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+<script src="../config.js"></script>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --ink-soft: #333;
+    --muted: #5a5a5a;
+    --paper: #fbf8f0;
+    --line: #d4cdb8;
+    --accent: #1a3a2a;
+    --highlight: #b8860b;
+    --serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, sans-serif;
+    --good: #2a7a3f;
+    --warn: #b8860b;
+    --bad: #b00020;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+  header.topbar { position: sticky; top: 0; z-index: 10; background: rgba(251, 248, 240, 0.96); backdrop-filter: saturate(160%) blur(8px); border-bottom: 1px solid var(--line); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  header.topbar h1 { font-family: var(--serif); font-size: 18pt; font-weight: 700; margin: 0; letter-spacing: -0.01em; color: var(--ink); }
+  header.topbar h1::before { content: "🛠 "; }
+  header.topbar nav { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; }
+  header.topbar nav a { color: var(--accent); text-decoration: none; font-weight: 600; padding: 4px 8px; border-radius: 3px; }
+  header.topbar nav a:hover { background: rgba(26,58,42,0.08); }
+  header.topbar .right { font-size: 12px; color: var(--muted); font-style: italic; }
+  header.topbar a.exit { color: var(--muted); }
+
+  /* ── Gate ─────────────────────────────────── */
+  #gate { max-width: 460px; margin: 80px auto; padding: 40px; background: #fff; border-radius: 8px; box-shadow: 0 8px 24px rgba(34, 22, 10, 0.08); border: 1px solid var(--line); }
+  #gate h2 { font-family: var(--serif); margin: 0 0 8px; font-size: 18pt; color: var(--ink); }
+  #gate p { color: var(--muted); margin: 0 0 20px; font-size: 14px; }
+  #gate input { display: block; width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid var(--line); border-radius: 4px; font-family: inherit; }
+  #gate .actions { margin-top: 16px; display: flex; gap: 10px; }
+  #gate button { background: var(--accent); color: #fff; border: none; padding: 9px 18px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  #gate button:hover { background: #0d1f16; }
+  #gate .error { color: var(--bad); font-size: 13px; margin-top: 10px; }
+
+  /* ── Main ─────────────────────────────────── */
+  main { display: none; padding: 24px; max-width: 1600px; margin: 0 auto; }
+  main.unlocked { display: block; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .stat-card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; }
+  .stat-card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .stat-card .value { font-family: var(--serif); font-size: 22pt; font-weight: 700; color: var(--accent); line-height: 1.2; margin-top: 2px; }
+  .stat-card .sub { font-size: 11px; color: var(--muted); font-style: italic; }
+  .stat-card.good .value { color: var(--good); }
+  .stat-card.warn .value { color: var(--warn); }
+  .stat-card.bad .value { color: var(--bad); }
+
+  .panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); gap: 16px; }
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px; }
+  .panel h2 { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 13pt; margin: 0 0 12px; letter-spacing: 0.04em; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .panel h3 { font-family: var(--serif); font-size: 11pt; margin: 14px 0 6px; color: var(--ink); }
+
+  .quick-link { display: flex; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 4px; text-decoration: none; color: var(--ink); margin-bottom: 8px; transition: all 0.1s; background: #fcfaf2; }
+  .quick-link:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .quick-link .icon { font-size: 20px; margin-right: 12px; }
+  .quick-link .title { font-weight: 600; font-size: 13px; }
+  .quick-link .desc { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .quick-link:hover .desc { color: rgba(255,255,255,0.8); }
+
+  table.queue { width: 100%; border-collapse: collapse; font-size: 12px; }
+  table.queue th { text-align: left; padding: 6px 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); border-bottom: 1px solid var(--line); font-weight: 600; }
+  table.queue td { padding: 8px; border-bottom: 1px solid #f0eadc; font-size: 12px; vertical-align: top; }
+  table.queue td.slug { font-family: "SF Mono", Menlo, monospace; color: var(--accent); font-weight: 600; font-size: 11px; }
+  .status-badge { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .status-badge.pending { background: #fdf6e3; color: var(--warn); }
+  .status-badge.draft_created { background: #e8f4f7; color: #1a4ea3; }
+  .status-badge.sent { background: #e7fef0; color: var(--good); }
+
+  .empty-state { padding: 24px; text-align: center; color: var(--muted); font-style: italic; font-size: 13px; }
+
+  .raw-link { font-size: 11px; color: var(--muted); text-decoration: none; border-bottom: 1px dotted var(--line); }
+</style>
+</head>
+<body>
+
+<!-- ── Gate ─────────────────────────────────── -->
+<section id="gate">
+  <h2>🛠 Admin</h2>
+  <p>Private. Enter the master code.</p>
+  <form id="gate-form" autocomplete="off">
+    <input type="password" id="gate-input" placeholder="Master code" autocomplete="off" required />
+    <div class="actions">
+      <button type="submit">Unlock</button>
+      <a href="../" style="color:#5a5a5a;text-decoration:none;font-size:13px;padding:9px 14px;">← Back</a>
+    </div>
+    <p class="error" id="gate-error" style="display:none;">That's not the code.</p>
+  </form>
+</section>
+
+<!-- ── Main ─────────────────────────────────── -->
+<header class="topbar" id="topbar" style="display:none;">
+  <h1>Admin</h1>
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#queue">Queue</a>
+    <a href="#apps">Apps</a>
+    <a href="#blog">Blog</a>
+    <a href="#tools">Tools</a>
+  </nav>
+  <span class="right" id="last-checked"></span>
+  <a href="../" class="exit">← Public site</a>
+</header>
+
+<main id="main">
+
+  <!-- Overview -->
+  <section id="overview">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="label">Pipeline rows</div><div class="value" id="stat-apps">…</div><div class="sub">in applications.json</div></div>
+      <div class="stat-card warn"><div class="label">Live pipeline</div><div class="value" id="stat-live">…</div><div class="sub">pending or approved</div></div>
+      <div class="stat-card good"><div class="label">Submitted (all time)</div><div class="value" id="stat-submitted">…</div><div class="sub">past submit button</div></div>
+      <div class="stat-card"><div class="label">Queue items pending</div><div class="value" id="stat-queue-pending">…</div><div class="sub">in Supabase application_followups</div></div>
+      <div class="stat-card good"><div class="label">Drafts created</div><div class="value" id="stat-drafts">…</div><div class="sub">Gmail follow-up drafts</div></div>
+      <div class="stat-card"><div class="label">Blog posts</div><div class="value" id="stat-blog">…</div><div class="sub">in data/blog-posts.json</div></div>
+    </div>
+  </section>
+
+  <!-- Queue + Apps + Blog + Tools panels -->
+  <div class="panels">
+
+    <!-- Follow-up queue -->
+    <div class="panel" id="queue">
+      <h2>Follow-up queue</h2>
+      <div id="queue-content">
+        <div class="empty-state">Loading…</div>
+      </div>
+      <p style="font-size:11px;color:#5a5a5a;font-style:italic;margin:10px 0 0;">Source: Supabase view <code>application_followups_admin</code> (recipient details masked). <a href="https://supabase.com/dashboard/project/doxmbwizpsyqruyrmffs/editor" class="raw-link" target="_blank">Open in Supabase ↗</a></p>
+    </div>
+
+    <!-- Quick actions: Apps -->
+    <div class="panel" id="apps">
+      <h2>Applications &amp; Contracts</h2>
+      <a class="quick-link" href="../jobs/" target="_blank">
+        <span class="icon">📋</span>
+        <div>
+          <div class="title">Pipeline dashboard (read-only)</div>
+          <div class="desc">All applications + statuses, public-facing JSON</div>
+        </div>
+      </a>
+      <a class="quick-link" href="../data/applications.json" target="_blank">
+        <span class="icon">🗄</span>
+        <div>
+          <div class="title">applications.json (raw)</div>
+          <div class="desc">Edit by messaging Claude: "apply to [URL]" or "mark submitted: [slug]"</div>
+        </div>
+      </a>
+      <a class="quick-link" href="../capability-statement/" target="_blank">
+        <span class="icon">📄</span>
+        <div>
+          <div class="title">Capability statement</div>
+          <div class="desc">For contract bids, grants, cold outreach</div>
+        </div>
+      </a>
+      <a class="quick-link" href="../negotiate/" target="_blank">
+        <span class="icon">💬</span>
+        <div>
+          <div class="title">Negotiation toolkit</div>
+          <div class="desc">Salary research, counter-offer scripts, walk-away math</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Blog -->
+    <div class="panel" id="blog">
+      <h2>Blog</h2>
+      <a class="quick-link" href="../blog/" target="_blank">
+        <span class="icon">📰</span>
+        <div>
+          <div class="title">Public blog index</div>
+          <div class="desc">List view of published posts</div>
+        </div>
+      </a>
+      <a class="quick-link" href="../data/blog-posts.json" target="_blank">
+        <span class="icon">🗃</span>
+        <div>
+          <div class="title">blog-posts.json (manifest)</div>
+          <div class="desc">Slugs, titles, dates, tags, excerpts</div>
+        </div>
+      </a>
+      <div style="margin-top:12px;padding:10px 12px;background:#fdf6e3;border:1px solid #b8860b;border-radius:4px;font-size:11px;color:#5a5a5a;">
+        <strong>To add a post:</strong> message Claude: <code>new blog post: title — body</code>. The system generates the Markdown, renders the static page, adds it to the manifest, commits.
+      </div>
+    </div>
+
+    <!-- Tools / settings -->
+    <div class="panel" id="tools">
+      <h2>Tools &amp; settings</h2>
+      <a class="quick-link" href="https://github.com/Omtatsat101/riketpatel-site" target="_blank">
+        <span class="icon">🐙</span>
+        <div>
+          <div class="title">GitHub repo</div>
+          <div class="desc">Source of truth</div>
+        </div>
+      </a>
+      <a class="quick-link" href="https://supabase.com/dashboard/project/doxmbwizpsyqruyrmffs" target="_blank">
+        <span class="icon">🗄</span>
+        <div>
+          <div class="title">Supabase dashboard</div>
+          <div class="desc">leads + application_followups tables</div>
+        </div>
+      </a>
+      <a class="quick-link" href="https://www.make.com/" target="_blank">
+        <span class="icon">⚙️</span>
+        <div>
+          <div class="title">Make.com</div>
+          <div class="desc">Follow-up scenarios (A + B)</div>
+        </div>
+      </a>
+      <a class="quick-link" href="https://analytics.google.com/" target="_blank">
+        <span class="icon">📊</span>
+        <div>
+          <div class="title">Google Analytics 4</div>
+          <div class="desc">riketpatel.com traffic</div>
+        </div>
+      </a>
+      <a class="quick-link" href="../BUILD-STATUS-2026-05-25.md" target="_blank">
+        <span class="icon">📝</span>
+        <div>
+          <div class="title">BUILD-STATUS-2026-05-25.md</div>
+          <div class="desc">What was built while you were off-desk</div>
+        </div>
+      </a>
+      <a class="quick-link" href="../WORKFLOW-APPLY.md" target="_blank">
+        <span class="icon">📖</span>
+        <div>
+          <div class="title">WORKFLOW-APPLY.md</div>
+          <div class="desc">The full automation protocol</div>
+        </div>
+      </a>
+      <button id="lock-again" style="margin-top:14px;background:transparent;color:var(--muted);border:1px solid var(--line);padding:8px 14px;border-radius:4px;cursor:pointer;font-size:12px;font-family:inherit;">🔒 Lock admin again</button>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+  // ── Gate ────────────────────────────────────
+  var GATE_CODE = (window.RP_CONFIG && window.RP_CONFIG.ADMIN_PASSWORD) || 'RPAdmin2026';
+  var GATE_KEY = 'rp_admin_unlocked';
+
+  function isUnlocked() { try { return localStorage.getItem(GATE_KEY) === '1'; } catch (e) { return false; } }
+  function unlock() {
+    try { localStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('topbar').style.display = 'flex';
+    document.getElementById('main').classList.add('unlocked');
+    loadDashboard();
+  }
+  function lock() {
+    try { localStorage.removeItem(GATE_KEY); } catch (e) {}
+    window.location.reload();
+  }
+
+  document.getElementById('gate-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = (document.getElementById('gate-input').value || '').trim();
+    if (v === GATE_CODE) unlock();
+    else document.getElementById('gate-error').style.display = 'block';
+  });
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.id === 'lock-again') lock();
+  });
+  if (isUnlocked()) unlock();
+
+  // ── Dashboard ───────────────────────────────
+  function fmtDate(s) {
+    if (!s) return '';
+    var d = new Date(s);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function loadDashboard() {
+    var cfg = window.RP_CONFIG || {};
+    var nowStr = new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+    document.getElementById('last-checked').textContent = 'checked ' + nowStr;
+
+    // 1. Applications stats from applications.json
+    fetch('../data/applications.json?v=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var apps = data.applications || [];
+        document.getElementById('stat-apps').textContent = apps.length;
+        var live = apps.filter(function (a) { return ['pending_review', 'approved'].indexOf(a.status) >= 0; }).length;
+        document.getElementById('stat-live').textContent = live;
+        var submitted = apps.filter(function (a) {
+          return ['submitted', 'followup_sent', 'interview', 'offer', 'rejected', 'ghosted'].indexOf(a.status) >= 0;
+        }).length;
+        document.getElementById('stat-submitted').textContent = submitted;
+      })
+      .catch(function () {
+        document.getElementById('stat-apps').textContent = '—';
+        document.getElementById('stat-live').textContent = '—';
+        document.getElementById('stat-submitted').textContent = '—';
+      });
+
+    // 2. Blog posts count from manifest
+    fetch('../data/blog-posts.json?v=' + Date.now())
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (data && Array.isArray(data.posts)) {
+          document.getElementById('stat-blog').textContent = data.posts.filter(function (p) { return p.published !== false; }).length;
+        } else {
+          document.getElementById('stat-blog').textContent = '0';
+        }
+      })
+      .catch(function () { document.getElementById('stat-blog').textContent = '—'; });
+
+    // 3. Supabase follow-up queue (via the safe admin view)
+    var supaUrl = cfg.SUPABASE_URL;
+    var anon = cfg.SUPABASE_ANON_KEY;
+    if (!supaUrl || !anon) {
+      document.getElementById('queue-content').innerHTML = '<div class="empty-state">Supabase config missing.</div>';
+      document.getElementById('stat-queue-pending').textContent = '—';
+      document.getElementById('stat-drafts').textContent = '—';
+      return;
+    }
+    fetch(supaUrl + '/rest/v1/application_followups_admin?select=*&order=run_at.asc&limit=50', {
+      headers: { apikey: anon, Authorization: 'Bearer ' + anon }
+    })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (rows) {
+        var pending = rows.filter(function (r) { return r.status === 'pending'; }).length;
+        var drafted = rows.filter(function (r) { return r.status === 'draft_created'; }).length;
+        document.getElementById('stat-queue-pending').textContent = pending;
+        document.getElementById('stat-drafts').textContent = drafted;
+
+        if (rows.length === 0) {
+          document.getElementById('queue-content').innerHTML = '<div class="empty-state">No queued follow-ups. When you mark an application as <code>submitted</code>, the Make.com scenarios queue a follow-up here.</div>';
+          return;
+        }
+        var html = '<table class="queue"><thead><tr><th>Slug</th><th>Company / Role</th><th>Status</th><th>Run at</th></tr></thead><tbody>';
+        rows.forEach(function (row) {
+          html += '<tr>'
+            + '<td class="slug">' + escapeHtml(row.slug) + '</td>'
+            + '<td><strong>' + escapeHtml(row.company || '') + '</strong><br/><span style="font-size:11px;color:#5a5a5a;">' + escapeHtml(row.role_title || '') + '</span></td>'
+            + '<td><span class="status-badge ' + row.status + '">' + row.status.replace('_', ' ') + '</span></td>'
+            + '<td>' + fmtDate(row.run_at) + '</td>'
+            + '</tr>';
+        });
+        html += '</tbody></table>';
+        document.getElementById('queue-content').innerHTML = html;
+      })
+      .catch(function (e) {
+        document.getElementById('queue-content').innerHTML = '<div class="empty-state">Failed to load queue: ' + e.message + '</div>';
+        document.getElementById('stat-queue-pending').textContent = '—';
+        document.getElementById('stat-drafts').textContent = '—';
+      });
+  }
+
+  function escapeHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+</script>
+
+</body>
+</html>

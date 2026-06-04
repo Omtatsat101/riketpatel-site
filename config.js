@@ -95,6 +95,16 @@ window.RP_CONFIG = {
   SLACK_PIPELINE_CHANNEL: "#applications-pipeline",
   SLACK_PIPELINE_BOT_NAME: "Pipeline Bot",
 
+  /* Admin module at /admin/ — single password gate for Riket only.
+   * Hidden by obscurity (URL not linked from public pages) + this soft
+   * lock. For real privacy upgrades later: Supabase magic-link auth
+   * sending to riketpatel@hariomtatsatinvestments.com.
+   *
+   * To rotate: change this value here, push, and remember the new
+   * password. The localStorage key resets on the next visit.
+   */
+  ADMIN_PASSWORD: "RPAdmin2026",
+
   /* GitHub repo identifier used for deep-linking to the web editor. */
   GITHUB_REPO: "Omtatsat101/riketpatel-site"
 };

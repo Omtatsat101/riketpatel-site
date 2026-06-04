@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Negotiation Toolkit — Riket B. Patel</title>
+<meta name="description" content="Private negotiation toolkit. Salary research, counter-offer scripts, walk-away math, equity discussion notes." />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-383FDKRG70"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-383FDKRG70', { send_page_view: true });
+</script>
+<style>
+  :root {
+    --ink: #1a1a1a; --ink-soft: #333; --muted: #5a5a5a;
+    --paper: #fbf8f0; --line: #d4cdb8; --accent: #1a3a2a; --highlight: #b8860b;
+    --serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  header.topbar { position: sticky; top: 0; z-index: 10; background: rgba(251, 248, 240, 0.96); backdrop-filter: saturate(160%) blur(8px); border-bottom: 1px solid var(--line); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  header.topbar h1 { font-family: var(--serif); font-size: 18pt; font-weight: 700; margin: 0; }
+  header.topbar a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  .intro { background: #fdf6e3; border: 1px solid var(--highlight); border-radius: 6px; padding: 16px 20px; margin: 0 0 28px; font-size: 13px; color: var(--ink-soft); }
+  .intro strong { color: var(--ink); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 16px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 18px 22px; }
+  .card h2 { font-family: var(--serif); font-style: italic; color: var(--accent); font-size: 13pt; margin: 0 0 10px; letter-spacing: 0.04em; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  .card h3 { font-family: var(--serif); font-size: 11.5pt; font-weight: 600; margin: 14px 0 6px; color: var(--ink); }
+
+  ul.checklist { list-style: none; padding: 0; margin: 0; }
+  ul.checklist li { padding: 5px 0 5px 22px; position: relative; font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
+  ul.checklist li::before { content: "☐"; position: absolute; left: 0; top: 4px; color: var(--accent); font-size: 14px; }
+
+  ul.links { list-style: none; padding: 0; margin: 0; }
+  ul.links li { padding: 5px 0; font-size: 13px; }
+  ul.links a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--line); }
+  ul.links a:hover { background: #fdf6e3; }
+  ul.links .desc { color: var(--muted); font-size: 12px; margin-left: 6px; }
+
+  /* Script blocks */
+  .script { background: #fcfaf2; border-left: 3px solid var(--accent); padding: 12px 16px; margin: 10px 0; font-family: var(--serif); font-size: 12.5pt; line-height: 1.6; color: var(--ink-soft); white-space: pre-wrap; }
+  .script .placeholder { background: #fff3c4; padding: 0 4px; color: #7a5a00; font-weight: 600; border-radius: 2px; }
+  .copy-btn { float: right; background: #fdf6e3; color: var(--accent); border: 1px solid var(--highlight); padding: 3px 11px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; font-family: var(--sans); }
+  .copy-btn.copied { background: var(--accent); color: #fff; }
+
+  /* Math worksheet */
+  .calc { display: grid; grid-template-columns: 1fr 100px; gap: 8px 12px; align-items: center; font-size: 13px; margin: 10px 0; }
+  .calc label { color: var(--muted); }
+  .calc input { padding: 6px 10px; border: 1px solid var(--line); border-radius: 3px; font-family: var(--sans); font-size: 13px; text-align: right; }
+  .calc .total { font-family: var(--serif); font-weight: 700; font-size: 16pt; color: var(--accent); text-align: right; padding-top: 8px; border-top: 1px solid var(--line); }
+  .calc .total-label { padding-top: 8px; border-top: 1px solid var(--line); color: var(--ink); font-weight: 600; }
+
+  footer { padding: 32px; text-align: center; font-size: 11px; color: var(--muted); font-style: italic; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <h1>💬 Negotiation Toolkit</h1>
+  <a href="../">← riketpatel.com</a>
+</header>
+
+<main>
+  <div class="intro">
+    <strong>How to use:</strong> Sit with this page once before any offer conversation. Fill in the math (it's saved nowhere, just for thinking out loud). Copy the relevant script. The scripts are starting points — your voice always wins; AI-flat language gets discounted by the panel.
+  </div>
+
+  <div class="grid">
+
+    <!-- 1. Pre-offer prep -->
+    <section class="card">
+      <h2>Before the offer comes</h2>
+      <h3>1. Research the market range</h3>
+      <ul class="links">
+        <li><a href="https://www.levels.fyi" target="_blank">Levels.fyi</a><span class="desc">Software / tech roles, by level, by city</span></li>
+        <li><a href="https://www.glassdoor.com/Salaries" target="_blank">Glassdoor Salaries</a><span class="desc">Broader role coverage</span></li>
+        <li><a href="https://www.payscale.com" target="_blank">Payscale</a><span class="desc">Mid-market roles</span></li>
+        <li><a href="https://www.bls.gov/ooh/" target="_blank">BLS Occupational Outlook</a><span class="desc">Federal data; conservative anchor</span></li>
+        <li><a href="https://www.ziprecruiter.com/Salaries" target="_blank">ZipRecruiter Salaries</a><span class="desc">Quick sanity check</span></li>
+        <li><a href="https://blind.team" target="_blank">Team Blind</a><span class="desc">Anonymous comp comparisons (verified emails)</span></li>
+      </ul>
+      <h3>2. Know your floor and target</h3>
+      <ul class="checklist">
+        <li>Floor: the number where you say no. Below this, the role isn't viable. Decide BEFORE the offer.</li>
+        <li>Target: the number you'd be excited to accept. Usually 15-25% above floor.</li>
+        <li>Stretch: the number you'd be foolish not to ask for. Usually 10-15% above target.</li>
+        <li>Walk-away point: what you'd actually do if they hit floor minus 10%. Write it down.</li>
+      </ul>
+    </section>
+
+    <!-- 2. When they ask for your number first -->
+    <section class="card">
+      <h2>When they ask your number first</h2>
+      <p style="font-size:13px;color:#5a5a5a;font-style:italic;margin:0 0 10px;">The first person to name a number anchors the conversation. Don't be that person.</p>
+
+      <h3>Recruiter screen: "What are you looking for?"</h3>
+      <div class="script">
+<button class="copy-btn" data-target="s1">Copy</button>
+<span id="s1">I'd rather hear the range the team has in mind for the role first. I've been compensated competitively in my last role and I'd want to make sure we're in the same neighborhood before we get specific. Can you share the band?</span></div>
+
+      <h3>If they push: "Help me out, just a rough number"</h3>
+      <div class="script">
+<button class="copy-btn" data-target="s2">Copy</button>
+<span id="s2">Honestly, I'd rather wait until we both know the role is a fit and then talk about a specific package. Right now I don't have enough context on the scope, the team, or the trajectory to give you a number I'd stand by. Let's keep talking and circle back to comp when we have more to anchor on.</span></div>
+
+      <h3>If they share a range: thank them, don't commit</h3>
+      <div class="script">
+<button class="copy-btn" data-target="s3">Copy</button>
+<span id="s3">Appreciate you sharing. That range is in a reasonable neighborhood for the work I'd be doing. Let me keep learning about the role and we can come back to specifics when there's a more concrete offer on the table.</span></div>
+    </section>
+
+    <!-- 3. Counter-offer script -->
+    <section class="card">
+      <h2>Counter-offering the first offer</h2>
+      <p style="font-size:13px;color:#5a5a5a;font-style:italic;margin:0 0 10px;">Almost every first offer is below where they'd actually go. Counter once, well-justified, with specifics. One ask, not five.</p>
+
+      <h3>Email counter (when offer is in writing)</h3>
+      <div class="script">
+<button class="copy-btn" data-target="s4">Copy</button>
+<span id="s4">Hi <span class="placeholder">[Recruiter name]</span>,
+
+Thank you for the offer. I'm genuinely excited about <span class="placeholder">[Company]</span> and the <span class="placeholder">[Role]</span> work — the conversations with <span class="placeholder">[Hiring manager / panel]</span> made it clear this is a team I'd want to spend my next chapter inside.
+
+I do want to come back on the base. The offer at <span class="placeholder">[their number]</span> is below what I've been seeing for roles at this level of scope. Based on Levels.fyi / Glassdoor comparables for similar roles in NJ + remote, and given my track record (the seven years at Merck running multi-system product programs, the AI Product Management cert, the active growth-marketing portfolio), I was hoping we could land at <span class="placeholder">[your target — usually 12-18% above their offer]</span>.
+
+If the base is locked, I'd love to talk about a sign-on, a six-month review with a defined raise trigger, or additional equity. I'd rather find a structure that works for both of us than walk away from a role I think I'd do well in.
+
+Best,
+Riket</span></div>
+
+      <h3>Phone counter (if they call before sending in writing)</h3>
+      <div class="script">
+<button class="copy-btn" data-target="s5">Copy</button>
+<span id="s5">Thank you, that's generous and I appreciate the offer. Before I respond formally, I want to be transparent that the base is below what I've been seeing for similar scope. Can we get the base to <span class="placeholder">[your target]</span>? If that's outside what's possible, I'd want to talk about how we structure the rest of the package to bridge the gap. Either way, I'm in for the role — I just want us to land in a number that feels right to both of us.</span></div>
+    </section>
+
+    <!-- 4. Total compensation calculator -->
+    <section class="card">
+      <h2>Total compensation worksheet</h2>
+      <p style="font-size:13px;color:#5a5a5a;font-style:italic;margin:0 0 10px;">Base is one line. Add everything else.</p>
+      <div class="calc">
+        <label>Base salary</label><input type="number" id="c-base" placeholder="0" />
+        <label>Sign-on bonus</label><input type="number" id="c-signon" placeholder="0" />
+        <label>Annual bonus target ($)</label><input type="number" id="c-bonus" placeholder="0" />
+        <label>Equity / RSU value (per year)</label><input type="number" id="c-equity" placeholder="0" />
+        <label>401(k) match estimate ($)</label><input type="number" id="c-401k" placeholder="0" />
+        <label>Healthcare premium savings (vs. ACA)</label><input type="number" id="c-health" placeholder="0" />
+        <label>Learning / dev budget</label><input type="number" id="c-learn" placeholder="0" />
+        <label>PTO (days × ~base/260)</label><input type="number" id="c-pto" placeholder="0" />
+        <span class="total-label">Total comp (year 1)</span>
+        <span class="total" id="c-total">$0</span>
+      </div>
+    </section>
+
+    <!-- 5. Things to ask for besides base -->
+    <section class="card">
+      <h2>Levers besides base</h2>
+      <p style="font-size:13px;color:#5a5a5a;font-style:italic;margin:0 0 10px;">If base is locked, ask for these. Most are easier yeses than salary bumps.</p>
+      <ul class="checklist">
+        <li><strong>Sign-on bonus.</strong> Often comes from a different budget than salary. Easier yes.</li>
+        <li><strong>Equity grant size or refresh.</strong> Especially at startups; the marginal cost to them is paper.</li>
+        <li><strong>Earlier vesting cliff.</strong> 6 months instead of 12 months.</li>
+        <li><strong>Annual bonus floor.</strong> Negotiated minimum for year 1.</li>
+        <li><strong>Sign-on bonus protections.</strong> Pro-rated repayment if the company terminates you without cause.</li>
+        <li><strong>Six-month review with raise trigger.</strong> Define the metrics now.</li>
+        <li><strong>Remote / hybrid flexibility.</strong> Days per week in office — get it written.</li>
+        <li><strong>Title.</strong> Senior vs. Lead vs. Principal carries career value and market value.</li>
+        <li><strong>Direct reports / scope.</strong> Headcount or budget you'd own.</li>
+        <li><strong>Learning budget.</strong> $5K-$15K is normal for senior IC / management roles.</li>
+        <li><strong>Conference budget.</strong> Often a separate line item.</li>
+        <li><strong>Equipment stipend.</strong> $2K-$5K refresh budgets are common.</li>
+        <li><strong>Relocation allowance.</strong> Even if not relocating, sometimes available.</li>
+        <li><strong>Severance.</strong> 3 to 6 months at senior levels; harder to negotiate but worth raising.</li>
+        <li><strong>Garden leave / non-compete softening.</strong> If applicable to your industry.</li>
+        <li><strong>PTO floor.</strong> If unlimited PTO, get a minimum guarantee.</li>
+        <li><strong>Start date.</strong> 2-4 extra weeks for personal runway.</li>
+      </ul>
+    </section>
+
+    <!-- 6. Walking away -->
+    <section class="card">
+      <h2>Walking away well</h2>
+      <p style="font-size:13px;color:#5a5a5a;font-style:italic;margin:0 0 10px;">Reject with grace. The person you decline today often refers you to the role you want tomorrow.</p>
+
+      <h3>Declining (still interested in the company)</h3>
+      <div class="script">
+<button class="copy-btn" data-target="s6">Copy</button>
+<span id="s6">Hi <span class="placeholder">[Recruiter name]</span>,
+
+I want to thank you and the team for the time and the offer. After a lot of thought, I'm not going to be able to accept this role — the gap between the offer and where I'd need to be to take a corporate role on right now is bigger than I think we can bridge in this round.
+
+I want to be clear: this is about the math, not about <span class="placeholder">[Company]</span>. The mission is real, the team impressed me, and I'd be open to revisiting if a different role or a different scope opens up in the next six to twelve months.
+
+Please keep me in mind, and thank you again for the conversation.
+
+Best,
+Riket</span></div>
+
+      <h3>Declining (not interested in this company)</h3>
+      <div class="script">
+<button class="copy-btn" data-target="s7">Copy</button>
+<span id="s7">Hi <span class="placeholder">[Recruiter name]</span>,
+
+Thank you for the offer. After consideration I've decided not to move forward with the role. I appreciate the time the team invested and I wish you the best on the search.
+
+Best,
+Riket</span></div>
+    </section>
+
+    <!-- 7. Day-one playbook -->
+    <section class="card">
+      <h2>Day-one playbook (after you accept)</h2>
+      <ul class="checklist">
+        <li>Get everything in writing before you sign. Email confirming the offer letter, the sign-on terms, the equity grant size, the start date.</li>
+        <li>Verify the offer letter matches the verbal. Numbers, title, manager, start date, PTO accrual, bonus target.</li>
+        <li>Read the equity docs in full. Vesting schedule, cliff, post-termination exercise window, acceleration on change of control.</li>
+        <li>Read the non-compete / IP assignment carefully. Negotiate carve-outs for your existing side projects (KiddieSketch, KiddieGo, KiddieWordle, SafeInk, Legacy Bridge, Metta Realty Partners, Metta Legacy Partners) BEFORE signing. Once you sign, those carve-outs are much harder.</li>
+        <li>Ask for a 30-60-90 day plan template you'll co-author with your manager in week 1.</li>
+        <li>Ask for an intro list — the 8-10 people you should meet with in your first month.</li>
+        <li>Confirm tools and access requests will be filed before day one (laptop, accounts, badges, calendar invites).</li>
+        <li>Send the "I accept" email warmly. Refer one or two top candidates if you have them — it builds long-term currency.</li>
+      </ul>
+    </section>
+
+  </div>
+
+</main>
+
+<footer>Private toolkit. Updates land via the admin module. Hari Om Tat Sat.</footer>
+
+<script>
+  // Copy buttons
+  document.querySelectorAll('.copy-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var target = document.getElementById(btn.dataset.target);
+      if (!target) return;
+      var txt = target.innerText.trim();
+      navigator.clipboard.writeText(txt).then(function () {
+        var orig = btn.innerText;
+        btn.innerText = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(function () { btn.innerText = orig; btn.classList.remove('copied'); }, 1600);
+      });
+    });
+  });
+
+  // Total comp calculator
+  function recalc() {
+    var ids = ['c-base', 'c-signon', 'c-bonus', 'c-equity', 'c-401k', 'c-health', 'c-learn', 'c-pto'];
+    var total = 0;
+    ids.forEach(function (id) {
+      var v = parseFloat(document.getElementById(id).value || 0);
+      if (!isNaN(v)) total += v;
+    });
+    document.getElementById('c-total').textContent = '$' + total.toLocaleString();
+  }
+  ['c-base', 'c-signon', 'c-bonus', 'c-equity', 'c-401k', 'c-health', 'c-learn', 'c-pto'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', recalc);
+  });
+</script>
+
+</body>
+</html>
