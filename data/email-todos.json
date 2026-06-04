@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "last_updated": "2026-05-25",
+  "_note": "Action items extracted from email. Sorted by due_at + priority. Update via Claude: 'add email todo: [from] re [subject] — [action] by [date]' or 'mark email todo done: [id]'. Future enhancement: Gmail MCP integration auto-populates from inbox scan with subject + from headers + first-paragraph action extraction.",
+  "priority_legend": {
+    "urgent": "Today or tomorrow",
+    "high": "This week",
+    "medium": "Next 2 weeks",
+    "low": "Nice to do, no hard deadline"
+  },
+  "status_legend": {
+    "open": "Not started",
+    "in_progress": "Drafting / partially done",
+    "blocked": "Waiting on someone else",
+    "done": "Completed",
+    "skipped": "Decided not to do"
+  },
+  "todos": [
+    {
+      "id": "humin-submit",
+      "from_name": "Self-prompt (from ApplicantPro confirmation)",
+      "from_email": "humin@applicantpro.com",
+      "subject": "Growth Marketing Manager, Lifecycle & MarTech — application",
+      "received_at": "2026-05-25",
+      "action": "Submit the Humin application via ApplicantPro. All materials ready at /resume/humin/. Form answers at /form-answers.html. Print résumé + cover letter to PDF, upload.",
+      "due_at": "2026-05-28",
+      "priority": "high",
+      "status": "open",
+      "linked_app": "humin-2026-05-25",
+      "notes": "Use the LinkedIn person-name lookup for the recruiter follow-up email recipient before submitting."
+    },
+    {
+      "id": "humin-followup-recipient",
+      "from_name": "Internal",
+      "from_email": null,
+      "subject": "Find Humin VP of Marketing on LinkedIn",
+      "received_at": "2026-05-25",
+      "action": "Search LinkedIn for 'Humin VP marketing' or 'Healthy Minds Innovations marketing leader'. Find the named human for the 24h follow-up email. Update outreach.json with the result.",
+      "due_at": "2026-05-26",
+      "priority": "high",
+      "status": "open",
+      "linked_app": "humin-2026-05-25",
+      "notes": null
+    },
+    {
+      "id": "nj-mbe-certification",
+      "from_name": "Self-prompt (from contract research)",
+      "from_email": null,
+      "subject": "NJ MBE Certification — start application",
+      "received_at": "2026-05-25",
+      "action": "Apply for NJ Minority Business Enterprise certification via UCS portal. Fee currently WAIVED. ~4 hrs paperwork. Run as Legacy Bridge Alliance Group LLC. Unlocks municipal preference + corporate diversity pipelines + federal 8(a) eligibility.",
+      "due_at": "2026-06-01",
+      "priority": "medium",
+      "status": "open",
+      "linked_app": "nj-mbe-certification",
+      "notes": "https://www.njportal.com/DOR/SBERegistry/"
+    },
+    {
+      "id": "klaviyo-partner-apply",
+      "from_name": "Self-prompt (from contract research)",
+      "from_email": null,
+      "subject": "Klaviyo Agency Partner Program — apply",
+      "received_at": "2026-05-25",
+      "action": "Apply at klaviyo.com/partners. 15-min form. KiddieSketch Klaviyo build is the proof point — describe gift-giver segmentation as the differentiator. ~10% revenue share on referred clients.",
+      "due_at": "2026-05-30",
+      "priority": "medium",
+      "status": "open",
+      "linked_app": "klaviyo-partner-program",
+      "notes": null
+    },
+    {
+      "id": "shopify-verified-skills",
+      "from_name": "Self-prompt (from contract research)",
+      "from_email": null,
+      "subject": "Shopify Verified Skills application",
+      "received_at": "2026-05-25",
+      "action": "Submit Verified Skills evaluation via Shopify Partner Directory. CustomSketch app is the build-chops proof. 20% lifetime commission on referred merchants + 70% theme revenue share.",
+      "due_at": "2026-05-30",
+      "priority": "medium",
+      "status": "open",
+      "linked_app": "shopify-partner-directory",
+      "notes": null
+    },
+    {
+      "id": "use-healthy-minds-app",
+      "from_name": "Self-prompt (Humin interview prep)",
+      "from_email": null,
+      "subject": "Use the Healthy Minds Program app daily",
+      "received_at": "2026-05-25",
+      "action": "Open the Healthy Minds Program app daily for at least 7 days before any Humin interview round. Note 2-3 specific things you genuinely appreciate + 1-2 honest improvement areas. Those become the strongest answers when they ask 'what's your relationship with the app?'.",
+      "due_at": "2026-06-01",
+      "priority": "high",
+      "status": "open",
+      "linked_app": "humin-2026-05-25",
+      "notes": null
+    },
+    {
+      "id": "rotate-admin-on-ohm-homes",
+      "from_name": "Internal security note",
+      "from_email": null,
+      "subject": "Rotate ohm.homes admin password",
+      "received_at": "2026-05-25",
+      "action": "When you deploy the ohm.homes Worker for the first time, run `wrangler secret put ADMIN_PASSWORD` and use the password fVNifZoIR5eQeMgQzuhyGnVL (generated earlier this session). Save in password manager.",
+      "due_at": null,
+      "priority": "low",
+      "status": "open",
+      "linked_app": null,
+      "notes": "Was previously Admin137 — scrubbed from config.js but lives in git history forever."
+    }
+  ]
+}

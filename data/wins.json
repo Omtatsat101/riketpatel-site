@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "last_updated": "2026-05-25",
+  "_note": "Things to be proud of. Curated, evergreen. The 'remind myself when I'm down' surface, not a real-time activity feed. Update via Claude: 'add win: [title] — [detail]' or 'archive win: [id]'. Wins are tagged by category and displayed on the admin dashboard.",
+  "categories": {
+    "shipped": "Things I've shipped to the world",
+    "earned": "Recognition, ratings, certifications",
+    "built": "Systems and brands I own",
+    "served": "Ways I've shown up for people",
+    "personal": "Roots, family, identity"
+  },
+  "wins": [
+    {
+      "id": "left-merck-chosen",
+      "category": "personal",
+      "date": "2025-11",
+      "title": "Left Merck on my own terms after seven years",
+      "detail": "Walked away from a Fortune-100 product role to build things I own, raise my son visibly, and keep my father's promise to give back to our village in Anand. Two OUTPERFORMED years (2020, 2021) aside, the line I think about is Jenny Mao's thank-you note.",
+      "tags": ["career", "courage"]
+    },
+    {
+      "id": "ten-thousand-hours",
+      "category": "shipped",
+      "date": "2024",
+      "title": "Removed 10,000 hours of annual manual effort at Merck",
+      "detail": "Scale IT for Clinical Portfolio program. Four interconnected systems (Delta Fusion, CDI, CDDR, SLS). Biostatisticians got their evenings back. Projected to double to 20,000 hours.",
+      "tags": ["impact", "merck"]
+    },
+    {
+      "id": "csr-translation-cycle",
+      "category": "shipped",
+      "date": "2024-2025",
+      "title": "Cut China NDA translation cycle from 6-7 months to one month",
+      "detail": "A&R Submission Translation platform. Faster regulatory submissions to China's NMPA means faster access to medicines. Research with stakeholders in Tokyo, Shanghai, Berlin, Brussels, Boston.",
+      "tags": ["impact", "merck", "global"]
+    },
+    {
+      "id": "zero-audit-findings",
+      "category": "earned",
+      "date": "2022-2025",
+      "title": "Zero audit findings across three inspection-sensitive systems",
+      "detail": "As Squad Lead and SME for BARDS regulatory audit-readiness. Year after year. Pharma's hardest game won quietly.",
+      "tags": ["merck", "discipline"]
+    },
+    {
+      "id": "jenny-mao-mentorship",
+      "category": "served",
+      "date": "2025",
+      "title": "Jenny Mao's intern thank-you",
+      "detail": "\"I truly don't think I would have completed my internship so successfully without your mentorship.\" — Jenny Mao, Cornell Tech master's student, after her 2025 summer with my Merck team. I'll take that paragraph over a performance rating any day.",
+      "tags": ["mentorship", "merck"]
+    },
+    {
+      "id": "jill-mcginn-endorsement",
+      "category": "earned",
+      "date": "2024",
+      "title": "Senior leadership endorsement from Jill McGinn",
+      "detail": "\"Strategic thinker, unbound by convention; values diversity and inclusion; goal-oriented and ambitious.\" — Jill McGinn, Director of Corporate Strategy, Merck.",
+      "tags": ["recognition", "merck"]
+    },
+    {
+      "id": "robert-wiley-reverse-mentor",
+      "category": "earned",
+      "date": "2024",
+      "title": "Reverse-mentor note from Robert Wiley",
+      "detail": "\"You were exceptional in how you worked with me in every area we explored. I do not have any further development feedback.\" — Robert Wiley, Director of Oncology National Account, Merck.",
+      "tags": ["recognition", "merck"]
+    },
+    {
+      "id": "ai-pm-cert",
+      "category": "earned",
+      "date": "2024-12",
+      "title": "Certified AI Product Manager",
+      "detail": "AIPMM certification, December 2024. The capstone deck is the artifact I'm proudest of from any course I've taken.",
+      "tags": ["learning", "ai"]
+    },
+    {
+      "id": "mhfa-cert",
+      "category": "earned",
+      "date": "2024-05",
+      "title": "Certified Mental Health First Aider",
+      "detail": "May 2024. Took it because too many people at work were struggling silently and I wanted to be the kind of teammate who's useful before being asked. Still in regular use.",
+      "tags": ["service", "mental-health"]
+    },
+    {
+      "id": "cal-1-cert",
+      "category": "earned",
+      "date": "2024-06",
+      "title": "Certified Agile Leader (CAL-1), Scrum Alliance",
+      "detail": "June 2024. The credential that backs the Squad Lead work.",
+      "tags": ["learning", "leadership"]
+    },
+    {
+      "id": "ms-data-analytics",
+      "category": "earned",
+      "date": "2018-05",
+      "title": "M.P.S. Data Analytics, Pennsylvania State University",
+      "detail": "Master's at Penn State. Plus the Graduate Certificate in Business Analytics (2017) and B.S. Business Administration (2014). The whole thing happened while working.",
+      "tags": ["education", "penn-state"]
+    },
+    {
+      "id": "kiddiesketch-cash-cow",
+      "category": "built",
+      "date": "2024-2026",
+      "title": "KiddieSketch — the cash-flow brand",
+      "detail": "Shopify store turning kids' drawings into framed prints, mugs, hoodies, lightboards. 4 active SKUs at $30-60 AOV. Strong Meta Ads unit economics: 4.55% CTR, $0.14 CPC. Klaviyo lifecycle with gift-giver segmentation.",
+      "tags": ["brand", "shopify"]
+    },
+    {
+      "id": "kiddiewordle-architecture",
+      "category": "built",
+      "date": "2024-2026",
+      "title": "KiddieWordle in seventeen languages",
+      "detail": "Free Wordle variant for kids. No ads in the play area on purpose. Repeatable localization architecture so adding language 18, 19, 20 doesn't compound the work. June launch on the marketing side.",
+      "tags": ["brand", "free", "global"]
+    },
+    {
+      "id": "safeink",
+      "category": "built",
+      "date": "2025-2026",
+      "title": "SafeInk — zero-knowledge anonymous letter platform",
+      "detail": "Route source reports from anyone to verified journalists, community leaders, advocacy orgs. Privacy by architecture: client-side encryption, zero-knowledge server, edge-proxy metadata stripping. The public-interest project I'd point my son toward.",
+      "tags": ["civic-tech", "public-interest"]
+    },
+    {
+      "id": "legacy-bridge-alliance-group",
+      "category": "built",
+      "date": "2024",
+      "title": "Founded Legacy Bridge Alliance Group LLC",
+      "detail": "The holding entity for everything. Metta Realty Partners + Metta Legacy Partners under it. NJ-formed. My name on the storefront.",
+      "tags": ["entity", "founder"]
+    },
+    {
+      "id": "metta-realty-homesmart",
+      "category": "built",
+      "date": "2024-2025",
+      "title": "Metta Realty Partners — NJ real estate (HomeSmart affiliate)",
+      "detail": "Active book of clients across Burlington, Camden, Gloucester, South Jersey. NJ Real Estate Salesperson license active.",
+      "tags": ["brokerage", "nj"]
+    },
+    {
+      "id": "metta-legacy-brokerage",
+      "category": "built",
+      "date": "2024-2025",
+      "title": "Metta Legacy Partners — small-business brokerage",
+      "detail": "Helping owners sell their small businesses. Confidential, NJ-based, hand-built deal flow.",
+      "tags": ["brokerage"]
+    },
+    {
+      "id": "four-free-sites",
+      "category": "served",
+      "date": "2024-2026",
+      "title": "Four free public-good sites I built and operate",
+      "detail": "KiddieWordle (17 languages), BestPythonCourse (plain-English Python guides), LoanRatesFinder + FreeRateFinder (mortgage and loan references). None will make anyone rich. That's the point.",
+      "tags": ["civic-tech", "free"]
+    },
+    {
+      "id": "father-promise-village",
+      "category": "personal",
+      "date": "ongoing",
+      "title": "Father's promise — village teacher position",
+      "detail": "Setting up a Python and generative-AI teacher position in our family's village in Anand, Gujarat. Continuing his public promise to always give back there. The kids growing up where my parents grew up should have access to the same tools the rest of the world is learning.",
+      "tags": ["family", "vedic", "india"]
+    },
+    {
+      "id": "wife-and-son",
+      "category": "personal",
+      "date": "ongoing",
+      "title": "Wife and son in Edgewater Park",
+      "detail": "Raising our son in Edgewater Park, NJ. Most of the work on the other pages is in service of leaving him something durable.",
+      "tags": ["family"]
+    },
+    {
+      "id": "trilingual",
+      "category": "personal",
+      "date": "lifetime",
+      "title": "Trilingual: English, Hindi, Gujarati",
+      "detail": "Native English. Conversational Hindi. Family Gujarati. Useful for the work, more useful for the relationships.",
+      "tags": ["identity", "languages"]
+    },
+    {
+      "id": "vedic-practice",
+      "category": "personal",
+      "date": "ongoing",
+      "title": "Daily Vedic practice",
+      "detail": "The line that holds the rest together. Hari Om Tat Sat.",
+      "tags": ["spiritual", "discipline"]
+    },
+    {
+      "id": "automation-pipeline",
+      "category": "built",
+      "date": "2026-05",
+      "title": "Built the entire application automation system in a weekend",
+      "detail": "riketpatel.com /jobs/ + /admin/ + /interview-prep/ + /outreach/ + /negotiate/ + /capability-statement/ + /blog/ + ohm-homes Worker pipeline + Supabase queue + Slack Pipeline Bot. End-to-end. With Claude as pair-programmer. Operating muscle that compounds.",
+      "tags": ["automation", "ai", "infra"]
+    },
+    {
+      "id": "aipm-capstone",
+      "category": "shipped",
+      "date": "2024-12",
+      "title": "AIPM Final Presentation — capstone deck",
+      "detail": "Full PM artifact: problem framing, user research, model selection (build vs buy vs fine-tune), evaluation strategy, rollout plan, risk register. The work I'd put in front of a hiring panel as a sample of how I think.",
+      "tags": ["ai", "portfolio"]
+    },
+    {
+      "id": "erg-active-merck",
+      "category": "served",
+      "date": "2018-2025",
+      "title": "Active in three Merck Employee Resource Groups",
+      "detail": "capABILITY Network (disability inclusion), Interfaith Organization, Next Gen Network. Not just a member — actually showed up.",
+      "tags": ["service", "inclusion", "merck"]
+    }
+  ]
+}
