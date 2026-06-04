@@ -105,6 +105,17 @@ window.RP_CONFIG = {
    */
   ADMIN_PASSWORD: "RPAdmin2026",
 
+  /* Google Apps Script web app URL that returns contacts JSON from the
+   * "Riket Contacts" Sheet in Drive. Installed per Gmail account.
+   * Setup: scripts/contacts/SETUP.md. Until configured, /contacts/
+   * shows a setup banner with instructions.
+   *
+   * The URL is the soft secret — anyone with it can hit the endpoint and
+   * read the contacts JSON. The dashboard is gated by Pipeline137. If
+   * the URL leaks, redeploy from Apps Script (new ID, paste new URL here).
+   */
+  GOOGLE_CONTACTS_WEB_APP_URL: "REPLACE_WITH_APPS_SCRIPT_WEB_APP_URL",
+
   /* GitHub repo identifier used for deep-linking to the web editor. */
   GITHUB_REPO: "Omtatsat101/riketpatel-site"
 };
