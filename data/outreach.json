@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "last_updated": "2026-05-25",
+  "_note": "Cold-outreach tracker (separate from /jobs/ which tracks active applications). Use for: fractional/contract bid outreach, networking touches, prospective recruiter conversations, business-brokerage referrals being shopped. Trigger phrases for Claude: 'track outreach: [target]', 'log touchpoint: [target]', 'mark responded: [slug]'.",
+  "status_legend": {
+    "cold": "Researched, draft prepared, not yet sent",
+    "sent": "First message went out, no response yet",
+    "responded": "They replied — keep the thread warm",
+    "meeting_set": "Live conversation scheduled",
+    "converted": "Closed (engagement signed, contract awarded, etc.)",
+    "dormant": "60+ days no movement — soft-archive",
+    "no_fit": "Confirmed not a fit (after meeting or explicit rejection)"
+  },
+  "channel_legend": {
+    "linkedin_inmail": "LinkedIn InMail or connect+note",
+    "email_direct": "Direct email to work address",
+    "email_referral": "Email via a warm introducer",
+    "twitter_dm": "Twitter/X direct message",
+    "form_submission": "Their contact form on company website",
+    "in_person": "Conference, meetup, intro at event"
+  },
+  "outreach": [
+    {
+      "id": "humin-vp-marketing-outreach",
+      "target_company": "Humin (Healthy Minds Innovations)",
+      "target_person": "VP of Marketing (TBD)",
+      "target_title": "VP of Marketing",
+      "target_linkedin": null,
+      "channel": "email_direct",
+      "purpose": "Job application follow-up — Growth Marketing Manager, Lifecycle & MarTech",
+      "first_touch_date": null,
+      "last_touch_date": null,
+      "touch_count": 0,
+      "status": "cold",
+      "next_action_date": null,
+      "next_action": "Find named VP of Marketing on LinkedIn before submitting application; address follow-up email to them by name",
+      "notes": "Linked to applications.json humin-2026-05-25. Cross-references the Healthy Minds app-user hook + MHFA cert."
+    }
+  ]
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Riket B. Patel — Outreach Tracker</title>
+<meta name="description" content="Private outreach tracker." />
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+<script src="../config.js"></script>
+<style>
+  :root {
+    --ink: #1a1a1a; --ink-soft: #333; --muted: #5a5a5a;
+    --paper: #fbf8f0; --line: #d4cdb8; --accent: #1a3a2a; --highlight: #b8860b;
+    --serif: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Calibri, sans-serif;
+    --col-cold: #fdf6e3;
+    --col-sent: #e8f4f7;
+    --col-responded: #f0f7e8;
+    --col-meeting: #faf2c7;
+    --col-converted: #d4e8d4;
+    --col-dormant: #ebebeb;
+    --col-no-fit: #f0e4e4;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; }
+  header.topbar { position: sticky; top: 0; z-index: 10; background: rgba(251, 248, 240, 0.96); backdrop-filter: saturate(160%) blur(8px); border-bottom: 1px solid var(--line); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  header.topbar h1 { font-family: var(--serif); font-size: 18pt; font-weight: 700; margin: 0; }
+  header.topbar a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px; }
+
+  #gate { max-width: 460px; margin: 80px auto; padding: 40px; background: #fff; border-radius: 8px; box-shadow: 0 8px 24px rgba(34, 22, 10, 0.08); border: 1px solid var(--line); }
+  #gate h2 { font-family: var(--serif); margin: 0 0 8px; font-size: 18pt; }
+  #gate p { color: var(--muted); margin: 0 0 20px; }
+  #gate input { display: block; width: 100%; padding: 10px 12px; font-size: 14px; border: 1px solid var(--line); border-radius: 4px; font-family: inherit; }
+  #gate .actions { margin-top: 16px; display: flex; gap: 10px; }
+  #gate button { background: var(--accent); color: #fff; border: none; padding: 9px 18px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; }
+  #gate .error { color: #b00020; font-size: 13px; margin-top: 10px; }
+
+  main { display: none; padding: 24px; max-width: 1600px; margin: 0 auto; }
+  main.unlocked { display: block; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; }
+  .stat-card .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .stat-card .value { font-family: var(--serif); font-size: 22pt; font-weight: 700; color: var(--accent); line-height: 1.2; margin-top: 2px; }
+  .stat-card .sub { font-size: 11px; color: var(--muted); font-style: italic; }
+
+  .intro { background: #fdf6e3; border: 1px solid var(--highlight); border-radius: 4px; padding: 12px 16px; margin: 0 0 24px; font-size: 12px; color: var(--ink-soft); line-height: 1.55; }
+  .intro code { background: rgba(255,255,255,0.5); padding: 1px 5px; border-radius: 3px; font-size: 11.5px; }
+
+  .pipeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+  .col { background: var(--col-cold); border: 1px solid var(--line); border-radius: 6px; padding: 12px; min-height: 120px; }
+  .col[data-status="sent"] { background: var(--col-sent); }
+  .col[data-status="responded"] { background: var(--col-responded); }
+  .col[data-status="meeting_set"] { background: var(--col-meeting); }
+  .col[data-status="converted"] { background: var(--col-converted); }
+  .col[data-status="dormant"] { background: var(--col-dormant); }
+  .col[data-status="no_fit"] { background: var(--col-no-fit); }
+  .col .col-header { font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--accent); letter-spacing: 0.06em; text-transform: uppercase; padding-bottom: 8px; margin-bottom: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; align-items: baseline; gap: 6px; }
+  .col-count { font-family: var(--sans); background: rgba(26, 58, 42, 0.12); color: var(--accent); font-style: normal; border-radius: 999px; padding: 1px 8px; font-size: 11px; font-weight: 700; }
+
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 11px 12px; margin-bottom: 10px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .card .target-co { font-family: var(--serif); font-size: 13pt; font-weight: 600; line-height: 1.25; margin: 0; }
+  .card .target-person { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+  .card .target-title { font-size: 11px; color: var(--muted); font-style: italic; margin-top: 1px; }
+  .card .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; font-size: 11px; }
+  .card .channel { background: #fdf6e3; color: var(--accent); padding: 2px 7px; border-radius: 3px; font-weight: 600; }
+  .card .touches { color: var(--muted); }
+  .card .purpose { font-size: 11px; color: var(--ink-soft); font-style: italic; margin-top: 6px; padding: 4px 8px; background: #fcfaf2; border-left: 2px solid var(--accent); }
+  .card .next { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .card .next strong { color: var(--accent); }
+  .empty-state { padding: 24px; text-align: center; color: var(--muted); font-style: italic; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<section id="gate">
+  <h2>📨 Outreach</h2>
+  <p>Private tracker. Enter the access code.</p>
+  <form id="gate-form" autocomplete="off">
+    <input type="password" id="gate-input" placeholder="Access code" autocomplete="off" required />
+    <div class="actions">
+      <button type="submit">Unlock</button>
+      <a href="../" style="color:#5a5a5a;text-decoration:none;font-size:13px;padding:9px 14px;">← Back</a>
+    </div>
+    <p class="error" id="gate-error" style="display:none;">That's not the code.</p>
+  </form>
+</section>
+
+<header class="topbar" id="topbar" style="display:none;">
+  <h1>📨 Outreach Tracker</h1>
+  <a href="../jobs/" style="margin-right:18px;">↔ Pipeline</a>
+  <a href="../admin/" style="margin-right:18px;">🛠 Admin</a>
+  <a href="../">← riketpatel.com</a>
+</header>
+
+<main id="main">
+
+  <div class="intro">
+    Use this for <strong>cold outreach pipelines</strong> — fractional/contract bids, networking touches, prospective recruiter conversations, business-brokerage referrals being shopped. Separate from <code>/jobs/</code> which tracks active applications. Update via Claude in chat: <code>track outreach: [URL or person]</code> · <code>log touchpoint: [slug]</code> · <code>mark responded: [slug]</code>.
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <div class="pipeline" id="pipeline"></div>
+</main>
+
+<script>
+  // Reuse the same Pipeline137 gate as /jobs/ so Riket only remembers one code.
+  var GATE_CODE = (window.RP_CONFIG && window.RP_CONFIG.JOBS_PIPELINE_PASSWORD) || 'Pipeline137';
+  var GATE_KEY = 'rp_jobs_unlocked';
+
+  function isUnlocked() { try { return localStorage.getItem(GATE_KEY) === '1'; } catch (e) { return false; } }
+  function unlock() {
+    try { localStorage.setItem(GATE_KEY, '1'); } catch (e) {}
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('topbar').style.display = 'flex';
+    document.getElementById('main').classList.add('unlocked');
+    loadDashboard();
+  }
+  document.getElementById('gate-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = (document.getElementById('gate-input').value || '').trim();
+    if (v === GATE_CODE) unlock();
+    else document.getElementById('gate-error').style.display = 'block';
+  });
+  if (isUnlocked()) unlock();
+
+  var STATUS_ORDER = ['cold', 'sent', 'responded', 'meeting_set', 'converted', 'dormant', 'no_fit'];
+  var STATUS_LABELS = {
+    cold: 'Cold · drafting',
+    sent: 'Sent · awaiting reply',
+    responded: 'Responded · warm thread',
+    meeting_set: 'Meeting scheduled',
+    converted: 'Converted',
+    dormant: 'Dormant (60+ days)',
+    no_fit: 'Confirmed no-fit'
+  };
+
+  function escapeHtml(s) {
+    if (!s) return '';
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function fmtDate(s) {
+    if (!s) return '';
+    var d = new Date(s + (s.indexOf('T') < 0 ? 'T00:00:00' : ''));
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function renderStats(data) {
+    var entries = data.outreach || [];
+    var byStatus = {};
+    STATUS_ORDER.forEach(function (s) { byStatus[s] = 0; });
+    entries.forEach(function (e) { if (byStatus[e.status] !== undefined) byStatus[e.status]++; });
+    var active = byStatus.cold + byStatus.sent + byStatus.responded + byStatus.meeting_set;
+    var html = '';
+    html += '<div class="stat-card"><div class="label">Total tracked</div><div class="value">' + entries.length + '</div><div class="sub">all-time outreach</div></div>';
+    html += '<div class="stat-card"><div class="label">Active</div><div class="value">' + active + '</div><div class="sub">cold + sent + warm</div></div>';
+    html += '<div class="stat-card"><div class="label">Sent</div><div class="value">' + byStatus.sent + '</div><div class="sub">awaiting reply</div></div>';
+    html += '<div class="stat-card"><div class="label">Warm</div><div class="value">' + (byStatus.responded + byStatus.meeting_set) + '</div><div class="sub">replied or meeting set</div></div>';
+    html += '<div class="stat-card"><div class="label">Converted</div><div class="value">' + byStatus.converted + '</div><div class="sub">closed deals / engagements</div></div>';
+    document.getElementById('stats').innerHTML = html;
+  }
+
+  function cardHtml(e) {
+    var meta = '<span class="channel">' + escapeHtml(e.channel || 'unknown') + '</span>';
+    if (e.touch_count) meta += '<span class="touches">' + e.touch_count + ' touch' + (e.touch_count === 1 ? '' : 'es') + '</span>';
+    if (e.last_touch_date) meta += '<span class="touches">last ' + fmtDate(e.last_touch_date) + '</span>';
+    return ''
+      + '<article class="card">'
+      +   '<p class="target-co">' + escapeHtml(e.target_company) + '</p>'
+      +   (e.target_person ? '<p class="target-person">' + escapeHtml(e.target_person) + '</p>' : '')
+      +   (e.target_title ? '<p class="target-title">' + escapeHtml(e.target_title) + '</p>' : '')
+      +   '<div class="meta">' + meta + '</div>'
+      +   (e.purpose ? '<p class="purpose">' + escapeHtml(e.purpose) + '</p>' : '')
+      +   (e.next_action ? '<p class="next"><strong>Next:</strong> ' + escapeHtml(e.next_action) + (e.next_action_date ? ' · ' + fmtDate(e.next_action_date) : '') + '</p>' : '')
+      + '</article>';
+  }
+
+  function loadDashboard() {
+    fetch('../data/outreach.json?v=' + Date.now())
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        renderStats(data);
+        var entries = data.outreach || [];
+        var byStatus = {};
+        STATUS_ORDER.forEach(function (s) { byStatus[s] = []; });
+        entries.forEach(function (e) { if (byStatus[e.status]) byStatus[e.status].push(e); });
+
+        var html = '';
+        STATUS_ORDER.forEach(function (status) {
+          var list = byStatus[status];
+          if (list.length === 0) return;
+          html += '<section class="col" data-status="' + status + '">';
+          html += '<div class="col-header">' + STATUS_LABELS[status] + '<span class="col-count">' + list.length + '</span></div>';
+          list.forEach(function (e) { html += cardHtml(e); });
+          html += '</section>';
+        });
+        document.getElementById('pipeline').innerHTML = html || '<p class="empty-state" style="grid-column:1/-1;">No outreach tracked yet. Tell Claude: <code>track outreach: [URL or person name]</code></p>';
+      })
+      .catch(function (err) {
+        document.getElementById('pipeline').innerHTML = '<p style="color:#b00020;padding:32px;text-align:center;grid-column:1/-1;">Failed to load: ' + err.message + '</p>';
+      });
+  }
+</script>
+
+</body>
+</html>
