@@ -214,6 +214,21 @@
     background: rgba(255,255,255,0.5);
   }
   .card .actions a:hover { background: var(--accent); color: #fff; }
+  .card .followup-state {
+    margin-top: 7px;
+    padding: 5px 8px;
+    border-radius: 3px;
+    font-size: 10.5px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card .followup-state.pending { background: rgba(184, 134, 11, 0.10); color: #7a5a00; }
+  .card .followup-state.draft_created { background: rgba(26, 78, 163, 0.10); color: #1a4ea3; }
+  .card .followup-state.sent { background: rgba(42, 122, 63, 0.10); color: #1a5a2a; }
+  .card .followup-state .icon { font-size: 13px; }
+  .card .followup-state .when { color: var(--muted); font-size: 10px; margin-left: auto; font-style: italic; }
 
   footer.legend {
     margin-top: 32px;
@@ -325,6 +340,7 @@
 
   // ── Dashboard ───────────────────────────────
   var DATA = null;
+  var FOLLOWUPS_BY_SLUG = {}; // slug -> latest followup row (from Supabase admin view)
 
   var STATUS_ORDER = ['pending_review', 'approved', 'submitted', 'followup_sent', 'interview', 'offer', 'rejected', 'ghosted'];
   var STATUS_LABELS = {
@@ -395,8 +411,36 @@
       +     '<span>' + (a.submitted_at ? 'submitted ' + fmtDate(a.submitted_at) : 'added ' + fmtDate(a.added_at)) + '</span>'
       +   '</div>'
       +   (a.notes ? '<p class="notes">' + escapeHtml(a.notes) + '</p>' : '')
+      +   followupHtml(slug)
       +   (actions ? '<div class="actions">' + actions + '</div>' : '')
       + '</article>';
+  }
+
+  function followupHtml(slug) {
+    var f = FOLLOWUPS_BY_SLUG[slug];
+    if (!f) return '';
+    var icon, label, status = f.status;
+    if (status === 'pending') {
+      icon = '⏳';
+      label = 'Follow-up queued for ' + fmtDate(f.run_at);
+    } else if (status === 'draft_created') {
+      icon = '📬';
+      label = 'Draft created · ready to send in Gmail';
+    } else if (status === 'sent') {
+      icon = '✅';
+      label = 'Follow-up sent';
+    } else {
+      icon = '•';
+      label = status;
+    }
+    var whenStr = '';
+    if (f.drafted_at) whenStr = 'drafted ' + fmtDate(f.drafted_at);
+    else if (f.sent_at) whenStr = 'sent ' + fmtDate(f.sent_at);
+    return '<div class="followup-state ' + status + '">'
+      + '<span class="icon">' + icon + '</span>'
+      + '<span>' + escapeHtml(label) + '</span>'
+      + (whenStr ? '<span class="when">' + whenStr + '</span>' : '')
+      + '</div>';
   }
 
   function escapeHtml(s) {
@@ -439,10 +483,29 @@
     document.getElementById('pipeline').innerHTML = html || '<p style="color:#5a5a5a;font-style:italic;padding:32px;text-align:center;">No applications match the current filter.</p>';
   }
 
+  function loadFollowups() {
+    var cfg = window.RP_CONFIG || {};
+    if (!cfg.SUPABASE_URL || !cfg.SUPABASE_ANON_KEY) return Promise.resolve();
+    return fetch(cfg.SUPABASE_URL + '/rest/v1/application_followups_admin?select=*&order=run_at.desc&limit=200', {
+      headers: { apikey: cfg.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + cfg.SUPABASE_ANON_KEY }
+    })
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (rows) {
+        // For each slug, keep the latest row (already ordered by run_at desc).
+        rows.forEach(function (row) {
+          if (!FOLLOWUPS_BY_SLUG[row.slug]) FOLLOWUPS_BY_SLUG[row.slug] = row;
+        });
+      })
+      .catch(function () { /* graceful: app cards still render without followup state */ });
+  }
+
   function loadDashboard() {
-    fetch('../data/applications.json?v=' + Date.now())
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
+    Promise.all([
+      fetch('../data/applications.json?v=' + Date.now()).then(function (r) { return r.json(); }),
+      loadFollowups(),
+    ])
+      .then(function (results) {
+        var data = results[0];
         DATA = data;
         document.getElementById('last-updated').textContent = 'last updated ' + (data.last_updated || '');
         renderStats();
