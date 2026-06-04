@@ -99,6 +99,29 @@
   .win-cat-filter button.active { background: var(--highlight); color: #fff; border-color: var(--highlight); }
   .win-shuffle { float: right; background: var(--highlight); color: #fff; border: none; padding: 2px 9px; border-radius: 3px; font-size: 11px; cursor: pointer; font-family: var(--sans); }
 
+  /* Signals panel */
+  .signal-card { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; margin-bottom: 8px; border-left: 3px solid var(--accent); }
+  .signal-card.interview { border-left-color: #1a4ea3; background: #f7faff; }
+  .signal-card.rejected { border-left-color: #b00020; background: #fef0f0; }
+  .signal-card.offer { border-left-color: #2a7a3f; background: #f0f9f2; }
+  .signal-card.next_steps { border-left-color: var(--warn); background: #fdfaf0; }
+  .signal-card .sig-h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .signal-card .sig-detected { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+  .signal-card.interview .sig-detected { color: #1a4ea3; }
+  .signal-card.rejected .sig-detected { color: #b00020; }
+  .signal-card.offer .sig-detected { color: #2a7a3f; }
+  .signal-card.next_steps .sig-detected { color: var(--warn); }
+  .signal-card .sig-slug { font-family: "SF Mono", Menlo, monospace; font-size: 11px; color: var(--accent); }
+  .signal-card .sig-co { font-family: var(--serif); font-size: 12.5px; font-weight: 600; color: var(--ink); margin-top: 2px; }
+  .signal-card .sig-subj { font-size: 12px; color: var(--ink-soft); font-style: italic; margin: 4px 0; }
+  .signal-card .sig-from { font-size: 11px; color: var(--muted); }
+  .signal-card .sig-actions { font-size: 10.5px; color: var(--muted); margin-top: 5px; padding-top: 5px; border-top: 1px solid #f0eadc; }
+  .signal-card .sig-actions code { background: #fdf6e3; padding: 1px 5px; border-radius: 3px; font-size: 10.5px; color: var(--accent); }
+  .conf-badge { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-left: 4px; }
+  .conf-badge.high { background: #d4e8d4; color: #1a5a2a; }
+  .conf-badge.medium { background: #fdf6e3; color: var(--warn); }
+  .conf-badge.low { background: #ebebeb; color: var(--muted); }
+
   /* Email todos */
   .todo-card { background: #fff; border: 1px solid var(--line); border-radius: 4px; padding: 9px 11px; margin-bottom: 7px; position: relative; }
   .todo-card.urgent { border-left: 3px solid #b00020; background: #fef0f0; }
@@ -167,8 +190,18 @@
       <div class="stat-card"><div class="label">Blog posts</div><div class="value" id="stat-blog">…</div><div class="sub">in data/blog-posts.json</div></div>
       <div class="stat-card warn"><div class="label">Email to-dos open</div><div class="value" id="stat-todos">…</div><div class="sub">action items from email</div></div>
       <div class="stat-card"><div class="label">Wins tracked</div><div class="value" id="stat-wins">…</div><div class="sub">things to be proud of</div></div>
+      <div class="stat-card warn"><div class="label">Pending signals</div><div class="value" id="stat-signals">…</div><div class="sub">detected from Gmail, awaiting review</div></div>
     </div>
   </section>
+
+  <!-- Signals panel (Gmail outcome detector candidates awaiting confirmation) -->
+  <div class="panels">
+    <div class="panel panel-wide" id="signals">
+      <h2>📨 Detected signals — review &amp; confirm</h2>
+      <p style="font-size:11px;color:#5a5a5a;font-style:italic;margin:-6px 0 10px;">Candidates from the Gmail outcome detector. Confirm via Claude: <code>mark interview: [slug]</code> / <code>mark rejected: [slug]</code> / <code>mark offer: [slug]</code> / <code>dismiss signal: [id]</code>. Source: <a href="https://supabase.com/dashboard/project/doxmbwizpsyqruyrmffs/editor" class="raw-link" target="_blank">application_status_signals</a>.</p>
+      <div id="signals-content"><div class="empty-state">Loading…</div></div>
+    </div>
+  </div>
 
   <!-- Email todos + Wins (wide panels above the smaller ones) -->
   <div class="panels">
@@ -525,6 +558,45 @@
         document.getElementById('stat-wins').textContent = '—';
         document.getElementById('wins-content').innerHTML = '<div class="empty-state">Failed to load wins.json</div>';
       });
+
+    // 5b. Signals (Gmail outcome detector candidates)
+    var cfgX = window.RP_CONFIG || {};
+    if (cfgX.SUPABASE_URL && cfgX.SUPABASE_ANON_KEY) {
+      fetch(cfgX.SUPABASE_URL + '/rest/v1/application_status_signals_admin?select=*&order=created_at.desc&limit=30&status=eq.pending', {
+        headers: { apikey: cfgX.SUPABASE_ANON_KEY, Authorization: 'Bearer ' + cfgX.SUPABASE_ANON_KEY }
+      })
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (rows) {
+          document.getElementById('stat-signals').textContent = rows.length;
+          if (rows.length === 0) {
+            document.getElementById('signals-content').innerHTML = '<div class="empty-state">No pending signals. <span style="font-size:11px;">When the Gmail outcome detector spots a likely interview / rejection / offer in your inbox, it lands here for one-click confirm.</span></div>';
+            return;
+          }
+          var KIND_LABEL = { interview: '🟦 Interview', rejected: '🟥 Rejected', offer: '🟩 Offer', next_steps: '🟨 Next steps' };
+          var html = rows.map(function (s) {
+            var kind = s.detected_status || 'unknown';
+            var trigger = kind === 'rejected' ? 'mark rejected' : kind === 'offer' ? 'mark offer' : kind === 'interview' ? 'mark interview' : 'note';
+            var dateStr = s.gmail_date ? new Date(s.gmail_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
+            return '<article class="signal-card ' + kind + '">'
+              + '<div class="sig-h">'
+              +   '<span class="sig-detected">' + (KIND_LABEL[kind] || kind) + '<span class="conf-badge ' + (s.confidence || 'low') + '">' + (s.confidence || 'low') + '</span></span>'
+              +   '<span class="sig-slug">' + escapeHtmlAdmin(s.slug || '?') + (dateStr ? ' · ' + dateStr : '') + '</span>'
+              + '</div>'
+              + '<p class="sig-co">' + escapeHtmlAdmin(s.company || '') + (s.role_title ? ' — ' + escapeHtmlAdmin(s.role_title) : '') + '</p>'
+              + (s.gmail_subject ? '<p class="sig-subj">' + escapeHtmlAdmin(s.gmail_subject) + '</p>' : '')
+              + (s.gmail_from ? '<p class="sig-from">from ' + escapeHtmlAdmin(s.gmail_from) + '</p>' : '')
+              + '<p class="sig-actions">If real, tell Claude <code>' + trigger + ': ' + escapeHtmlAdmin(s.slug || '') + '</code> · false positive: <code>dismiss signal: ' + escapeHtmlAdmin(s.id) + '</code></p>'
+              + '</article>';
+          }).join('');
+          document.getElementById('signals-content').innerHTML = html;
+        })
+        .catch(function () {
+          document.getElementById('stat-signals').textContent = '—';
+          document.getElementById('signals-content').innerHTML = '<div class="empty-state">Could not load signals. Apps Script may not be set up yet — see <a href="https://github.com/Omtatsat101/riketpatel-site/blob/main/scripts/contacts/SETUP-OUTCOMES.md" target="_blank">SETUP-OUTCOMES.md</a>.</div>';
+        });
+    } else {
+      document.getElementById('stat-signals').textContent = '—';
+    }
 
     // 5. Email todos
     fetch('../data/email-todos.json?v=' + Date.now())
