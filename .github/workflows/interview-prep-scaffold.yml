@@ -1,0 +1,97 @@
+# Auto-scaffold interview-prep workspaces.
+#
+# Runs hourly. Reads data/applications.json. For every application where
+# status is in {interview, offer} and the folder interview-prep/{slug}/
+# does not yet exist, runs `node scripts/interview-prep/generate.mjs --slug X`
+# and commits the new workspace. Zero token cost (pure Node + git).
+#
+# This replaces step 2 of the old riket-os-daily-iteration Claude routine.
+# The creative work (templates, blog posts, polish) now lives in the
+# 3 new routines on claude.ai/code/routines.
+
+name: interview-prep-scaffold
+
+on:
+  schedule:
+    - cron: "17 * * * *"     # hourly at :17 to avoid round-hour rush
+  workflow_dispatch:          # manual fire button in Actions UI
+
+permissions:
+  contents: write             # so the workflow can git push
+
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Find applications needing prep workspaces
+        id: detect
+        run: |
+          set -euo pipefail
+
+          # Active statuses that should have prep workspaces ready
+          ACTIVE_STATUSES='["interview", "offer"]'
+
+          # Pull slugs for active apps
+          SLUGS=$(jq -r --argjson statuses "$ACTIVE_STATUSES" '
+            (.applications // [])
+            | map(select(.status as $s | $statuses | index($s)))
+            | map(.materials_slug // .id)
+            | .[]
+          ' data/applications.json)
+
+          MISSING=""
+          for slug in $SLUGS; do
+            if [ ! -d "interview-prep/$slug" ]; then
+              MISSING="$MISSING $slug"
+            fi
+          done
+
+          MISSING=$(echo "$MISSING" | xargs)
+          echo "missing_slugs=$MISSING" >> "$GITHUB_OUTPUT"
+          if [ -z "$MISSING" ]; then
+            echo "::notice::No missing interview-prep workspaces. Nothing to do."
+          else
+            echo "::notice::Missing workspaces: $MISSING"
+          fi
+
+      - name: Scaffold any missing workspaces
+        if: steps.detect.outputs.missing_slugs != ''
+        run: |
+          set -euo pipefail
+          # Generator may not exist yet; check first
+          if [ ! -f "scripts/interview-prep/generate.mjs" ]; then
+            echo "::warning::scripts/interview-prep/generate.mjs does not exist yet. Nothing to run."
+            exit 0
+          fi
+          for slug in ${{ steps.detect.outputs.missing_slugs }}; do
+            echo "Scaffolding interview-prep/$slug/"
+            node scripts/interview-prep/generate.mjs --slug "$slug" || {
+              echo "::error::Generator failed for $slug"
+              exit 1
+            }
+          done
+
+      - name: Commit and push
+        if: steps.detect.outputs.missing_slugs != ''
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add interview-prep/
+          if git diff --cached --quiet; then
+            echo "::notice::No new files to commit (generator may have been a no-op)."
+            exit 0
+          fi
+          git commit -m "auto: scaffold interview-prep workspaces (${{ steps.detect.outputs.missing_slugs }})"
+          git push origin HEAD:main
