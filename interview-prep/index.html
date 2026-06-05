@@ -103,13 +103,10 @@
   });
   if (isUnlocked()) unlock();
 
-  // List workspaces: a workspace exists if there's a row in applications.json
-  // with status in [approved, submitted, followup_sent, interview, offer] AND
-  // we have a folder for it. For v1, just list known slugs hardcoded — Claude
-  // updates this list when creating a new workspace.
-  var KNOWN_WORKSPACES = [
-    { slug: 'humin', folder: 'humin' }
-  ];
+  // Auto-discover workspaces: for each active app in applications.json, probe
+  // whether interview-prep/{slug}/index.html exists. Show with a "missing"
+  // call-to-action for any app that doesn't have a workspace yet.
+  var ACTIVE_STATUSES = ['approved', 'submitted', 'followup_sent', 'interview', 'offer'];
 
   function escapeHtml(s) {
     if (!s) return '';
@@ -118,29 +115,56 @@
     });
   }
 
+  function probeWorkspace(slug) {
+    return fetch(slug + '/', { method: 'HEAD' })
+      .then(function (r) { return r.ok; })
+      .catch(function () { return false; });
+  }
+
   function loadList() {
     fetch('../data/applications.json?v=' + Date.now())
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        var apps = data.applications || [];
-        var bySlug = {};
-        apps.forEach(function (a) { bySlug[a.materials_slug || a.id] = a; });
-
-        var html = '';
-        KNOWN_WORKSPACES.forEach(function (w) {
-          var app = bySlug[w.slug];
-          if (!app) return;
-          html += '<li><a href="' + w.folder + '/">'
-            + '<div class="h">'
-            +   '<span class="role">' + escapeHtml(app.role_title) + '</span>'
-            +   '<span class="stage">' + escapeHtml(app.status.replace('_', ' ')) + '</span>'
-            + '</div>'
-            + '<div class="company">' + escapeHtml(app.company) + '</div>'
-            + (app.location ? '<div class="meta">' + escapeHtml(app.location) + '</div>' : '')
-            + '</a></li>';
+        var apps = (data.applications || []).filter(function (a) {
+          return ACTIVE_STATUSES.indexOf(a.status) >= 0 && a.type === 'job';
         });
-        if (!html) html = '<li class="empty">No workspaces yet. Tell Claude: <code>interview prep for [slug]</code></li>';
-        document.getElementById('workspace-list').innerHTML = html;
+        if (apps.length === 0) {
+          document.getElementById('workspace-list').innerHTML = '<li class="empty">No active job applications. Workspaces auto-list here once you have applications with status in <code>approved | submitted | followup_sent | interview | offer</code>.</li>';
+          return;
+        }
+        // Probe each in parallel
+        Promise.all(apps.map(function (a) {
+          var slug = a.materials_slug || a.id;
+          return probeWorkspace(slug).then(function (exists) { return { app: a, slug: slug, exists: exists }; });
+        })).then(function (results) {
+          // Show existing first, then missing-but-active
+          results.sort(function (a, b) {
+            if (a.exists !== b.exists) return a.exists ? -1 : 1;
+            return 0;
+          });
+          var html = results.map(function (r) {
+            if (r.exists) {
+              return '<li><a href="' + r.slug + '/">'
+                + '<div class="h">'
+                +   '<span class="role">' + escapeHtml(r.app.role_title) + '</span>'
+                +   '<span class="stage">' + escapeHtml(r.app.status.replace('_', ' ')) + '</span>'
+                + '</div>'
+                + '<div class="company">' + escapeHtml(r.app.company) + '</div>'
+                + (r.app.location ? '<div class="meta">' + escapeHtml(r.app.location) + '</div>' : '')
+                + '</a></li>';
+            } else {
+              return '<li style="opacity:0.65;background:#fdf6e3;border-color:#b8860b;">'
+                + '<div class="h">'
+                +   '<span class="role">' + escapeHtml(r.app.role_title) + '</span>'
+                +   '<span class="stage" style="background:#fff3c4;color:#7a5a00;">no workspace yet</span>'
+                + '</div>'
+                + '<div class="company">' + escapeHtml(r.app.company) + '</div>'
+                + '<div class="meta">Generate with: <code>node scripts/interview-prep/generate.mjs --slug ' + escapeHtml(r.slug) + '</code> · or tell Claude: <code>interview prep for ' + escapeHtml(r.slug) + '</code></div>'
+                + '</li>';
+            }
+          }).join('');
+          document.getElementById('workspace-list').innerHTML = html;
+        });
       });
   }
 </script>
