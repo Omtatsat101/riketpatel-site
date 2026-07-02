@@ -375,9 +375,9 @@
   // Soft lock pattern. Password lives in config.js. Files at obfuscated URLs
   // under assets/downloads/private/. On correct password, triggers BOTH
   // downloads (the capstone .pptx + the cert PDF) via temporary anchor clicks.
-  var AIPM_PW = (window.RP_CONFIG && window.RP_CONFIG.AIPM_DOWNLOAD_PASSWORD) || "AIPM137";
+  var AIPM_PW = FAMILY_PW;
   var AIPM_FILES = [
-    { url: "assets/downloads/private/aipm-capstone-riket-b-patel-X9F2K3.pptx", name: "Riket-B-Patel-AIPM-Capstone.pptx" },
+    { url: "assets/downloads/private/aipm-capstone-riket-b-patel-X9F2K3.pdf", name: "Riket-B-Patel-AIPM-Capstone.pdf" },
     { url: "assets/downloads/private/aipm-certificate-riket-b-patel-X9F2K3.pdf", name: "Riket-B-Patel-AIPM-Certificate.pdf" }
   ];
 
@@ -425,7 +425,7 @@
       var input = document.getElementById("aipm-gate-input");
       var status = document.getElementById("aipm-gate-status");
       if ((input.value || "").trim() === AIPM_PW) {
-        if (status) { status.textContent = "Unlocked. Downloading both files…"; status.className = "cm-status is-ok"; }
+        if (status) { status.textContent = "Unlocked. Downloading PDFs…"; status.className = "cm-status is-ok"; }
         if (window.gtag) gtag("event", "aipm_download_unlocked", { domain: "riketpatel.com" });
         // Stagger the two downloads slightly so the browser doesn't block the second
         triggerDownload(AIPM_FILES[0].url, AIPM_FILES[0].name);

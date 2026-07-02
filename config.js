@@ -61,7 +61,7 @@ window.RP_CONFIG = {
    * want to give the deck to (recruiters, future teammates). To rotate:
    * change this value AND rename the two files in the private folder.
    */
-  AIPM_DOWNLOAD_PASSWORD: "AIPM137",
+  AIPM_DOWNLOAD_PASSWORD: "Family137",
 
   /* Applications pipeline dashboard at /jobs/ — separate password.
    * Soft lock; the dashboard reads from data/applications.json which is
@@ -95,15 +95,15 @@ window.RP_CONFIG = {
   SLACK_PIPELINE_CHANNEL: "#applications-pipeline",
   SLACK_PIPELINE_BOT_NAME: "Pipeline Bot",
 
-  /* Admin module at /admin/ — single password gate for Riket only.
-   * Hidden by obscurity (URL not linked from public pages) + this soft
-   * lock. For real privacy upgrades later: Supabase magic-link auth
-   * sending to riketpatel@hariomtatsatinvestments.com.
-   *
-   * To rotate: change this value here, push, and remember the new
-   * password. The localStorage key resets on the next visit.
+  /* Admin module at /admin/ — DISABLED on the public site.
+   * This file ships to every visitor's browser, so no admin credential
+   * may ever live here (two prior values were leaked this way and are
+   * burned). The gate in /admin/index.html only unlocks when
+   * ADMIN_PASSWORD is defined — leaving it undefined keeps admin
+   * permanently locked on the deployed site. For real access later:
+   * server-side auth (e.g. Supabase magic-link to
+   * riketpatel@hariomtatsatinvestments.com), never a value in this file.
    */
-  ADMIN_PASSWORD: "RPAdmin2026",
 
   /* Google Apps Script web app URL that returns contacts JSON from the
    * "Riket Contacts" Sheet in Drive. Installed per Gmail account.
