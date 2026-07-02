@@ -384,7 +384,10 @@
 
 <script>
   // ── Gate ────────────────────────────────────
-  var GATE_CODE = (window.RP_CONFIG && window.RP_CONFIG.ADMIN_PASSWORD) || 'RPAdmin2026';
+  // No fallback credential: this file is public, so a hardcoded value here
+  // is a leak (the previous one is burned). When RP_CONFIG.ADMIN_PASSWORD
+  // is undefined — the deployed state — the gate can never unlock.
+  var GATE_CODE = (window.RP_CONFIG && window.RP_CONFIG.ADMIN_PASSWORD) || null;
   var GATE_KEY = 'rp_admin_unlocked';
 
   function isUnlocked() { try { return localStorage.getItem(GATE_KEY) === '1'; } catch (e) { return false; } }
@@ -403,7 +406,7 @@
   document.getElementById('gate-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var v = (document.getElementById('gate-input').value || '').trim();
-    if (v === GATE_CODE) unlock();
+    if (GATE_CODE && v === GATE_CODE) unlock();
     else document.getElementById('gate-error').style.display = 'block';
   });
   document.addEventListener('click', function (e) {
