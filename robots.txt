@@ -3,6 +3,7 @@ Allow: /
 Allow: /capability-statement/
 Allow: /connect/
 Allow: /blog/
+Allow: /card/
 
 # Tailored application materials (direct-link only — do not index company-specific
 # packets so search results don't reveal which companies I'm applying to).
