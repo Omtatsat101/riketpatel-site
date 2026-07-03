@@ -339,6 +339,229 @@
     h1.name { font-size: 34px; }
     .avatar { width: 128px; height: 128px; }
   }
+
+  /* ── Owner Om unlock trigger (a tasteful personal mark, not an obvious edit button) ── */
+  .om-mark {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--gold);
+    opacity: 0.4;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    font-family: var(--font-display);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .om-mark:hover, .om-mark:focus-visible {
+    opacity: 0.9;
+    outline: none;
+    transform: scale(1.06);
+  }
+  .om-mark:focus-visible { box-shadow: 0 0 0 2px var(--gold); border-radius: 8px; }
+
+  /* ── Unlock modal ── */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 31, 22, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 100;
+  }
+  .modal-backdrop[hidden] { display: none; }
+  .modal {
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 380px;
+    width: 100%;
+    padding: 26px 22px 22px;
+    border: 1px solid var(--line);
+  }
+  .modal h2 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--forest-deep);
+    margin: 0 0 6px;
+  }
+  .modal p.modal-lead {
+    color: var(--ink-soft);
+    font-size: 14px;
+    margin: 0 0 16px;
+  }
+  .modal label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin: 0 0 6px;
+  }
+  .modal input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    font-family: var(--font-body);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    box-sizing: border-box;
+  }
+  .modal input[type="password"]:focus-visible {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.3);
+  }
+  .modal .modal-error {
+    color: #a12020;
+    font-size: 13px;
+    margin: 8px 0 0;
+    min-height: 18px;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .modal-btn {
+    flex: 1;
+    padding: 12px 16px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    border: 1px solid var(--forest);
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .modal-btn.primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    color: #fff;
+    border-color: transparent;
+  }
+  .modal-btn.secondary {
+    background: transparent;
+    color: var(--forest);
+  }
+  .modal-btn.secondary:hover, .modal-btn.secondary:focus-visible {
+    background: var(--forest); color: var(--paper); outline: none;
+  }
+  .modal-hint {
+    color: var(--muted);
+    font-size: 11px;
+    font-style: italic;
+    margin: 14px 0 0;
+    letter-spacing: 0.01em;
+  }
+  @keyframes shake-x {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+  .shake { animation: shake-x 0.4s ease; }
+
+  /* ── Edit mode affordances ── */
+  .edit-field {
+    font: inherit;
+    color: inherit;
+    background: rgba(184, 134, 11, 0.06);
+    border: 1px dashed var(--gold);
+    border-radius: 8px;
+    padding: 4px 8px;
+    cursor: text;
+    box-sizing: border-box;
+  }
+  .edit-field:focus-visible {
+    outline: none;
+    border-style: solid;
+    box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.3);
+  }
+  input.edit-field { width: 100%; max-width: 100%; }
+  h1.name input.edit-field { font-family: var(--font-display); font-size: inherit; text-align: center; }
+  .edit-tab-urls {
+    margin: 0 0 24px;
+    padding: 16px;
+    background: var(--paper-alt);
+    border: 1px dashed var(--gold);
+    border-radius: var(--radius);
+  }
+  .edit-tab-urls h3 {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--forest-deep);
+    margin: 0 0 10px;
+  }
+  .edit-tab-urls .tab-url-row { margin: 0 0 10px; }
+  .edit-tab-urls .tab-url-row:last-child { margin-bottom: 0; }
+  .edit-tab-urls label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    margin: 0 0 4px;
+  }
+
+  /* ── Floating editor toolbar ── */
+  .editor-toolbar {
+    position: fixed;
+    left: 50%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    z-index: 90;
+    background: var(--forest-deep);
+    color: var(--paper);
+    border-radius: 14px;
+    box-shadow: var(--shadow-lg);
+    padding: 10px 12px;
+    max-width: calc(100vw - 24px);
+    width: 440px;
+    box-sizing: border-box;
+  }
+  .editor-toolbar[hidden] { display: none; }
+  .editor-toolbar .tb-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .editor-toolbar button {
+    flex: 1 1 auto;
+    min-width: 74px;
+    padding: 9px 10px;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    border-radius: 10px;
+    border: 1px solid rgba(250, 246, 236, 0.25);
+    background: transparent;
+    color: var(--paper);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .editor-toolbar button:hover, .editor-toolbar button:focus-visible {
+    background: rgba(250, 246, 236, 0.14); outline: none;
+  }
+  .editor-toolbar button.tb-save {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border-color: transparent;
+  }
+  .editor-toolbar .tb-status {
+    font-size: 11px;
+    color: rgba(250, 246, 236, 0.72);
+    margin: 8px 2px 0;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+  body.editing { padding-bottom: 130px; }
 </style>
 </head>
 <body>
@@ -353,7 +576,7 @@
          alt="Portrait of Riket B. Patel"
          width="128" height="128"
          loading="eager" decoding="async" />
-    <h1 class="name">Riket B. Patel</h1>
+    <h1 class="name" id="name-val">Riket B. Patel</h1>
     <p class="tagline" id="tagline">Product · Growth · Real Estate · Applied AI</p>
     <p class="note" id="note" hidden></p>
   </header>
@@ -403,8 +626,41 @@
 
   <footer class="card-foot">
     <a href="https://riketpatel.com/card/">riketpatel.com/card/</a>
+    <div>
+      <button type="button" class="om-mark" id="om-mark" aria-label="Owner tools" title="">&#x0950;</button>
+    </div>
   </footer>
 </main>
+
+<!-- ── Unlock modal (owner-only inline editing) ── -->
+<div class="modal-backdrop" id="unlock-backdrop" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="unlock-title" id="unlock-modal">
+    <h2 id="unlock-title">Unlock editing</h2>
+    <p class="modal-lead">Enter your key to edit this card.</p>
+    <form id="unlock-form" autocomplete="off">
+      <label for="unlock-key">Key</label>
+      <input type="password" id="unlock-key" name="unlock-key" autocomplete="off"
+             autocapitalize="off" autocorrect="off" spellcheck="false" />
+      <p class="modal-error" id="unlock-error" role="alert" aria-live="assertive"></p>
+      <div class="modal-actions">
+        <button type="submit" class="modal-btn primary" id="unlock-submit">Unlock</button>
+        <button type="button" class="modal-btn secondary" id="unlock-cancel">Cancel</button>
+      </div>
+    </form>
+    <p class="modal-hint">Future: this unlocks with your brain-profile NFT ID.</p>
+  </div>
+</div>
+
+<!-- ── Floating editor toolbar (only visible in edit mode) ── -->
+<div class="editor-toolbar" id="editor-toolbar" hidden role="region" aria-label="Editor toolbar">
+  <div class="tb-buttons">
+    <button type="button" class="tb-save" id="tb-save">Save</button>
+    <button type="button" id="tb-export">Export config.json</button>
+    <button type="button" id="tb-reset">Reset to defaults</button>
+    <button type="button" id="tb-lock">Lock</button>
+  </div>
+  <p class="tb-status" id="tb-status">Saved locally — Export &amp; commit to publish for everyone.</p>
+</div>
 
 <!-- ============================================================
      qrcode-generator (compact build) by Kazuhiko Arase — MIT License
@@ -645,11 +901,18 @@ var QRCode = (function () {
 })();
 
 // ============================================================
-// Card page bootstrap: load config, render tabs, render QR,
-// handle personalization query params, wire download.
+// Card page bootstrap: load config, deep-merge localStorage
+// overrides, render tabs, render QR, handle personalization,
+// wire dynamic vCard download, and the owner-only inline editor.
 // ============================================================
 (function () {
   var CARD_URL = 'https://riketpatel.com/card/';
+  var OVERRIDES_KEY = 'riketpatel.card.overrides';
+
+  // The unlock key is the SHA-256 hex of the "family key" — the same soft-gate
+  // passphrase already public on Riket's homepage Family tab. We store ONLY the
+  // hash here, never the plaintext, so committing this file leaks nothing new.
+  var CARD_UNLOCK_HASH = 'c2fbde3870d1b6106223f9523ad5cb5bf8061af9c609ac2573284dc15614c8d0';
 
   var FALLBACK = {
     contact: {
@@ -678,6 +941,14 @@ var QRCode = (function () {
   };
   var ARROW = '<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>';
 
+  // ── Live state ──
+  // ACTIVE_CONFIG is the merged, rendered config (defaults + overrides + edits).
+  // DEFAULT_CONFIG is the pristine config.json (for Reset).
+  var DEFAULT_CONFIG = null;
+  var ACTIVE_CONFIG = null;
+  var EDIT_MODE = false;
+  var lastFocusedBeforeModal = null;
+
   function escapeHtml(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;')
@@ -687,38 +958,124 @@ var QRCode = (function () {
       .replace(/'/g, '&#39;');
   }
 
+  // Only allow safe link schemes for tab hrefs — reject javascript:/data: etc.
+  function isSafeUrl(url) {
+    if (typeof url !== 'string') return false;
+    var u = url.trim();
+    return /^https?:\/\//i.test(u) || /^mailto:/i.test(u) || /^tel:/i.test(u);
+  }
+
+  function deepClone(o) { return JSON.parse(JSON.stringify(o)); }
+
+  // Deep-merge overrides on top of a base config. Tabs merge by array index,
+  // preserving the base tab's id/icon while allowing title/subtitle/url edits.
+  function mergeConfig(base, over) {
+    var out = deepClone(base);
+    if (!over || typeof over !== 'object') return out;
+    if (over.tagline != null) out.tagline = String(over.tagline);
+    if (over.contact && typeof over.contact === 'object') {
+      out.contact = out.contact || {};
+      ['name', 'phone', 'phoneRaw', 'email', 'city', 'website'].forEach(function (k) {
+        if (over.contact[k] != null) out.contact[k] = String(over.contact[k]);
+      });
+    }
+    if (Array.isArray(over.tabs)) {
+      out.tabs = Array.isArray(out.tabs) ? out.tabs : [];
+      for (var i = 0; i < out.tabs.length; i++) {
+        var ot = over.tabs[i];
+        if (!ot || typeof ot !== 'object') continue;
+        if (ot.title != null) out.tabs[i].title = String(ot.title);
+        if (ot.subtitle != null) out.tabs[i].subtitle = String(ot.subtitle);
+        // Tab URL edit only applied if it passes the scheme allowlist.
+        if (ot.url != null && isSafeUrl(ot.url)) out.tabs[i].url = String(ot.url).trim();
+      }
+    }
+    return out;
+  }
+
+  function loadOverrides() {
+    try {
+      var raw = localStorage.getItem(OVERRIDES_KEY);
+      if (!raw) return null;
+      return JSON.parse(raw);
+    } catch (e) { return null; }
+  }
+
+  function saveOverrides(obj) {
+    try { localStorage.setItem(OVERRIDES_KEY, JSON.stringify(obj)); return true; }
+    catch (e) { return false; }
+  }
+
+  // Derive phoneRaw (tel: target) from a display phone string.
+  function normalizePhoneRaw(display) {
+    var s = String(display || '').trim();
+    var plus = s.charAt(0) === '+' ? '+' : '';
+    var digits = s.replace(/[^0-9]/g, '');
+    // Preserve leading + if present; else if 10 US digits, add +1.
+    if (plus) return '+' + digits;
+    if (digits.length === 10) return '+1' + digits;
+    return digits ? '+' + digits : '';
+  }
+
   function renderTabs(tabs) {
     var host = document.getElementById('tabs');
     if (!host) return;
-    var html = '';
+    // Build via safe DOM APIs — never innerHTML with config/override values.
+    host.textContent = '';
     for (var i = 0; i < tabs.length; i++) {
       var t = tabs[i];
       var icon = TAB_ICONS[t.id] || TAB_ICONS.projects;
-      html +=
-        '<a class="tab" href="' + escapeHtml(t.url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + escapeHtml(t.title) + '">' +
-          '<div class="tab-icon" aria-hidden="true">' + icon + '</div>' +
-          '<div class="tab-title">' + escapeHtml(t.title) + ARROW + '</div>' +
-          '<div class="tab-sub">' + escapeHtml(t.subtitle || '') + '</div>' +
-        '</a>';
+      var a = document.createElement('a');
+      a.className = 'tab';
+      a.setAttribute('href', isSafeUrl(t.url) ? t.url : '#');
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener noreferrer');
+      a.setAttribute('aria-label', t.title || '');
+
+      var iconWrap = document.createElement('div');
+      iconWrap.className = 'tab-icon';
+      iconWrap.setAttribute('aria-hidden', 'true');
+      iconWrap.innerHTML = icon; // trusted static SVG constant only
+
+      var titleWrap = document.createElement('div');
+      titleWrap.className = 'tab-title';
+      var titleText = document.createElement('span');
+      titleText.textContent = t.title || '';
+      titleWrap.appendChild(titleText);
+      var arrow = document.createElement('span');
+      arrow.innerHTML = ARROW; // trusted static SVG constant only
+      titleWrap.appendChild(arrow.firstChild);
+
+      var sub = document.createElement('div');
+      sub.className = 'tab-sub';
+      sub.textContent = t.subtitle || '';
+
+      a.appendChild(iconWrap);
+      a.appendChild(titleWrap);
+      a.appendChild(sub);
+      host.appendChild(a);
     }
-    host.innerHTML = html;
   }
 
   function applyContact(c) {
-    var save = document.getElementById('save-contact');
-    if (save) save.setAttribute('href', 'riket-patel.vcf');
+    var name = document.getElementById('name-val') || document.querySelector('h1.name');
+    if (name && c.name) name.textContent = c.name;
     var phone = document.getElementById('phone-val');
     var phoneRow = phone && phone.closest('a');
     if (phone) phone.textContent = c.phone;
-    if (phoneRow && c.phoneRaw) phoneRow.setAttribute('href', 'tel:' + c.phoneRaw);
+    var raw = c.phoneRaw || normalizePhoneRaw(c.phone);
+    if (phoneRow && raw) phoneRow.setAttribute('href', 'tel:' + raw);
     var email = document.getElementById('email-val');
     var emailRow = email && email.closest('a');
     if (email) email.textContent = c.email;
-    if (emailRow) emailRow.setAttribute('href', 'mailto:' + c.email);
+    if (emailRow && c.email) emailRow.setAttribute('href', 'mailto:' + c.email);
     var city = document.getElementById('city-val');
     if (city) city.textContent = c.city;
+  }
+
+  function applyTagline(tagline) {
     var tag = document.getElementById('tagline');
-    if (tag && window.__CARD_TAGLINE__) tag.textContent = window.__CARD_TAGLINE__;
+    if (tag && tagline) tag.textContent = tagline;
   }
 
   function personalize() {
@@ -730,6 +1087,7 @@ var QRCode = (function () {
         var g = document.getElementById('greeting');
         var wrap = document.getElementById('greeting-wrap');
         if (g && wrap) {
+          // textContent — user-controlled query param never touches innerHTML.
           g.textContent = 'For ' + to + ' — great to meet you.';
           wrap.hidden = false;
         }
@@ -742,6 +1100,55 @@ var QRCode = (function () {
         }
       }
     } catch (e) { /* ignore */ }
+  }
+
+  // ── Dynamic vCard (3.0, CRLF) built from CURRENT contact fields ──
+  function buildVcard(c) {
+    var name = c.name || 'Riket B. Patel';
+    var parts = name.trim().split(/\s+/);
+    var first = parts.shift() || '';
+    var last = parts.pop() || '';
+    var mid = parts.join(' ');
+    var raw = c.phoneRaw || normalizePhoneRaw(c.phone);
+    function esc(v) { return String(v == null ? '' : v).replace(/([,;\\])/g, '\\$1'); }
+    var lines = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'FN:' + esc(name),
+      'N:' + esc(last) + ';' + esc(first) + ';' + esc(mid) + ';;',
+      raw ? 'TEL;TYPE=CELL,VOICE:' + esc(raw) : null,
+      c.email ? 'EMAIL;TYPE=INTERNET:' + esc(c.email) : null,
+      c.website ? 'URL:' + esc(c.website) : null,
+      c.city ? 'ADR;TYPE=HOME:;;;' + esc(c.city) + ';;;' : null,
+      'NOTE:Product manager, operator, and broker. Founder - Legacy Bridge Alliance Group, Kiddie Brands.',
+      'END:VCARD'
+    ].filter(function (l) { return l !== null; });
+    return lines.join('\r\n') + '\r\n';
+  }
+
+  // Override the static <a href="riket-patel.vcf"> with a live blob so edits flow in.
+  function wireSaveContact() {
+    var save = document.getElementById('save-contact');
+    if (!save) return;
+    save.addEventListener('click', function (ev) {
+      try {
+        ev.preventDefault();
+        var c = (ACTIVE_CONFIG && ACTIVE_CONFIG.contact) || FALLBACK.contact;
+        var vcf = buildVcard(c);
+        var blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'riket-patel.vcf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+      } catch (e) {
+        // If JS blob path fails, let the browser fall back to the static file.
+        window.location.href = 'riket-patel.vcf';
+      }
+    });
   }
 
   function buildQrSvg(text) {
@@ -796,15 +1203,385 @@ var QRCode = (function () {
     });
   }
 
-  function boot(cfg) {
-    if (cfg && cfg.tagline) window.__CARD_TAGLINE__ = cfg.tagline;
-    var contact = (cfg && cfg.contact) || FALLBACK.contact;
-    var tabs = (cfg && cfg.tabs) || FALLBACK.tabs;
-    applyContact(contact);
-    renderTabs(tabs);
+  function render() {
+    var cfg = ACTIVE_CONFIG || FALLBACK;
+    applyContact(cfg.contact || FALLBACK.contact);
+    applyTagline(cfg.tagline || FALLBACK.tagline);
+    renderTabs(cfg.tabs || FALLBACK.tabs);
+  }
+
+  // Use the raw config's shape when it's usable so per-tab metadata (id,
+  // swapNote, etc.) survives into export; fall back to FALLBACK otherwise.
+  function normalizeDefaults(rawCfg) {
+    var base = (rawCfg && rawCfg.contact && Array.isArray(rawCfg.tabs)) ? rawCfg : FALLBACK;
+    // Still run through mergeConfig against FALLBACK to backfill any missing
+    // contact keys, then re-attach raw tab metadata by id.
+    var merged = mergeConfig(FALLBACK, base);
+    if (Array.isArray(base.tabs)) {
+      merged.tabs = base.tabs.map(function (t) {
+        var out = { id: t.id, title: String(t.title || ''), subtitle: String(t.subtitle || ''),
+                    url: isSafeUrl(t.url) ? String(t.url).trim() : '' };
+        if (t.swapNote) out.swapNote = t.swapNote;
+        return out;
+      });
+    }
+    return merged;
+  }
+
+  function boot(rawCfg) {
+    // rawCfg = pristine defaults (config.json or FALLBACK).
+    DEFAULT_CONFIG = normalizeDefaults(rawCfg); // normalize/validate defaults
+    var overrides = loadOverrides();
+    ACTIVE_CONFIG = mergeConfig(DEFAULT_CONFIG, overrides); // defaults + this device's edits
+    render();
     renderQr(CARD_URL);
     wireQrDownload(CARD_URL);
+    wireSaveContact();
     personalize();
+    wireEditor();
+  }
+
+  // ================================================================
+  // Owner-only inline editor
+  // ================================================================
+
+  // ── NFT SWAP POINT ─────────────────────────────────────────────
+  // TODAY: soft-gate hash check against the family key (client-side only;
+  // real security is that saving to the live site requires a git commit).
+  // FUTURE: replace the hash comparison below with brain-profile NFT
+  // verification — e.g. connect wallet, verify ownership of the specific
+  // token ID, or match input against the minted NFT id. Everything else
+  // (edit mode, persistence, export) stays identical.
+  // ───────────────────────────────────────────────────────────────
+  async function verifyUnlock(input) {
+    // NOTE: this soft gate is NOT a security boundary. It gates a convenience/
+    // intent action (local editing + export on this device), not any server
+    // write. SubtleCrypto requires a secure context; localhost and https both
+    // qualify, so this works in local preview and on production.
+    try {
+      if (!window.crypto || !window.crypto.subtle) return false;
+      var data = new TextEncoder().encode(String(input || '').trim());
+      var digest = await window.crypto.subtle.digest('SHA-256', data);
+      var hex = Array.prototype.map.call(new Uint8Array(digest), function (b) {
+        return b.toString(16).padStart(2, '0');
+      }).join('');
+      return hex === CARD_UNLOCK_HASH;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  var prefersReducedMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function openModal() {
+    var backdrop = document.getElementById('unlock-backdrop');
+    var input = document.getElementById('unlock-key');
+    var err = document.getElementById('unlock-error');
+    if (!backdrop) return;
+    lastFocusedBeforeModal = document.activeElement;
+    if (err) err.textContent = '';
+    if (input) input.value = '';
+    backdrop.hidden = false;
+    document.addEventListener('keydown', modalKeydown, true);
+    if (input) setTimeout(function () { input.focus(); }, 0);
+  }
+
+  function closeModal() {
+    var backdrop = document.getElementById('unlock-backdrop');
+    if (!backdrop) return;
+    backdrop.hidden = true;
+    document.removeEventListener('keydown', modalKeydown, true);
+    var om = document.getElementById('om-mark');
+    if (lastFocusedBeforeModal && lastFocusedBeforeModal.focus) {
+      lastFocusedBeforeModal.focus();
+    } else if (om) { om.focus(); }
+  }
+
+  function modalKeydown(e) {
+    var backdrop = document.getElementById('unlock-backdrop');
+    if (!backdrop || backdrop.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+    if (e.key === 'Tab') {
+      // Simple focus trap across the modal's focusable elements.
+      var modal = document.getElementById('unlock-modal');
+      var focusables = modal.querySelectorAll('input, button');
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    }
+  }
+
+  async function attemptUnlock() {
+    var input = document.getElementById('unlock-key');
+    var err = document.getElementById('unlock-error');
+    var ok = await verifyUnlock(input ? input.value : '');
+    if (ok) {
+      if (err) err.textContent = '';
+      closeModal();
+      enterEditMode();
+    } else {
+      if (err) err.textContent = "That key didn't match.";
+      if (input && !prefersReducedMotion) {
+        input.classList.remove('shake');
+        // reflow to restart animation
+        void input.offsetWidth;
+        input.classList.add('shake');
+      }
+      if (input) { input.focus(); input.select(); }
+    }
+  }
+
+  function makeInput(value, className) {
+    var el = document.createElement('input');
+    el.type = 'text';
+    el.className = 'edit-field ' + (className || '');
+    el.value = value == null ? '' : value;
+    el.setAttribute('autocomplete', 'off');
+    el.spellcheck = false;
+    return el;
+  }
+
+  // Turn a display element into an inline text input; returns the input.
+  function fieldToInput(el, className) {
+    if (!el) return null;
+    var input = makeInput(el.textContent, className);
+    el.textContent = '';
+    el.appendChild(input);
+    return input;
+  }
+
+  var editRefs = {};
+
+  function enterEditMode() {
+    if (EDIT_MODE) return;
+    EDIT_MODE = true;
+    document.body.classList.add('editing');
+    var cfg = ACTIVE_CONFIG;
+
+    editRefs = {};
+    // Greeting (only if present/visible)
+    var greeting = document.getElementById('greeting');
+    var greetingWrap = document.getElementById('greeting-wrap');
+    if (greeting && greetingWrap && !greetingWrap.hidden) {
+      editRefs.greeting = fieldToInput(greeting, '');
+    }
+    // Name (h1)
+    editRefs.name = fieldToInput(document.querySelector('h1.name'), '');
+    // Tagline
+    editRefs.tagline = fieldToInput(document.getElementById('tagline'), '');
+    // Contact values
+    editRefs.phone = fieldToInput(document.getElementById('phone-val'), '');
+    editRefs.email = fieldToInput(document.getElementById('email-val'), '');
+    editRefs.city = fieldToInput(document.getElementById('city-val'), '');
+
+    // Website + tab URLs — grouped edit panel inserted before the QR section.
+    var panel = document.createElement('div');
+    panel.className = 'edit-tab-urls';
+    panel.id = 'edit-url-panel';
+    var h3 = document.createElement('h3');
+    h3.textContent = 'Links & destinations';
+    panel.appendChild(h3);
+
+    editRefs.tabUrls = [];
+    function addUrlRow(labelText, value, key) {
+      var row = document.createElement('div');
+      row.className = 'tab-url-row';
+      var lab = document.createElement('label');
+      lab.textContent = labelText;
+      var inp = makeInput(value, '');
+      row.appendChild(lab);
+      row.appendChild(inp);
+      panel.appendChild(row);
+      return inp;
+    }
+    editRefs.website = addUrlRow('Website', (cfg.contact && cfg.contact.website) || '', 'website');
+    for (var i = 0; i < cfg.tabs.length; i++) {
+      var t = cfg.tabs[i];
+      // Also let owner edit each tab's title + subtitle here for completeness.
+      var tRow = document.createElement('div');
+      tRow.className = 'tab-url-row';
+      var tLab = document.createElement('label');
+      tLab.textContent = 'Tab ' + (i + 1) + ' title';
+      var tTitle = makeInput(t.title, '');
+      tRow.appendChild(tLab); tRow.appendChild(tTitle);
+      panel.appendChild(tRow);
+
+      var sRow = document.createElement('div');
+      sRow.className = 'tab-url-row';
+      var sLab = document.createElement('label');
+      sLab.textContent = 'Tab ' + (i + 1) + ' subtitle';
+      var sSub = makeInput(t.subtitle || '', '');
+      sRow.appendChild(sLab); sRow.appendChild(sSub);
+      panel.appendChild(sRow);
+
+      var uRow = document.createElement('div');
+      uRow.className = 'tab-url-row';
+      var uLab = document.createElement('label');
+      uLab.textContent = 'Tab ' + (i + 1) + ' URL (https/mailto/tel)';
+      var uInp = makeInput(t.url, '');
+      uRow.appendChild(uLab); uRow.appendChild(uInp);
+      panel.appendChild(uRow);
+
+      editRefs.tabUrls.push({ title: tTitle, subtitle: sSub, url: uInp });
+    }
+    var tabsHost = document.getElementById('tabs');
+    if (tabsHost && tabsHost.parentNode) {
+      tabsHost.parentNode.insertBefore(panel, tabsHost.nextSibling);
+    }
+
+    // Show toolbar
+    var toolbar = document.getElementById('editor-toolbar');
+    if (toolbar) toolbar.hidden = false;
+    setStatus('Editing — make changes, then Save. (Export & commit to publish for everyone.)');
+  }
+
+  function setStatus(msg) {
+    var s = document.getElementById('tb-status');
+    if (s) s.textContent = msg;
+  }
+
+  // Collect current edit-field values into a fresh merged config object.
+  function collectEdits() {
+    var next = deepClone(ACTIVE_CONFIG);
+    next.contact = next.contact || {};
+    if (editRefs.name) next.contact.name = editRefs.name.value.trim();
+    if (editRefs.tagline) next.tagline = editRefs.tagline.value.trim();
+    if (editRefs.phone) {
+      next.contact.phone = editRefs.phone.value.trim();
+      next.contact.phoneRaw = normalizePhoneRaw(next.contact.phone);
+    }
+    if (editRefs.email) next.contact.email = editRefs.email.value.trim();
+    if (editRefs.city) next.contact.city = editRefs.city.value.trim();
+    if (editRefs.website) next.contact.website = editRefs.website.value.trim();
+    if (editRefs.tabUrls) {
+      for (var i = 0; i < editRefs.tabUrls.length && i < next.tabs.length; i++) {
+        var r = editRefs.tabUrls[i];
+        if (r.title) next.tabs[i].title = r.title.value.trim();
+        if (r.subtitle) next.tabs[i].subtitle = r.subtitle.value.trim();
+        if (r.url) {
+          var candidate = r.url.value.trim();
+          // Reject unsafe schemes — keep the previous value if invalid.
+          if (isSafeUrl(candidate)) next.tabs[i].url = candidate;
+        }
+      }
+    }
+    return next;
+  }
+
+  // Build the override delta to persist (only fields that differ from defaults
+  // would be ideal, but storing the full merged config is simpler and honest).
+  function buildOverridePayload(cfg) {
+    return {
+      tagline: cfg.tagline,
+      contact: {
+        name: cfg.contact.name,
+        phone: cfg.contact.phone,
+        phoneRaw: cfg.contact.phoneRaw,
+        email: cfg.contact.email,
+        city: cfg.contact.city,
+        website: cfg.contact.website
+      },
+      tabs: cfg.tabs.map(function (t) {
+        return { title: t.title, subtitle: t.subtitle, url: t.url };
+      })
+    };
+  }
+
+  function exitEditMode(rerender) {
+    EDIT_MODE = false;
+    document.body.classList.remove('editing');
+    var panel = document.getElementById('edit-url-panel');
+    if (panel && panel.parentNode) panel.parentNode.removeChild(panel);
+    var toolbar = document.getElementById('editor-toolbar');
+    if (toolbar) toolbar.hidden = true;
+    editRefs = {};
+    if (rerender) render(); // rebuild static display from ACTIVE_CONFIG
+  }
+
+  function wireEditor() {
+    var om = document.getElementById('om-mark');
+    if (om) om.addEventListener('click', openModal);
+
+    var backdrop = document.getElementById('unlock-backdrop');
+    if (backdrop) {
+      backdrop.addEventListener('click', function (e) {
+        if (e.target === backdrop) closeModal(); // click outside modal box
+      });
+    }
+    var form = document.getElementById('unlock-form');
+    if (form) form.addEventListener('submit', function (e) { e.preventDefault(); attemptUnlock(); });
+    var cancel = document.getElementById('unlock-cancel');
+    if (cancel) cancel.addEventListener('click', closeModal);
+
+    var save = document.getElementById('tb-save');
+    if (save) save.addEventListener('click', function () {
+      ACTIVE_CONFIG = collectEdits();
+      var ok = saveOverrides(buildOverridePayload(ACTIVE_CONFIG));
+      // Re-render the visible fields so the inputs reflect normalized values,
+      // then keep editing (rebuild inputs from the new ACTIVE_CONFIG).
+      exitEditMode(true);
+      enterEditMode();
+      setStatus(ok
+        ? 'Saved locally — Export & commit to publish for everyone.'
+        : 'Could not save to this browser (storage blocked).');
+    });
+
+    var exportBtn = document.getElementById('tb-export');
+    if (exportBtn) exportBtn.addEventListener('click', function () {
+      // Export the CURRENT edits as a config.json Riket can commit to card/.
+      var cfg = collectEdits();
+      ACTIVE_CONFIG = cfg;
+      var payload = {
+        contact: {
+          name: cfg.contact.name,
+          phone: cfg.contact.phone,
+          phoneRaw: cfg.contact.phoneRaw,
+          email: cfg.contact.email,
+          city: cfg.contact.city,
+          website: cfg.contact.website
+        },
+        tagline: cfg.tagline,
+        tabs: cfg.tabs.map(function (t) {
+          var o = { id: t.id, title: t.title, subtitle: t.subtitle, url: t.url };
+          if (t.swapNote) o.swapNote = t.swapNote;
+          return o;
+        })
+      };
+      var json = JSON.stringify(payload, null, 2) + '\n';
+      var blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'config.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+      setStatus('Exported config.json — commit it to card/ to publish for everyone.');
+    });
+
+    var resetBtn = document.getElementById('tb-reset');
+    if (resetBtn) resetBtn.addEventListener('click', function () {
+      try { localStorage.removeItem(OVERRIDES_KEY); } catch (e) {}
+      ACTIVE_CONFIG = deepClone(DEFAULT_CONFIG);
+      exitEditMode(true);
+      enterEditMode();
+      setStatus('Reset to published defaults.');
+    });
+
+    var lockBtn = document.getElementById('tb-lock');
+    if (lockBtn) lockBtn.addEventListener('click', function () {
+      // Discard uncommitted input edits; ACTIVE_CONFIG reflects last Save.
+      exitEditMode(true);
+      var omMark = document.getElementById('om-mark');
+      if (omMark) omMark.focus();
+    });
   }
 
   // Load config with graceful fallback
