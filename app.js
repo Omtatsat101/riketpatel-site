@@ -572,7 +572,7 @@
         if (window.gtag) gtag("event", "contact_submit", { domain: "riketpatel.com" });
         setTimeout(closeModal, 1800);
       } else {
-        if (status) { status.textContent = "Something broke. Email hey@riketpatel.com directly."; status.className = "cm-status is-error"; }
+        if (status) { status.textContent = "Something broke. Email Riketpatel@gmail.com directly."; status.className = "cm-status is-error"; }
       }
     });
   }

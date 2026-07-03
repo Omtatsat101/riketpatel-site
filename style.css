@@ -1378,11 +1378,133 @@ footer a:hover { color: var(--saffron); }
   transform: translateY(0);
 }
 
+/* ── Vedic ambient motifs (yantra / mandala / lotus / wheel)
+   Scroll-revealed background graphics. Line-based, gold-tinted,
+   pointer-events off so they never block clicks. Static without JS. */
+.vedic-motif {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--gold);
+  opacity: 0.18;
+  width: 320px;
+  height: 320px;
+  transform: scale(0.9) rotate(0deg);
+  transition: opacity 1.8s ease, transform 1.8s ease;
+  will-change: transform, opacity;
+}
+.vedic-motif svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+/* Fallback: if JS never fires, still show them softly */
+.vedic-motif.revealed,
+.no-js .vedic-motif {
+  opacity: 0.20;
+  transform: scale(1) rotate(0deg);
+}
+/* Very slow, ambient rotation once revealed (kept subtle) */
+.vedic-motif.revealed.spin { animation: vedic-spin 60s linear infinite; }
+.vedic-motif.revealed.spin-reverse { animation: vedic-spin-reverse 90s linear infinite; }
+
+@keyframes vedic-spin {
+  from { transform: scale(1) rotate(0deg); }
+  to   { transform: scale(1) rotate(360deg); }
+}
+@keyframes vedic-spin-reverse {
+  from { transform: scale(1) rotate(0deg); }
+  to   { transform: scale(1) rotate(-360deg); }
+}
+
+/* Section-specific placement. Each host section has position:relative
+   applied inline via markup, and overflow:hidden to keep motifs from
+   spilling. Sizes tuned per section. */
+.vedic-motif--hero {
+  top: 40px;
+  right: -40px;
+  width: 380px;
+  height: 380px;
+  opacity: 0.14;
+}
+.vedic-motif--stories {
+  bottom: 20px;
+  left: -60px;
+  width: 300px;
+  height: 300px;
+  opacity: 0.16;
+}
+.vedic-motif--skills {
+  top: 30px;
+  right: -50px;
+  width: 340px;
+  height: 340px;
+  opacity: 0.15;
+}
+.vedic-motif--hobbies {
+  top: 60px;
+  left: -70px;
+  width: 360px;
+  height: 360px;
+  opacity: 0.14;
+}
+.vedic-motif--footer {
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  margin-top: -110px;
+  margin-left: -110px;
+  opacity: 0.12;
+}
+
+/* Ensure host sections clip and stack correctly. Any real content
+   should keep its own z-index above the motif layer. */
+.hero,
+#stories,
+#skills,
+#hobbies,
+footer {
+  position: relative;
+  overflow: hidden;
+}
+.hero > *:not(.vedic-motif),
+#stories .container,
+#skills .container,
+#hobbies .container,
+footer .container {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 760px) {
+  .vedic-motif { width: 220px; height: 220px; opacity: 0.12; }
+  .vedic-motif--hero { top: 20px; right: -60px; width: 240px; height: 240px; }
+  .vedic-motif--stories { bottom: 10px; left: -80px; width: 220px; height: 220px; }
+  .vedic-motif--skills { top: 20px; right: -70px; width: 240px; height: 240px; }
+  .vedic-motif--hobbies { top: 30px; left: -80px; width: 240px; height: 240px; }
+  .vedic-motif--footer { width: 160px; height: 160px; margin-top: -80px; margin-left: -80px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .page.is-active, .card, .t-item, .btn, .chip {
     transition: none !important;
     animation: none !important;
     transform: none !important;
+  }
+  .vedic-motif,
+  .vedic-motif.revealed,
+  .vedic-motif.revealed.spin,
+  .vedic-motif.revealed.spin-reverse {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 0.16;
   }
 }
 

@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+Allow: /capability-statement/
+Allow: /connect/
+Allow: /blog/
+
+# Tailored application materials (direct-link only — do not index company-specific
+# packets so search results don't reveal which companies I'm applying to).
+Disallow: /resume/humin/
+Disallow: /resume/bmo-local-crm/
+Disallow: /resume/lonely-entrepreneur/
+Disallow: /resume/adp/
+Disallow: /resume/deborah-heart-lung/
+Disallow: /resume/internet-archive/
+Disallow: /resume/nj-innovation/
+Disallow: /resume/nj-judiciary/
+Disallow: /resume/universal-pure/
+
+# Internal operating dashboards — not for public indexing.
+Disallow: /admin/
+Disallow: /jobs/
+Disallow: /hub/
+Disallow: /trading/
+Disallow: /digest/
+Disallow: /outreach/
+Disallow: /contacts/
+Disallow: /weekly-review/
+Disallow: /interview-prep/
+Disallow: /negotiate/
+Disallow: /professional/
+Disallow: /realestate/
+
+# Private assets (password-gated downloads and pipeline data).
+Disallow: /assets/downloads/private/
+Disallow: /data/
+
+Sitemap: https://riketpatel.com/sitemap.xml
