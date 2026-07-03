@@ -1,0 +1,38 @@
+{
+  "contact": {
+    "name": "Riket B. Patel",
+    "phone": "+1 (267) 408-6295",
+    "phoneRaw": "+12674086295",
+    "email": "Riketpatel@gmail.com",
+    "city": "Edgewater Park, NJ",
+    "website": "https://riketpatel.com"
+  },
+  "tagline": "Product · Growth · Real Estate · Applied AI",
+  "tabs": [
+    {
+      "id": "projects",
+      "title": "My Projects",
+      "subtitle": "Legacy Bridge Alliance Group",
+      "url": "https://legacybridgealliancegroup.com"
+    },
+    {
+      "id": "realestate",
+      "title": "Real Estate Profile (NJ)",
+      "subtitle": "Metta Realty Partners · HomeSmart affiliate",
+      "url": "https://mettarealtypartners.com",
+      "swapNote": "Riket: swap in your direct HomeSmart agent profile URL here when live"
+    },
+    {
+      "id": "inquire",
+      "title": "Service Inquiry",
+      "subtitle": "Contact form + calendar",
+      "url": "https://riketpatel.com/connect/"
+    },
+    {
+      "id": "career",
+      "title": "My Career",
+      "subtitle": "Portfolio and experience",
+      "url": "https://riketpatel.com/"
+    }
+  ]
+}
